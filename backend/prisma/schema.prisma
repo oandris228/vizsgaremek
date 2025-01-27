@@ -28,21 +28,50 @@ model User {
 
 model Product {
   id Int @id @default(autoincrement())
-  name String
-  price Int
-  description Int
-  img String
+  name String //shared
+  price Int //shared
+
+  category ProductCategory
+
+  tea Tea?
+  other Other?
 
   Order Order[]
 }
 
+model Tea {
+  id Int @id @default(autoincrement())
+  name String
+  type String
+  flavor String
+
+
+  productId Int @unique
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Other {
+  id Int @id @default(autoincrement())
+  description String
+  img String
+
+  productId Int @unique
+  product Product @relation(fields: [productId], references: [id])
+}
+
+enum ProductCategory {
+  Tea
+  Other
+}
+
 model Order {
   id Int @id
-  cart Product[]
+  cart String
   shipping_address String
   user_id Int
 
   User User[]
+  Product Product[]
 }
 
 model Token {
