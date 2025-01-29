@@ -27,7 +27,7 @@ model User {
 }
 
 model Product {
-  id Int @id @default(autoincrement())
+  id Int @id
   name String //shared
   price Int //shared
 
@@ -41,7 +41,6 @@ model Product {
 
 model Tea {
   id Int @id @default(autoincrement())
-  name String
   type String
   flavor String
 
