@@ -3,8 +3,8 @@ export class CreateProductDto {
     name: string;
     price: number;
     category: "Tea" | "Other";
-    tea_id?: string;
-    other_id?: string;
+    tea_id?: number;
+    other_id?: number;
 
     tea_name?: string;
     tea_type?: string;

@@ -1,0 +1,16 @@
+// create a Tea
+{
+    "id": 1000,
+    "name": "name",
+    "price": 1000,
+    "category": "Tea",
+    "tea_name": "tea name",
+    "tea_type": "tea type",
+    "tea_flavor": "favor 1, flavor 2"
+}
+
+// edit a Tea
+
+{
+    "tea_flavor": "only flavor 1"
+}

@@ -1,26 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTeaDto } from './dto/create-tea.dto';
 import { UpdateTeaDto } from './dto/update-tea.dto';
+import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class TeaService {
+
+  constructor(private readonly db: PrismaService) {}
+
+
   create(createTeaDto: CreateTeaDto) {
-    return 'This action adds a new tea';
+    return this.db.tea.create({
+      data: createTeaDto
+    });
   }
 
   findAll() {
-    return `This action returns all tea`;
+    return this.db.tea.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} tea`;
+    return this.db.tea.findUnique({
+      where: {id}
+    });
   }
 
   update(id: number, updateTeaDto: UpdateTeaDto) {
-    return `This action updates a #${id} tea`;
+    console.log("tea update")
+    console.log(id + " " + updateTeaDto)
+    return this.db.tea.update({
+      where: {id},
+      data: updateTeaDto
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} tea`;
+    return this.db.tea.delete({
+      where: {id}
+    });
   }
 }

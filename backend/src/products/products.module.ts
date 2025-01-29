@@ -3,9 +3,10 @@ import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
 import { PrismaService } from 'src/prisma.service';
 import { TeaService } from 'src/tea/tea.service';
+import { OthersService } from 'src/others/others.service';
 
 @Module({
   controllers: [ProductsController],
-  providers: [ProductsService, PrismaService],
+  providers: [ProductsService, PrismaService, TeaService, OthersService],
 })
 export class ProductsModule {}

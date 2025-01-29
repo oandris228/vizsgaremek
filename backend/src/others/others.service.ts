@@ -9,22 +9,31 @@ export class OthersService {
   constructor(private readonly db: PrismaService) {}
 
   create(createOtherDto: CreateOtherDto) {
-    return "Action in another service";
+    return this.db.other.create({
+      data: createOtherDto
+    });
   }
 
   findAll() {
-    return `This action returns all others`;
+    return this.db.other.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} other`;
+    return this.db.other.findUnique({
+      where: {id}
+    });
   }
 
   update(id: number, updateOtherDto: UpdateOtherDto) {
-    return `This action updates a #${id} other`;
+    return this.db.other.update({
+      where: {id},
+      data: updateOtherDto
+    })
   }
 
   remove(id: number) {
-    return `This action removes a #${id} other`;
+    return this.db.other.delete({
+      where: {id}
+    });
   }
 }
