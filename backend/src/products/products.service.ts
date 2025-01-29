@@ -3,13 +3,15 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma.service';
 import { TeaService } from 'src/tea/tea.service';
+import { OthersService } from 'src/others/others.service';
 
 @Injectable()
 export class ProductsService {
 
   constructor(
     private readonly db: PrismaService,
-    private readonly teaservice: TeaService
+    private readonly teaservice: TeaService,
+    private readonly otherservice: OthersService
   ) {}
 
   async create(createProductDto: CreateProductDto) {
@@ -73,11 +75,11 @@ export class ProductsService {
     });
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  async update(id: number, updateProductDto: UpdateProductDto) {
 
     console.log(updateProductDto)
 
-    this.db.product.update({
+    await this.db.product.update({
       where: {id},
       data: {
         name: updateProductDto.name,
@@ -87,13 +89,12 @@ export class ProductsService {
 
     if (updateProductDto.category == "Other") {
       console.log("uh oh")
-      this.db.other.update({
-        where: {id: updateProductDto.other_id},
-        data: {
+      const dtobj = {
           description: updateProductDto.others_description,
           img: updateProductDto.others_img
-        }
-      })
+      }
+      return this.otherservice.update(updateProductDto.other_id, dtobj)
+
     } else {
       console.log("Uh Oh")
       const dtobj = {
@@ -101,7 +102,7 @@ export class ProductsService {
         flavor: updateProductDto.tea_flavor,
         productId: id
       }
-      this.teaservice.update(updateProductDto.tea_id, dtobj)
+      return this.teaservice.update(updateProductDto.tea_id, dtobj)
     }
   }
 
