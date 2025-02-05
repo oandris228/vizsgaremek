@@ -88,7 +88,7 @@ export class ProductsService {
     })
 
     if (updateProductDto.category == "Other") {
-      console.log("uh oh")
+      //console.log("uh oh")
       const dtobj = {
           description: updateProductDto.others_description,
           img: updateProductDto.others_img
@@ -96,7 +96,7 @@ export class ProductsService {
       return this.otherservice.update(updateProductDto.other_id, dtobj)
 
     } else {
-      console.log("Uh Oh")
+      //console.log("Uh Oh")
       const dtobj = {
         type: updateProductDto.tea_type,
         flavor: updateProductDto.tea_flavor,
@@ -110,18 +110,19 @@ export class ProductsService {
 
     const thing_to_remove = await this.db.product.findUnique({ where: {id}})
 
-    this.db.product.delete({
-      where: {id}
-    });
 
     if (thing_to_remove.category == "Tea") {
-      this.db.tea.delete({
+      await this.db.tea.delete({
         where: {productId: id}
       })
     } else {
-      this.db.other.delete({
+      await this.db.other.delete({
         where: {productId: id}
       })
     }
+
+    return this.db.product.delete({
+      where: {id}
+    });
   }
 }
