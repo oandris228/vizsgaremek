@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Jan 16. 14:38
+-- Létrehozás ideje: 2025. Feb 10. 13:37
 -- Kiszolgáló verziója: 10.4.27-MariaDB
 -- PHP verzió: 8.2.0
 
@@ -30,7 +30,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `order` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `shipping_address` varchar(191) NOT NULL
+  `shipping_address` varchar(191) NOT NULL,
+  `cart` varchar(191) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `other`
+--
+
+CREATE TABLE `other` (
+  `id` int(11) NOT NULL,
+  `description` varchar(191) NOT NULL,
+  `img` varchar(191) NOT NULL,
+  `productId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -43,9 +57,37 @@ CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `name` varchar(191) NOT NULL,
   `price` int(11) NOT NULL,
-  `description` int(11) NOT NULL,
-  `img` varchar(191) NOT NULL
+  `category` enum('Tea','Other') NOT NULL,
+  `other_id` int(11) DEFAULT NULL,
+  `tea_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- A tábla adatainak kiíratása `product`
+--
+
+INSERT INTO `product` (`id`, `name`, `price`, `category`, `other_id`, `tea_id`) VALUES
+(1000, 'name', 1200, 'Tea', NULL, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `tea`
+--
+
+CREATE TABLE `tea` (
+  `id` int(11) NOT NULL,
+  `type` varchar(191) NOT NULL,
+  `flavor` varchar(191) NOT NULL,
+  `productId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- A tábla adatainak kiíratása `tea`
+--
+
+INSERT INTO `tea` (`id`, `type`, `flavor`, `productId`) VALUES
+(2, 'tea type', 'only flavor 3', 1000);
 
 -- --------------------------------------------------------
 
@@ -106,10 +148,26 @@ ALTER TABLE `order`
   ADD PRIMARY KEY (`id`);
 
 --
+-- A tábla indexei `other`
+--
+ALTER TABLE `other`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `Other_productId_key` (`productId`);
+
+--
 -- A tábla indexei `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `Product_tea_id_key` (`tea_id`),
+  ADD UNIQUE KEY `Product_other_id_key` (`other_id`);
+
+--
+-- A tábla indexei `tea`
+--
+ALTER TABLE `tea`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `Tea_productId_key` (`productId`);
 
 --
 -- A tábla indexei `token`
@@ -144,10 +202,16 @@ ALTER TABLE `_ordertouser`
 --
 
 --
--- AUTO_INCREMENT a táblához `product`
+-- AUTO_INCREMENT a táblához `other`
 --
-ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `other`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT a táblához `tea`
+--
+ALTER TABLE `tea`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `user`
@@ -158,6 +222,18 @@ ALTER TABLE `user`
 --
 -- Megkötések a kiírt táblákhoz
 --
+
+--
+-- Megkötések a táblához `other`
+--
+ALTER TABLE `other`
+  ADD CONSTRAINT `Other_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON UPDATE CASCADE;
+
+--
+-- Megkötések a táblához `tea`
+--
+ALTER TABLE `tea`
+  ADD CONSTRAINT `Tea_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON UPDATE CASCADE;
 
 --
 -- Megkötések a táblához `token`
