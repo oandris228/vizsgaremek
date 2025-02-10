@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TeaService } from './tea.service';
 import { CreateTeaDto } from './dto/create-tea.dto';
 import { UpdateTeaDto } from './dto/update-tea.dto';
-import { ApiExcludeEndpoint } from '@nestjs/swagger';
+import { ApiExcludeEndpoint, ApiNoContentResponse, ApiOkResponse, ApiParam } from '@nestjs/swagger';
 
 @Controller('tea')
 export class TeaController {
@@ -14,12 +14,30 @@ export class TeaController {
     return this.teaService.create(createTeaDto);
   }
 
+  /**
+   * returns all tea
+   * @returns json
+   */
   @Get()
+  @ApiOkResponse({description: 'The data was successfully returned'})
+  @ApiNoContentResponse({description: 'The data was not found'})
   findAll() {
     return this.teaService.findAll();
   }
 
+  /**
+   * returns one tea
+   * @param id the ID of the tea
+   * @returns json
+   */
   @Get(':id')
+  @ApiOkResponse({description: 'The data was successfully returned'})
+  @ApiNoContentResponse({description: 'The data was not found'})
+  @ApiParam({
+    name: 'id',
+    type: 'int',
+    description: 'The unique ID of the tea'
+  })
   findOne(@Param('id') id: string) {
     return this.teaService.findOne(+id);
   }

@@ -4,7 +4,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { TeaService } from 'src/tea/tea.service';
 import { OthersService } from 'src/others/others.service';
-import { ApiBody } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiParam, ApiResponse } from '@nestjs/swagger';
 
 @Controller('products')
 export class ProductsController {
@@ -14,6 +14,11 @@ export class ProductsController {
     private readonly othersService: OthersService
   ) {}
 
+  /**
+   * Creates a new product. (tea/other)
+   * @param createProductDto the data of the product
+   * @returns json of the created product (does not return the json of the tea/other, only the IDs)
+   */
   @Post()
   @ApiBody({
     type: CreateProductDto,
@@ -44,20 +49,45 @@ export class ProductsController {
       }
     }
   })
+  @ApiResponse({ status: 201, description: 'A new product was created' })
+  @ApiBadRequestResponse({ description: 'The supplied data was invalid' })
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
+  /**
+   * returns all products
+   */
   @Get()
+  @ApiResponse({status: 200, description: 'The data was successfully returned'})
+  @ApiResponse({status: 500, description: 'An error was encountered'})
   findAll() {
     return this.productsService.findAll();
   }
 
+  /**
+   * returns specific product
+   * @param id the ID of the product
+   * @returns json of the product
+   */
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'int',
+    description: 'The unique ID of the order'
+  })
+  @ApiResponse({status: 200, description: 'The data was successfully returned'})
+  @ApiResponse({status: 500, description: 'An error was encountered'})
   findOne(@Param('id') id: string) {
     return this.productsService.findOne(+id);
   }
 
+  /**
+   * Updates a specific product
+   * @param id the ID of the product
+   * @param updateProductDto the new data that replaces the old
+   * @returns json
+   */
   @Patch(':id')
   @ApiBody({
     type: CreateProductDto,
@@ -88,11 +118,30 @@ export class ProductsController {
       }
     }
   })
+  @ApiParam({
+    name: 'id',
+    type: 'int',
+    description: 'The unique ID of the order'
+  })
+  @ApiResponse({status: 200, description: 'The data was successfully updated'})
+  @ApiResponse({status: 500, description: 'An error was encountered'})
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productsService.update(+id, updateProductDto);
   }
 
+  /**
+   * Deletes a specific product.
+   * @param id the ID of the product
+   * @returns json
+   */
   @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'int',
+    description: 'The unique ID of the product'
+  })
+  @ApiResponse({status: 200, description: 'The data was successfully deleted'})
+  @ApiResponse({status: 500, description: 'An error was encountered'})
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);
   }
