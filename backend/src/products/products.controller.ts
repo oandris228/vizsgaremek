@@ -73,7 +73,6 @@ export class ProductsController {
   @Get(':id')
   @ApiParam({
     name: 'id',
-    type: 'int',
     description: 'The unique ID of the order'
   })
   @ApiResponse({status: 200, description: 'The data was successfully returned'})

@@ -66,13 +66,16 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.db.product.findMany();
+    return this.db.product.findMany({
+      include: {Tea: true, Other: true}
+    });
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return this.db.product.findUnique({
-      where: {id}
-    });
+      where: {id},
+      include: {Tea: true, Other: true}
+    })
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
