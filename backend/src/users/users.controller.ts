@@ -7,7 +7,6 @@ import { ApiExcludeController } from '@nestjs/swagger';
 
 //will finish later
 @Controller('users')
-@ApiExcludeController()	
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -22,17 +21,17 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  findOne(@Param('username') id: string) {
+    return this.usersService.findOneByName(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  update(@Param('username') username: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(username, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(+id);
+    return this.usersService.remove(id);
   }
 }

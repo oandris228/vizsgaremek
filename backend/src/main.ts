@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Tea Webshop Backend API Documentation')
     .setDescription('A basic overview of the API, for more info, check the word/ppt (does not exist atm). Not finished controllers/endpoints are also not shown. All controllers are written, but you do not need to use all of them.')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
 
