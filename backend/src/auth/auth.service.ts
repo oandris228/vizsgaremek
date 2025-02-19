@@ -17,13 +17,10 @@ export class AuthService {
   async signIn(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByName(username);
     const thing = await bcrypt.compare(pass, user.password);
-    console.log(thing);
     if (!thing) {
       throw new UnauthorizedException();
     }
     const { password, ...result } = user;
-    // TODO: Generate a JWT and return it here
-    // instead of the user object
     const payload = { sub: user.id, username: user.username };
     const access_token = await this.jwtService.signAsync(payload)
     return this.db.token.create({

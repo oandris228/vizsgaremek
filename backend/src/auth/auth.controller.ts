@@ -3,7 +3,11 @@ import { AuthService } from './auth.service';
 import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ApiBearerAuth, ApiExcludeController } from '@nestjs/swagger';
-import { AuthGuard } from './auth.guard';
+import { TokenAuthGuard } from './auth.guard';
+import { JwtAuthGuard } from './jwt-auth.guard';
+import { Roles } from './roles.decorator';
+import { Role } from '@prisma/client';
+import { RolesGuard } from './roles.guard';
 
 
 //will finish later
@@ -16,14 +20,22 @@ export class AuthController {
     return this.authService.signIn(LoginDto.username, LoginDto.password);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(TokenAuthGuard)
   @ApiBearerAuth()
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @ApiBearerAuth()
+  @Get('admin')
+  @Roles(Role.Admin)
+  getAdminProfile(@Request() req) {
+    return req.user;
+  }
+
+  @UseGuards(TokenAuthGuard)
   @ApiBearerAuth()
   @Delete('logout')
   logout(@Request() req) {
