@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 10. 13:37
+-- Létrehozás ideje: 2025. Feb 21. 14:08
 -- Kiszolgáló verziója: 10.4.27-MariaDB
 -- PHP verzió: 8.2.0
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `order` (
   `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `cart` varchar(191) NOT NULL,
   `shipping_address` varchar(191) NOT NULL,
-  `cart` varchar(191) NOT NULL
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -58,16 +58,9 @@ CREATE TABLE `product` (
   `name` varchar(191) NOT NULL,
   `price` int(11) NOT NULL,
   `category` enum('Tea','Other') NOT NULL,
-  `other_id` int(11) DEFAULT NULL,
-  `tea_id` int(11) DEFAULT NULL
+  `tea_id` int(11) DEFAULT NULL,
+  `other_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- A tábla adatainak kiíratása `product`
---
-
-INSERT INTO `product` (`id`, `name`, `price`, `category`, `other_id`, `tea_id`) VALUES
-(1000, 'name', 1200, 'Tea', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -82,13 +75,6 @@ CREATE TABLE `tea` (
   `productId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- A tábla adatainak kiíratása `tea`
---
-
-INSERT INTO `tea` (`id`, `type`, `flavor`, `productId`) VALUES
-(2, 'tea type', 'only flavor 3', 1000);
-
 -- --------------------------------------------------------
 
 --
@@ -99,6 +85,19 @@ CREATE TABLE `token` (
   `token` varchar(191) NOT NULL,
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- A tábla adatainak kiíratása `token`
+--
+
+INSERT INTO `token` (`token`, `userId`) VALUES
+('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoic3RyaW5nIiwiaWF0IjoxNzM5OTcwOTUwfQ.hEpHraUIqdWbgvuIth8l9KEf2riMGxrk59qmJs_E77s', 1),
+('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoic3RyaW5nIiwiaWF0IjoxNzM5OTY0MDcyfQ.gRDliLTnj0a2ehrsK9RDeDkiLLFYTxh1Pkz5V3z5gWc', 1),
+('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoic3RyaW5nIiwiaWF0IjoxNzM5OTY3NjE0fQ.7cSX8gIKySyxL1TkAAXvlBCLN9yC5vDgDOWV63gFb-U', 1),
+('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3Mzk5NjA2NTV9.DxncL7ACE-0bkBnlrYKLEiYtQvJncV_fcwQo5Ip40LU', 2),
+('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3Mzk5Njg0OTJ9.Bvjy40ZhgDmRl6UNbSmfLzUlgtwJQCmETkq6wfSvrFU', 2),
+('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3Mzk5NjgyMzB9.kodb8NkNwdUSHx6NrWuGNRnd9DU2xmacoap_cr3KG7M', 2),
+('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3Mzk5NzA3NDR9.XscsAKUULSPN0p7xAuYr2i_CDnJIxmKiM7YX-fc_7Vw', 2);
 
 -- --------------------------------------------------------
 
@@ -112,8 +111,16 @@ CREATE TABLE `user` (
   `email` varchar(191) NOT NULL,
   `password` varchar(191) NOT NULL,
   `shipping_address` varchar(191) DEFAULT NULL,
-  `admin` tinyint(1) NOT NULL
+  `role` enum('Admin','User') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- A tábla adatainak kiíratása `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `shipping_address`, `role`) VALUES
+(1, 'string', 'string', '$2b$10$z5V3lpDNRB3AEI6Ee81/fO74rT8EZUbckBaG8.mfiZMio2HV2yrk2', 'string', 'User'),
+(2, 'admin', 'string', '$2b$10$YLx6xkQfN0Kj1PsYTD2b8eFVRk1H2P0o6iWoSwt/yWDDtzWBd6qbO', 'string', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -205,19 +212,19 @@ ALTER TABLE `_ordertouser`
 -- AUTO_INCREMENT a táblához `other`
 --
 ALTER TABLE `other`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `tea`
 --
 ALTER TABLE `tea`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Megkötések a kiírt táblákhoz
