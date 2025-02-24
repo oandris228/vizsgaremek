@@ -21,7 +21,7 @@ function App() {
           }/>
           <Route path="/profile" element={
             <PrivateRoute token={token} element={
-              <Profile/>
+              <Profile token={token}/>
             }/>
           }/>
         </Routes>
