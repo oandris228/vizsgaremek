@@ -4,3 +4,7 @@
 - write swagger api for users and the rest of the controllers
 - write and actual document
 - update the database so it supports roles
+
+asd
+
+sdksjfksdjfhsdléf
