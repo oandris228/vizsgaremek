@@ -1,32 +1,45 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Profile from './components/Profile';
 import Login from './components/Login';
 import useToken from './auth/useToken';
 import PrivateRoute from './auth/PrivateRoute';
+import Listazas from './components/User/ProductListazasUser';
+import { ProductFelvetel } from './components/Admin/ProductFelvetelUser';
+import NavBar from './components/Navbar';
+export const AuthContext = createContext('no token');
 
 function App() {
   const { token, setToken } = useToken();
   return (
-    <div className="wrapper">
+    <AuthContext.Provider value={token}>
+      <NavBar/>
+      <div className="wrapper">
       <h1>Application</h1>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={
             <h1>Home</h1>
           }/>
+          <Route path="/lista" element={
+            <Listazas/>
+          }/>
+          <Route path="/productfelvetel" element={
+            <ProductFelvetel/>
+          }/>
           <Route path="/login" element={
             <Login setToken={setToken}/>
           }/>
           <Route path="/profile" element={
-            <PrivateRoute token={token} element={
-              <Profile token={token}/>
+            <PrivateRoute element={
+              <Profile/>
             }/>
           }/>
         </Routes>
       </BrowserRouter>
     </div>
+    </AuthContext.Provider>
   );
 }
 
