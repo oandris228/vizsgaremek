@@ -25,7 +25,6 @@ export class UsersController {
   @Get('token')
   @ApiBearerAuth()
   getProfile(@Request() req) {
-    console.log(req.token)
     return this.usersService.findUserByToken(req.token);
   }
 

@@ -38,7 +38,6 @@ export default function Listazas() {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data: BaseProduct[] = await response.json();
-                console.log("Fetched data:", data);
 
                 setProducts(data);
 
