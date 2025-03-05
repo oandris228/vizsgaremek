@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../App';
-import LogoutButton from '../auth/LogoutButton';
+import { AuthContext } from '../../App';
 
-export default function NavBar() {
+export default function AdminNavBar() {
     const token = useContext(AuthContext);
 
     const [state, setState] = useState(false);
@@ -34,35 +33,23 @@ export default function NavBar() {
     }, [token])
 
     return <>
-        <div className="container">
+        <div className="container" hidden={!state}>
             <nav className="">
-                <a className="" href="#">Navbar</a>
+                <a className="" href="#">Admin Navbar</a>
 
                 <div className="" id="">
                     <ul className="">
                         <li className="nav-item active">
-                            <a className="nav-link" href="/">Főoldal</a>
+                            <a className="nav-link" href="/">Admin felület</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/lista">Termékek</a>
+                            <a className="nav-link" href="/kereses">Termékek kezelése</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/toggle">Make Your Own</a>
+                            <a className="nav-link" href="/toggle">Felhasználók kezelése</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/novcsokk">Profil</a>
-                        </li>
-                        <li className="nav-item" hidden={!LoggedIn}>
-                            <LogoutButton token={token}/>
-                        </li>
-                        <li className="nav-item" hidden={LoggedIn}>
-                            <a className="nav-link" href="/rendezes">Bejelentkezés</a>
-                        </li>
-                        <li className="nav-item" hidden={LoggedIn}>
-                            <a className="nav-link" href="/paginacio">Regisztráció</a>
-                        </li>
-                        <li className="nav-item" hidden={!state}>
-                            <a className="nav-link" href="/admin">Admin</a>
+                            <a className="nav-link" href="/novcsokk">Rendelések kezelése</a>
                         </li>
                     </ul>
                 </div>
