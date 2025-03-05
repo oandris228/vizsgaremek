@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiExcludeController } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiExcludeController } from '@nestjs/swagger';
+import { TokenAuthGuard } from 'src/auth/auth.guard';
 
 
 //will finish later
@@ -18,6 +19,13 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Get('token')
+  @ApiBearerAuth()
+  getProfile(@Request() req) {
+    return this.usersService.findUserByToken(req.token);
   }
 
   @Get(':id')

@@ -5,6 +5,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Tea Webshop Backend API Documentation')
     .setDescription('A basic overview of the API, for more info, check the word/ppt (does not exist atm). Not finished controllers/endpoints are also not shown. All controllers are written, but you do not need to use all of them.')
