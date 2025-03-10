@@ -23,10 +23,8 @@ export default function NavBar() {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(data.role == "Admin");
                 setState(data.role == "Admin")
             } else {
-                console.log(false)
                 setState(false)
             }
         }
@@ -44,22 +42,22 @@ export default function NavBar() {
                             <a className="nav-link" href="/">Főoldal</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/lista">Termékek</a>
+                            <a className="nav-link" href="/shop">Termékek</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/toggle">Make Your Own</a>
+                            <a className="nav-link" href="/custom">Make Your Own</a> {/*lmao */}
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/novcsokk">Profil</a>
+                            <a className="nav-link" href="/profile">Profil</a>
                         </li>
                         <li className="nav-item" hidden={!LoggedIn}>
                             <LogoutButton token={token}/>
                         </li>
                         <li className="nav-item" hidden={LoggedIn}>
-                            <a className="nav-link" href="/rendezes">Bejelentkezés</a>
+                            <a className="nav-link" href="/login">Bejelentkezés</a>
                         </li>
                         <li className="nav-item" hidden={LoggedIn}>
-                            <a className="nav-link" href="/paginacio">Regisztráció</a>
+                            <a className="nav-link" href="/register">Regisztráció</a>
                         </li>
                         <li className="nav-item" hidden={!state}>
                             <a className="nav-link" href="/admin">Admin</a>

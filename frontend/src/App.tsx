@@ -9,6 +9,9 @@ import Listazas from './components/User/ProductListazasUser';
 import { ProductFelvetel } from './components/Admin/ProductFelvetelUser';
 import NavBar from './components/Navbar';
 import AdminFelulet from './components/Admin/AdminFelulet';
+import AdminNavBar from './components/Admin/AdminNavbar';
+import Users from './components/Admin/Users';
+import { Regisztracio } from './components/Register';
 export const AuthContext = createContext('no token');
 
 function App() {
@@ -19,15 +22,7 @@ function App() {
       <div className="wrapper">
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={
-              <h1>Home</h1>
-            } />
-            <Route path="/lista" element={
-              <Listazas />
-            } />
-            <Route path="/productfelvetel" element={
-              <ProductFelvetel />
-            } />
+            {/* User Authentication/Creation */}
             <Route path="/login" element={
               <Login setToken={setToken} />
             } />
@@ -36,13 +31,60 @@ function App() {
                 <Profile />
               } />
             } />
+            <Route path="/register" element={
+              <>
+              <h1>Regisztráció</h1>
+              <Regisztracio/>
+              </>
+            } />
+
+            {/* User Accessible endpoints */}
+
+            <Route path="/" element={
+              <h1>Home</h1>
+            } />
+            <Route path="/shop" element={
+              <Listazas />
+            } />
+            <Route path="/custom" element={ /* lol, lmao even (never implementing this) */
+              <h1>Saját blend készítő</h1>
+            } />
+
+
+            {/* Admin endpoints */}
 
 
             <Route path="/admin" element={
               <PrivateRoute element={
+                <>
+                <AdminNavBar/>
                 <AdminFelulet />
+                </>
               } />
             } />
+            <Route path="/products" element={
+              <PrivateRoute element={
+                <>
+                <AdminNavBar/>
+                <ProductFelvetel />
+                </>
+              } />
+            } />
+            <Route path="/users" element={
+              <PrivateRoute element={
+                <>
+                <AdminNavBar/>
+                <Users/>
+                </>
+              } />
+            } />
+            <Route path="/orders" element={
+              <>
+              <AdminNavBar/>
+              <h1>Rendelések kezelése</h1>
+              </>
+            } />
+
           </Routes>
         </BrowserRouter>
       </div>

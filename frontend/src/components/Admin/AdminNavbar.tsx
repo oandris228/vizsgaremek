@@ -40,16 +40,16 @@ export default function AdminNavBar() {
                 <div className="" id="">
                     <ul className="">
                         <li className="nav-item active">
-                            <a className="nav-link" href="/">Admin felület</a>
+                            <a className="nav-link" href="/admin">Admin felület</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/kereses">Termékek kezelése</a>
+                            <a className="nav-link" href="/products">Termékek kezelése</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/toggle">Felhasználók kezelése</a>
+                            <a className="nav-link" href="/users">Felhasználók kezelése</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/novcsokk">Rendelések kezelése</a>
+                            <a className="nav-link" href="/orders">Rendelések kezelése</a>
                         </li>
                     </ul>
                 </div>
