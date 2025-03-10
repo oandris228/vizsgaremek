@@ -12,7 +12,7 @@ export function Regisztracio() {
             <input type="password" name="password" /><br />
 
             <label>Shipping Address (Optional):</label>
-            <input type="num" name="tea_id" /><br />
+            <input type="text" name="shipping_address" /><br />
 
             <button type="submit">Submit</button>
         </form>

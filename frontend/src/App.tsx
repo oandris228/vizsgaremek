@@ -6,7 +6,7 @@ import Login from './components/Login';
 import useToken from './auth/useToken';
 import PrivateRoute from './auth/PrivateRoute';
 import Listazas from './components/User/ProductListazasUser';
-import { ProductFelvetel } from './components/Admin/ProductFelvetelUser';
+import { ProductFelvetel } from './components/Admin/Products';
 import NavBar from './components/Navbar';
 import AdminFelulet from './components/Admin/AdminFelulet';
 import AdminNavBar from './components/Admin/AdminNavbar';

@@ -11,7 +11,10 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
     return this.db.user.create({
-      data: createUserDto
+      data: {
+        ...createUserDto,
+        role: 'User'
+      }
     });
   }
 
