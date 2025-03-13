@@ -31,6 +31,18 @@ export class OthersService {
     })
   }
 
+  updateByProductID(id: number, updateOtherDto: UpdateOtherDto) {
+    console.log("other update")
+    console.log(id)
+    console.log(updateOtherDto)
+    return this.db.tea.update({
+      where: {
+        productId: id
+      },
+      data: updateOtherDto
+    });
+  }
+
   remove(id: number) {
     return this.db.other.delete({
       where: {id}

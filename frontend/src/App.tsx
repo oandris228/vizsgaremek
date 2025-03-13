@@ -12,6 +12,7 @@ import AdminFelulet from './components/Admin/AdminFelulet';
 import AdminNavBar from './components/Admin/AdminNavbar';
 import Users from './components/Admin/Users';
 import { Regisztracio } from './components/Register';
+import Modify from './components/Admin/modify';
 export const AuthContext = createContext('no token');
 
 function App() {
@@ -33,8 +34,8 @@ function App() {
             } />
             <Route path="/register" element={
               <>
-              <h1>Regisztráció</h1>
-              <Regisztracio/>
+                <h1>Regisztráció</h1>
+                <Regisztracio />
               </>
             } />
 
@@ -57,34 +58,40 @@ function App() {
             <Route path="/admin" element={
               <PrivateRoute element={
                 <>
-                <AdminNavBar/>
-                <AdminFelulet />
+                  <AdminNavBar />
+                  <AdminFelulet />
                 </>
               } />
             } />
             <Route path="/products" element={
               <PrivateRoute element={
                 <>
-                <AdminNavBar/>
-                <ProductFelvetel />
+                  <AdminNavBar />
+                  <ProductFelvetel />
                 </>
               } />
             } />
             <Route path="/users" element={
               <PrivateRoute element={
                 <>
-                <AdminNavBar/>
-                <Users/>
+                  <AdminNavBar />
+                  <Users />
                 </>
               } />
             } />
             <Route path="/orders" element={
               <>
-              <AdminNavBar/>
-              <h1>Rendelések kezelése</h1>
+                <AdminNavBar />
+                <h1>Rendelések kezelése</h1>
               </>
             } />
 
+            <Route path="/edit/:id" element={
+              <>
+                <AdminNavBar />
+                <Modify/>
+              </>
+            } />
           </Routes>
         </BrowserRouter>
       </div>

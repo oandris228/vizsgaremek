@@ -102,6 +102,27 @@ export function ProductFelvetel() {
         }
     };
 
+    const handleDelete = async (productId: number) => {
+        try {
+            const response = await fetch(`http://localhost:3000/products/${productId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                setProducts(prevProducts => prevProducts.filter(product => product.id !== productId));
+                console.log('deleted successfully');
+            } else {
+                console.error('Failed to delete');
+            }
+        } catch (error) {
+            console.error('Error deleting:', error);
+        }
+    };
+
+    const handleModify = (id: number) => {
+        navigate(`/edit/${id}`);
+    };
+
     return <>
         <div className="container mt-4">
             <h1>Listázás</h1>
@@ -129,6 +150,8 @@ export function ProductFelvetel() {
                             <td>{product.Tea?.[0]?.flavor || "N/A"}</td>
                             <td>N/A</td>
                             <td>N/A</td>
+                            <td><button className="btn btn-danger" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>
+                            <td><button className="btn btn-primary" onClick={() => { handleModify(product.id) }}>Módosítás</button></td>
                         </tr>
                     ))}
                     {others.map((product) => (
@@ -145,6 +168,8 @@ export function ProductFelvetel() {
                                     <img src={product.Other[0].img} alt="Product" width="50" />
                                 ) : "N/A"}
                             </td>
+                            <td><button className="btn btn-danger" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>
+                            <td><button className="btn btn-primary" onClick={() => { handleModify(product.id) }}>Módosítás</button></td>
                         </tr>
                     ))}
                 </tbody>
@@ -154,28 +179,28 @@ export function ProductFelvetel() {
         <h1>Felvétel</h1>
         <form>
             <label>ID:</label>
-            <input type="number" name="id"  onChange={(e) => { handleChange(e) }}/><br />
+            <input type="number" name="id" onChange={(e) => { handleChange(e) }} /><br />
 
             <label>Name:</label>
-            <input type="text" name="name"  onChange={(e) => { handleChange(e) }}/><br />
+            <input type="text" name="name" onChange={(e) => { handleChange(e) }} /><br />
 
             <label>Price:</label>
-            <input type="number" name="price"  onChange={(e) => { handleChange(e) }}/><br />
+            <input type="number" name="price" onChange={(e) => { handleChange(e) }} /><br />
 
             <label>Category:</label>
-            <input type="text" name="category"  onChange={(e) => { handleChange(e) }}/><br />
+            <input type="text" name="category" onChange={(e) => { handleChange(e) }} /><br />
 
             <label>Tea Type:</label>
-            <input type="text" name="tea_type"  onChange={(e) => { handleChange(e) }}/><br />
+            <input type="text" name="tea_type" onChange={(e) => { handleChange(e) }} /><br />
 
             <label>Tea Flavor:</label>
-            <input type="text" name="tea_flavor"  onChange={(e) => { handleChange(e) }}/><br />
+            <input type="text" name="tea_flavor" onChange={(e) => { handleChange(e) }} /><br />
 
             <label>Other Description:</label>
-            <input type="text" name="others_description"  onChange={(e) => { handleChange(e) }}/><br />
+            <input type="text" name="others_description" onChange={(e) => { handleChange(e) }} /><br />
 
             <label>Other Image:</label>
-            <input type="text" name="others_img"  onChange={(e) => { handleChange(e) }}/><br />
+            <input type="text" name="others_img" onChange={(e) => { handleChange(e) }} /><br />
 
             <button onClick={(e) => handleSubmit(e)}>Submit</button>
         </form>

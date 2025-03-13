@@ -96,7 +96,7 @@ export class ProductsService {
           description: updateProductDto.others_description,
           img: updateProductDto.others_img
       }
-      return this.otherservice.update(updateProductDto.other_id, dtobj)
+      return this.otherservice.updateByProductID(updateProductDto.other_id, dtobj)
 
     } else {
       //console.log("Uh Oh")
@@ -105,7 +105,7 @@ export class ProductsService {
         flavor: updateProductDto.tea_flavor,
         productId: id
       }
-      return this.teaservice.update(updateProductDto.tea_id, dtobj)
+      return this.teaservice.updateByProductID(updateProductDto.tea_id, dtobj)
     }
   }
 
