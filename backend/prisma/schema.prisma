@@ -39,7 +39,7 @@ model Product {
   Tea Tea[]
   Other Other[]
 
-  Cart Cart[]
+  Item Item[]
 }
 
 model Tea {
@@ -71,20 +71,28 @@ enum Role {
   User
 }
 
+enum OrderState {
+  Active // amíg van ilyen rendelés, addig nem hozható létre egy másik, CSAK FRONTEND KEZELI
+  Processed // a nem kiszállított rendelések, több is lehet
+  Completed // a kiszállított rendelések, több is lehet
+}
+
 model Order {
   id Int @id
   shipping_address String
   user_id Int
+  orderState OrderState
+  extratext String?
 
   User User[]
   Product Product[]
-  items Cart[]
+  items Item[]
 }
 
-model Cart { //very bad name btw
-  cartId Int @id @default(autoincrement())
+model Item {
+  id Int @id @default(autoincrement())
   orderId Int
-  productId Int @unique
+  productId Int
   product Product @relation(fields: [productId], references: [id])
   quantity Int
 
