@@ -79,9 +79,6 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-
-    console.log(updateProductDto)
-
     await this.db.product.update({
       where: {id},
       data: {
@@ -96,7 +93,7 @@ export class ProductsService {
           description: updateProductDto.others_description,
           img: updateProductDto.others_img
       }
-      return this.otherservice.update(updateProductDto.other_id, dtobj)
+      return this.otherservice.updateByProductID(id, dtobj)
 
     } else {
       //console.log("Uh Oh")
@@ -105,7 +102,7 @@ export class ProductsService {
         flavor: updateProductDto.tea_flavor,
         productId: id
       }
-      return this.teaservice.update(updateProductDto.tea_id, dtobj)
+      return this.teaservice.updateByProductID(id, dtobj)
     }
   }
 

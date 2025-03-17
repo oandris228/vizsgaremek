@@ -46,16 +46,16 @@ export class UsersService {
     return user;
   }
 
-  update(username: string, updateUserDto: UpdateUserDto) {
+  update(id: number, updateUserDto: UpdateUserDto) {
     return this.db.user.update({
-      where: {username: username},
+      where: {id},
       data: updateUserDto
     });
   }
 
-  remove(username: string) {
+  remove(id: number) {
     return this.db.user.delete({
-      where: {username}
+      where: {id}
     });
   }
 }

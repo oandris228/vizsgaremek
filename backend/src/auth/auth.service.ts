@@ -31,7 +31,7 @@ export class AuthService {
     })
   }
 
-  async logout(token: string) {
+  logout(token: string) {
     return this.db.token.delete({
       where: {token}
     })

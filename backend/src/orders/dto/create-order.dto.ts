@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsString } from "class-validator";
+import { IsInt, IsOptional, IsString } from "class-validator";
 
 export class CreateOrderDto {
     /**
@@ -12,15 +12,6 @@ export class CreateOrderDto {
         example: 10323264
     })
     id: number;
-
-    /**
-     * fill with a string of the ID-s of the ordered products separated by a ;
-     */
-    @IsString()
-    @ApiProperty({
-        example: "1001;1102;1010"
-    })
-    cart: string;
 
     /**
      * the shipping address
@@ -39,4 +30,24 @@ export class CreateOrderDto {
         example: 10
     })
     user_id: number;
+
+    /**
+     * order state
+     * always keep "Active" on creation
+     */
+    @IsString()
+    @ApiProperty({
+        example: "Active"
+    })
+    orderState: "Active" | "Processed" | "Completed";
+
+    /**
+     * extra text if the user wants to specify something that we just NEED to know
+     */
+    @IsString()
+    @IsOptional()
+    @ApiProperty({
+        example: "I am clinically insane."
+    })
+    extratext?: string;
 }
