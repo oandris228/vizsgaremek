@@ -8,8 +8,6 @@ import { AuthModule } from './auth/auth.module';
 import { TeaModule } from './tea/tea.module';
 import { OthersModule } from './others/others.module';
 import { ItemsModule } from './items/items.module';
-import { ItemsModule } from './items/items.module';
-import { ItemsModule } from './items/items.module';
 
 @Module({
   imports: [UsersModule, ProductsModule, OrdersModule, AuthModule, TeaModule, OthersModule, ItemsModule],
