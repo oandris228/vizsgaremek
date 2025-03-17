@@ -6,13 +6,6 @@ export default function Users() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
-    const [formData, setFormData] = useState<User>({
-        id: 0,
-        username: ' ',
-        email: ' ',
-        shipping_address: ' ',
-        role: 'User'
-    });
 
     type User = {
         id: number;
@@ -36,14 +29,6 @@ export default function Users() {
         } finally {
             setLoading(false);
         }
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value.toString(),
-        }));
     };
 
     const handleDelete = async (id: number) => {
