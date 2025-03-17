@@ -119,7 +119,7 @@ export class ProductsController {
   })
   @ApiParam({
     name: 'id',
-    type: 'number',
+    type: 'string',
     description: 'The unique ID of the order'
   })
   @ApiResponse({status: 200, description: 'The data was successfully updated'})

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function Modify() {
+export default function ModifyProducts() {
 
   const { id } = useParams();
 
@@ -99,7 +99,7 @@ export default function Modify() {
     }));
 };
 
-  if (loading) return <p>Loading geometry...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error fetching data: {error}</p>;
 
   return <>

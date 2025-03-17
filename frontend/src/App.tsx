@@ -6,13 +6,15 @@ import Login from './components/Login';
 import useToken from './auth/useToken';
 import PrivateRoute from './auth/PrivateRoute';
 import Listazas from './components/User/ProductListazasUser';
-import { ProductFelvetel } from './components/Admin/Products';
+import { Products } from './components/Admin/Products/Products';
 import NavBar from './components/Navbar';
 import AdminFelulet from './components/Admin/AdminFelulet';
 import AdminNavBar from './components/Admin/AdminNavbar';
-import Users from './components/Admin/Users';
+import Users from './components/Admin/Users/Users';
 import { Regisztracio } from './components/Register';
-import Modify from './components/Admin/modify';
+import Modify from './components/Admin/Products/ModifyProducts';
+import ModifyProducts from './components/Admin/Products/ModifyProducts';
+import ModifyUsers from './components/Admin/Users/ModifyUsers';
 export const AuthContext = createContext('no token');
 
 function App() {
@@ -63,14 +65,26 @@ function App() {
                 </>
               } />
             } />
+
+            {/* Product management */}
+
             <Route path="/products" element={
               <PrivateRoute element={
                 <>
                   <AdminNavBar />
-                  <ProductFelvetel />
+                  <Products />
                 </>
               } />
             } />
+            <Route path="/products/edit/:id" element={
+              <>
+                <AdminNavBar />
+                <ModifyProducts />
+              </>
+            } />
+
+            {/* User management */}
+
             <Route path="/users" element={
               <PrivateRoute element={
                 <>
@@ -79,17 +93,25 @@ function App() {
                 </>
               } />
             } />
-            <Route path="/orders" element={
+            <Route path="/users/edit/:id" element={
               <>
                 <AdminNavBar />
-                <h1>Rendelések kezelése</h1>
+                <ModifyUsers />
               </>
             } />
 
-            <Route path="/edit/:id" element={
+            {/* Order management */}
+
+            <Route path="/orders" element={
               <>
                 <AdminNavBar />
-                <Modify/>
+                <h1>Rendelések kezelése TODO</h1>
+              </>
+            } />
+            <Route path="/ordwers/edit/:id" element={
+              <>
+                <AdminNavBar />
+                <h1>Rendelések módosítása TODO</h1>
               </>
             } />
           </Routes>

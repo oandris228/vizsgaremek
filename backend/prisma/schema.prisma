@@ -38,6 +38,8 @@ model Product {
   Order Order[]
   Tea Tea[]
   Other Other[]
+
+  Cart Cart[]
 }
 
 model Tea {
@@ -71,12 +73,22 @@ enum Role {
 
 model Order {
   id Int @id
-  cart String
   shipping_address String
   user_id Int
 
   User User[]
   Product Product[]
+  items Cart[]
+}
+
+model Cart { //very bad name btw
+  cartId Int @id @default(autoincrement())
+  orderId Int
+  productId Int @unique
+  product Product @relation(fields: [productId], references: [id])
+  quantity Int
+
+  Order Order[]
 }
 
 model Token {

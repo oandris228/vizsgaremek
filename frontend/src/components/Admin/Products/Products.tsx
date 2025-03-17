@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function ProductFelvetel() {
+export function Products() {
     const [products, setProducts] = useState<BaseProduct[]>([]);
     const [teas, setTeas] = useState<BaseProduct[]>([]);
     const [others, setOthers] = useState<BaseProduct[]>([]);
@@ -120,7 +120,7 @@ export function ProductFelvetel() {
     };
 
     const handleModify = (id: number) => {
-        navigate(`/edit/${id}`);
+        navigate(`/products/edit/${id}`);
     };
 
     return <>

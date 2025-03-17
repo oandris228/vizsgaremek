@@ -35,7 +35,7 @@ export class OthersService {
     console.log("other update")
     console.log(id)
     console.log(updateOtherDto)
-    return this.db.tea.update({
+    return this.db.other.update({
       where: {
         productId: id
       },
