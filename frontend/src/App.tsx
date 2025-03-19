@@ -52,7 +52,11 @@ function App() {
             <Route path="/custom" element={ /* lol, lmao even (never implementing this) */
               <h1>Saját blend készítő</h1>
             } />
-
+            <Route path="/cart" element={
+              <PrivateRoute element={
+                <h1>Cart</h1>
+              } />
+            } />
 
             {/* Admin endpoints */}
 

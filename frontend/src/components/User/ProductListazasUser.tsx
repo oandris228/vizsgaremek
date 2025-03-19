@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BaseProduct, OrderFormData, User } from "../../types";
+import { AuthContext } from "../../App";
+import { GetProfile } from "../../functions";
 
 export default function Listazas() {
     const [products, setProducts] = useState<BaseProduct[]>([]);
@@ -7,28 +10,9 @@ export default function Listazas() {
     const [others, setOthers] = useState<BaseProduct[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [user, setUser] = useState<User>();
+    const token = useContext(AuthContext);
     const navigate = useNavigate();
-
-    type BaseProduct = {
-        id: number;
-        name: string;
-        price: number;
-        category: "Tea" | "Other";
-        Tea?: Tea[];
-        Other?: Other[];
-    };
-
-    type Tea = {
-        id?: number;
-        type?: string;
-        flavor?: string;
-    };
-
-    type Other = {
-        id?: number;
-        description?: string;
-        img?: string;
-    };
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -55,10 +39,39 @@ export default function Listazas() {
         };
 
         fetchProducts();
-    }, []);
+        GetProfile(token).then((e)=> setUser(e))
+    }, [token]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error fetching data: {error}</p>;
+
+    async function AddToCart(id: number): Promise<void> {
+        if (!user) {
+            navigate('/login')
+        } else {
+            const formData: OrderFormData = {
+                orderId: 0,
+                productId: id,
+                quantity: 1,
+                order_id: Date.now(),
+                order_shipping_address: user.shipping_address,
+                order_user_id: user.id,
+                order_extratext: "",
+                order_orderState: "Active"
+            }
+            try {
+                await fetch('http://localhost:3000/items', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+                navigate('/cart');
+            } catch (error: any) {
+                console.error("Error submitting form:", error);
+            }
+
+        }
+    }
 
     return (
         <div className="container mt-4">
@@ -87,6 +100,7 @@ export default function Listazas() {
                             <td>{product.Tea?.[0]?.flavor || "N/A"}</td>
                             <td>N/A</td>
                             <td>N/A</td>
+                            <td><button onClick={() => AddToCart(product.id)}>Add to Cart</button></td>
                         </tr>
                     ))}
                     {others.map((product) => (
@@ -103,6 +117,7 @@ export default function Listazas() {
                                     <img src={product.Other[0].img} alt="Product" width="50" />
                                 ) : "N/A"}
                             </td>
+                            <td><button onClick={() => AddToCart(product.id)}>Add to Cart</button></td>
                         </tr>
                     ))}
                 </tbody>

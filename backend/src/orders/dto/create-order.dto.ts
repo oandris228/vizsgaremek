@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsOptional, IsString } from "class-validator";
+import { OrderState } from "@prisma/client";
+import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
 
 export class CreateOrderDto {
     /**
@@ -35,11 +36,11 @@ export class CreateOrderDto {
      * order state
      * always keep "Active" on creation
      */
-    @IsString()
+    @IsEnum(OrderState)
     @ApiProperty({
         example: "Active"
     })
-    orderState: "Active" | "Processed" | "Completed";
+    orderState: OrderState;
 
     /**
      * extra text if the user wants to specify something that we just NEED to know

@@ -1,26 +1,19 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import { User } from '../../../types';
 
 export default function ModifyUsers() {
 
   const { id } = useParams();
 
-  type FormData = {
-    id: number;
-    username: string;
-    email: string;
-    shipping_address: string;
-    role: string;
-  }
-
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<User>({
     id: 0,
     username: ' ',
     email: ' ',
     shipping_address: ' ',
     role: 'User'
   });
-  const [product, setProduct] = useState<FormData>();
+  const [product, setProduct] = useState<User>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -34,7 +27,7 @@ export default function ModifyUsers() {
         }
         const data = await response.json();
 
-        const formattedData: FormData = {
+        const formattedData: User = {
           id: data.id,
           username: data.username,
           email: data.email,

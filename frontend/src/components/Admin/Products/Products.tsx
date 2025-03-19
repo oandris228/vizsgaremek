@@ -1,5 +1,6 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BaseProduct, ProductFormData } from "../../../types";
 
 export function Products() {
     const [products, setProducts] = useState<BaseProduct[]>([]);
@@ -7,7 +8,7 @@ export function Products() {
     const [others, setOthers] = useState<BaseProduct[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<ProductFormData>({
         id: 0,
         name: "undefined",
         price: 0,
@@ -16,38 +17,6 @@ export function Products() {
         tea_type: ""
     });
     const navigate = useNavigate();
-
-    type BaseProduct = {
-        id: number;
-        name: string;
-        price: number;
-        category: "Tea" | "Other";
-        Tea?: Tea[];
-        Other?: Other[];
-    };
-
-    type Tea = {
-        id?: number;
-        type?: string;
-        flavor?: string;
-    };
-
-    type Other = {
-        id?: number;
-        description?: string;
-        img?: string;
-    };
-
-    type FormData = {
-        id: number;
-        name: string;
-        price: number;
-        category: "Tea" | "Other";
-        tea_type?: string;
-        tea_flavor?: string;
-        others_description?: string;
-        others_img?: string;
-    }
 
     const fetchProducts = async () => {
         try {

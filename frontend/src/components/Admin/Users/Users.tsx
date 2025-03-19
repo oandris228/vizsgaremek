@@ -19,13 +19,14 @@ export default function Users() {
         try {
             const response = await fetch("http://localhost:3000/users");
             if (!response.ok) {
+                setError(response.statusText)
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data: User[] = await response.json();
 
             setUsers(data);
         } catch (err: any) {
-            setError(err.message);
+            //setError(err.message);
         } finally {
             setLoading(false);
         }

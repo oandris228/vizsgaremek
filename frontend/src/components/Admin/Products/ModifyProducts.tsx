@@ -1,22 +1,11 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
+import { ProductFormData } from '../../../types';
 
 export default function ModifyProducts() {
 
   const { id } = useParams();
-
-  type FormData = {
-    id: number;
-    name: string;
-    price: number;
-    category: "Tea" | "Other";
-    tea_type?: string;
-    tea_flavor?: string;
-    others_description?: string;
-    others_img?: string;
-  }
-
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<ProductFormData>({
     id: 0,
     name: "",
     price: 0,
@@ -26,7 +15,6 @@ export default function ModifyProducts() {
     others_description: "",
     others_img: ""
   });
-  const [product, setProduct] = useState<FormData>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -40,7 +28,7 @@ export default function ModifyProducts() {
         }
         const data = await response.json();
 
-        const formattedData: FormData = {
+        const formattedData: ProductFormData = {
           id: data.id,
           name: data.name,
           price: data.price,
