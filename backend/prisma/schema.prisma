@@ -26,7 +26,7 @@ model User {
 }
 
 model Product {
-  id Int @id
+  id Int @id @default(autoincrement())
   name String //shared
   price Int //shared
 
@@ -78,7 +78,7 @@ enum OrderState {
 }
 
 model Order {
-  id Int @id
+  id Int @id @default(autoincrement())
   shipping_address String
   user_id Int
   orderState OrderState

@@ -17,7 +17,6 @@ export class ItemsService {
       try {
         const newOrder = await this.db.order.create({
           data: {
-            id: createItemDto.order_id,
             shipping_address: createItemDto.order_shipping_address,
             user_id: createItemDto.order_user_id,
             orderState: "Active",
@@ -26,8 +25,6 @@ export class ItemsService {
         });
 
         console.log("New order created:", newOrder);
-
-        createItemDto.orderId = newOrder.id;
 
         return await this.db.item.create({
           data: {
