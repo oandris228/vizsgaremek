@@ -4,51 +4,72 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Tea {
-    private String termek;
-    private String leiras;
-    private int ar;
+    private static Connection connection;
 
-    public Tea(String termek, String leiras, int ar){
-        this.termek= termek;
-        this.leiras= leiras;
-        this.ar= ar;
+    public static void setConnection(Connection c) {
+        connection = c;
     }
 
-    public String getTermek() {
-        return termek;
+    private int id;
+    private String type;
+    private String flavor;
+    private int productId;
+
+    public Tea(int id, String type, String flavor, int productId){
+        this.id = id;
+        this.type= type;
+        this.flavor= flavor;
+        this.productId= productId;
+    }
+    public int getId() {
+        return id;
     }
 
-    public int getAr() {
-        return ar;
+    public String getType() {
+        return type;
     }
 
-    public String getLeiras() {
-        return leiras;
+    public String getFlavor() {
+        return flavor;
     }
 
-    public static void saveToFile(String fileName, ObservableList<Tea> teak) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
-        for (Tea tea : teak) {
-            //System.out.println(car.licensePlateNumber+","+car.name+","+ car.year);
-            bw.write(tea.termek+","+tea.leiras+","+ tea.ar);
-            bw.newLine();
+    public int getProductId() {
+        return productId;
+    }
+
+    public static List<Tea> getAll() throws Exception {
+        if (connection == null ) throw new Exception("connection is not set in Tea");
+        List<Tea> res = new ArrayList<>();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(
+                "select * from tea;"
+        );
+        while (resultSet.next()) {
+            int id= resultSet.getInt("id");
+            String type = resultSet.getString("type").trim();
+            String flavor = resultSet.getString("flavor").trim();
+            int productId = resultSet.getInt("productId");
+            res.add(new Tea(id, type, flavor, productId));
         }
-        bw.close();
+        resultSet.close();
+        statement.close();
+        return res;
     }
 
-    public static ObservableList<Tea> readFromFile(String fileName) throws IOException {
-        Scanner s = new Scanner(new File(fileName));
-        ObservableList<Tea> teak = FXCollections.observableArrayList();
-        while(s.hasNextLine()){
-            String[] parts= s.nextLine().split(",");
-            teak.add(new Tea(parts[0],parts[1],Integer.parseInt(parts[2])));
-        }
-        s.close();
-        return teak;
+    public void upload() throws SQLException {
+        Statement statement = connection.createStatement();
+        String sql = "insert into tea(id, type, flavor, productId) values('"+id+"','"+type+"','"+flavor+"','"+productId+"');";
+        System.out.println(sql);
+        statement.executeUpdate(sql);
+        statement.close();
     }
 }
