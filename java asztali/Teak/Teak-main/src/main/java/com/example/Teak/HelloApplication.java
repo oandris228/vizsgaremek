@@ -13,6 +13,8 @@ public class HelloApplication extends Application {
     Connection connection;
     Scene mainMenu;
     TeaTable tt;
+    OrderTable ot;
+
 
     @Override
     public void start(Stage stage) {
@@ -22,9 +24,14 @@ public class HelloApplication extends Application {
             String password = ""; // Default XAMPP password is empty
             connection = DriverManager.getConnection(url, user, password);
             Tea.setConnection(connection);
+            Order.setConnection(connection);
+
 
             tt = new TeaTable();
             tt.teas.addAll(Tea.getAll());
+
+            ot = new OrderTable();
+            ot.orders.addAll(Order.getAll());
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -37,7 +44,14 @@ public class HelloApplication extends Application {
             }));
         });
 
-        HBox menuOptions = new HBox(TeaTableButton);
+        Button OrderTableButton = new Button("Order");
+        OrderTableButton.setOnAction(e ->{
+            stage.setScene(ot.createScene(be -> {
+                stage.setScene(mainMenu);
+            }));
+        });
+
+        HBox menuOptions = new HBox(TeaTableButton, OrderTableButton);
         mainMenu = new Scene(menuOptions, 600, 400);
 
         stage.setScene(mainMenu);
