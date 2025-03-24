@@ -4,17 +4,6 @@ import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
 
 export class CreateOrderDto {
     /**
-     * the ID of the order
-     * 
-     * have to input manually
-     */
-    @IsInt()
-    @ApiProperty({
-        example: 10323264
-    })
-    id: number;
-
-    /**
      * the shipping address
      */
     @IsString()

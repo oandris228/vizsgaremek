@@ -26,9 +26,6 @@ export class TeaService {
   }
 
   update(id: number, updateTeaDto: UpdateTeaDto) {
-    console.log("tea update")
-    console.log(id)
-    console.log(updateTeaDto)
     return this.db.tea.update({
       where: {id},
       data: updateTeaDto
@@ -36,9 +33,6 @@ export class TeaService {
   }
 
   updateByProductID(id: number, updateTeaDto: UpdateTeaDto) {
-    console.log("tea update")
-    console.log(id)
-    console.log(updateTeaDto)
     return this.db.tea.update({
       where: {
         productId: id

@@ -32,9 +32,6 @@ export class OthersService {
   }
 
   updateByProductID(id: number, updateOtherDto: UpdateOtherDto) {
-    console.log("other update")
-    console.log(id)
-    console.log(updateOtherDto)
     return this.db.other.update({
       where: {
         productId: id
