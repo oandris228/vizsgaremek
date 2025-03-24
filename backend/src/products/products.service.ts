@@ -32,7 +32,8 @@ export class ProductsService {
         data: {
           type: createProductDto.tea_type,
           flavor: createProductDto.tea_flavor,
-          productId: temp_product.id
+          productId: temp_product.id,
+          color: createProductDto.tea_color
         }
       })
 
@@ -99,7 +100,8 @@ export class ProductsService {
       const dtobj = {
         type: updateProductDto.tea_type,
         flavor: updateProductDto.tea_flavor,
-        productId: id
+        productId: id,
+        color: updateProductDto.tea_color
       }
       return this.teaservice.updateByProductID(id, dtobj)
     }

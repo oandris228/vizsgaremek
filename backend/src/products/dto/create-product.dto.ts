@@ -78,6 +78,8 @@ export class CreateProductDto {
     })
     tea_flavor?: string;
 
+    tea_color?: string;
+
     /**
      * ONLY FILL THIS WHEN CREATING AN 'OTHER', OTHERWISE IT IS IGNORED
      * 

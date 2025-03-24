@@ -45,6 +45,7 @@ model Tea {
   id Int @id @default(autoincrement())
   type String
   flavor String
+  color String
 
 
   productId Int @unique
