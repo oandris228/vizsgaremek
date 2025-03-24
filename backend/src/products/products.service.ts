@@ -20,7 +20,6 @@ export class ProductsService {
 
     const temp_product = await this.db.product.create({
       data: {
-        id: +createProductDto.id,
         name: createProductDto.name,
         price: +createProductDto.price,
         category: createProductDto.category
@@ -33,13 +32,14 @@ export class ProductsService {
         data: {
           type: createProductDto.tea_type,
           flavor: createProductDto.tea_flavor,
-          productId: temp_product.id
+          productId: temp_product.id,
+          color: createProductDto.tea_color
         }
       })
 
       //Update product with Tea
       return this.db.product.update({
-        where: {id: +createProductDto.id},
+        where: {id: temp_product.id},
         data: {
           tea_id: tea_to_connect.id
         }
@@ -57,7 +57,7 @@ export class ProductsService {
 
       //Update product with Other
       return this.db.product.update({
-        where: {id: +createProductDto.id},
+        where: {id: temp_product.id},
         data: {
           other_id: other_to_connect.id
         }
@@ -100,7 +100,8 @@ export class ProductsService {
       const dtobj = {
         type: updateProductDto.tea_type,
         flavor: updateProductDto.tea_flavor,
-        productId: id
+        productId: id,
+        color: updateProductDto.tea_color
       }
       return this.teaservice.updateByProductID(id, dtobj)
     }

@@ -21,12 +21,12 @@ model User {
   password String
   shipping_address String?
   role Role
-  orders Order[]
+  commissions Commission[]
   tokens Token[]
 }
 
 model Product {
-  id Int @id
+  id Int @id @default(autoincrement())
   name String //shared
   price Int //shared
 
@@ -35,7 +35,6 @@ model Product {
   tea_id Int? @unique
   other_id Int? @unique
 
-  Order Order[]
   Tea Tea[]
   Other Other[]
 
@@ -46,6 +45,7 @@ model Tea {
   id Int @id @default(autoincrement())
   type String
   flavor String
+  color String
 
 
   productId Int @unique
@@ -71,32 +71,30 @@ enum Role {
   User
 }
 
-enum OrderState {
+enum CommissionState {
   Active // amíg van ilyen rendelés, addig nem hozható létre egy másik, CSAK FRONTEND KEZELI
   Processed // a nem kiszállított rendelések, több is lehet
   Completed // a kiszállított rendelések, több is lehet
 }
 
-model Order {
-  id Int @id
+model Commission {
+  id Int @id @default(autoincrement())
   shipping_address String
   user_id Int
-  orderState OrderState
+  commissionState CommissionState
   extratext String?
 
   User User[]
-  Product Product[]
   items Item[]
 }
 
 model Item {
   id Int @id @default(autoincrement())
-  orderId Int
+  commissionId Int
   productId Int
   product Product @relation(fields: [productId], references: [id])
+  commission Commission @relation(fields: [commissionId], references: [id])
   quantity Int
-
-  Order Order[]
 }
 
 model Token {
