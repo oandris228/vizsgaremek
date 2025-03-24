@@ -8,7 +8,7 @@ export class CommissionsService {
 
   constructor(private readonly db: PrismaService) {}
 
-  create(createOrderDto: CreateCommissionDto) {
+  create(createCommissionDto: CreateCommissionDto) {
     return this.db.commission.create({
       data: createCommissionDto
     });

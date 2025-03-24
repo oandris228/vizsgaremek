@@ -10,25 +10,25 @@ export class ItemsService {
 
   async create(createItemDto: CreateItemDto) {
 
-    const activeOrders = await this.db.order.findMany({ where: { orderState: "Active" } })
+    const activeCommissions = await this.db.commission.findMany({ where: { commissionState: "Active" } })
 
-    if (activeOrders.length == 0) {
+    if (activeCommissions.length == 0) {
       //create order and put item inside
       try {
-        const newOrder = await this.db.order.create({
+        const newCommission = await this.db.commission.create({
           data: {
-            shipping_address: createItemDto.order_shipping_address,
-            user_id: createItemDto.order_user_id,
-            orderState: "Active",
-            extratext: createItemDto.order_extratext
+            shipping_address: createItemDto.commission_shipping_address,
+            user_id: createItemDto.commission_user_id,
+            commissionState: "Active",
+            extratext: createItemDto.commission_extratext
           }
         });
 
-        console.log("New order created:", newOrder);
+        console.log("New order created:", newCommission);
 
         return await this.db.item.create({
           data: {
-            orderId: newOrder.id,
+            commissionId: newCommission.id,
             productId: createItemDto.productId,
             quantity: createItemDto.quantity
           }
@@ -41,7 +41,7 @@ export class ItemsService {
     } else {
       return this.db.item.create({
         data: {
-          orderId: activeOrders[0].id,
+          commissionId: activeCommissions[0].id,
           productId: createItemDto.productId,
           quantity: createItemDto.quantity
         }
@@ -51,12 +51,6 @@ export class ItemsService {
 
   findAll() {
     return this.db.item.findMany();
-  }
-
-  findByOrder(orderId: number) {
-    return this.db.item.findMany({
-      where: { orderId }
-    });
   }
 
   findOne(id: number) {

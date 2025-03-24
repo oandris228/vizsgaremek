@@ -9,7 +9,6 @@ export function Products() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState<ProductFormData>({
-        id: 0,
         name: "undefined",
         price: 0,
         category: "Tea",
@@ -147,9 +146,6 @@ export function Products() {
 
         <h1>Felvétel</h1>
         <form>
-            <label>ID:</label>
-            <input type="number" name="id" onChange={(e) => { handleChange(e) }} /><br />
-
             <label>Name:</label>
             <input type="text" name="name" onChange={(e) => { handleChange(e) }} /><br />
 

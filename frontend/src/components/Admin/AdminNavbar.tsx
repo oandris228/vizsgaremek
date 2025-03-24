@@ -22,10 +22,8 @@ export default function AdminNavBar() {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                console.log(data.role == "Admin");
                 setState(data.role == "Admin")
             } else {
-                console.log(false)
                 setState(false)
             }
         }

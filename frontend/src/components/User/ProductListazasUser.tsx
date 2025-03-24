@@ -50,10 +50,8 @@ export default function Listazas() {
             navigate('/login')
         } else {
             const formData: OrderFormData = {
-                orderId: 0,
                 productId: id,
                 quantity: 1,
-                order_id: Date.now(),
                 order_shipping_address: user.shipping_address,
                 order_user_id: user.id,
                 order_extratext: "",

@@ -35,7 +35,6 @@ model Product {
   tea_id Int? @unique
   other_id Int? @unique
 
-  Commission Commission[]
   Tea Tea[]
   Other Other[]
 
@@ -85,7 +84,6 @@ model Commission {
   extratext String?
 
   User User[]
-  Product Product[]
   items Item[]
 }
 

@@ -16,19 +16,29 @@ export type BaseProduct = {
 };
 
 export type Tea = {
-    id?: number;
     type?: string;
     flavor?: string;
 };
 
 export type Other = {
-    id?: number;
     description?: string;
     img?: string;
 };
 
+export type Order = {
+    user_id: number;
+    shipping_address: string;
+    extratext: string;
+    items: Item[]
+}
+
+export type Item = {
+    orderId: number;
+    productId: number;
+    quantity: number;
+}
+
 export type ProductFormData = {
-    id: number;
     name: string;
     price: number;
     category: "Tea" | "Other";
@@ -45,7 +55,6 @@ export type OrderFormData = {
     quantity?: number;
     //ITEM
 
-    order_id: number;
     order_shipping_address: string;
     order_user_id: number;
     order_orderState: "Active" | "Processed" | "Completed";

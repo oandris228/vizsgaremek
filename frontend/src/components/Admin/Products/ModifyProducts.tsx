@@ -6,7 +6,6 @@ export default function ModifyProducts() {
 
   const { id } = useParams();
   const [formData, setFormData] = useState<ProductFormData>({
-    id: 0,
     name: "",
     price: 0,
     category: "Tea",
@@ -29,7 +28,6 @@ export default function ModifyProducts() {
         const data = await response.json();
 
         const formattedData: ProductFormData = {
-          id: data.id,
           name: data.name,
           price: data.price,
           category: data.category,
@@ -50,7 +48,6 @@ export default function ModifyProducts() {
     };
 
     if (id == undefined) {
-      console.log("fuc u");
       window.alert("fuc u");
     } else {
       fetchProduct(+id);

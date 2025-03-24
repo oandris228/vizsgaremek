@@ -15,6 +15,7 @@ import { Regisztracio } from './components/Register';
 import Modify from './components/Admin/Products/ModifyProducts';
 import ModifyProducts from './components/Admin/Products/ModifyProducts';
 import ModifyUsers from './components/Admin/Users/ModifyUsers';
+import { Cart } from './components/Admin/Users/Cart';
 export const AuthContext = createContext('no token');
 
 function App() {
@@ -54,7 +55,7 @@ function App() {
             } />
             <Route path="/cart" element={
               <PrivateRoute element={
-                <h1>Cart</h1>
+                <Cart/>
               } />
             } />
 
