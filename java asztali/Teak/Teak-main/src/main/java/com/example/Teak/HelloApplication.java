@@ -14,6 +14,8 @@ public class HelloApplication extends Application {
     Scene mainMenu;
     TeaTable tt;
     OrderTable ot;
+    ProductTable pt;
+    UserTable ut;
 
 
     @Override
@@ -25,6 +27,9 @@ public class HelloApplication extends Application {
             connection = DriverManager.getConnection(url, user, password);
             Tea.setConnection(connection);
             Order.setConnection(connection);
+            Product.setConnection(connection);
+            User.setConnection(connection);
+
 
 
             tt = new TeaTable();
@@ -32,6 +37,14 @@ public class HelloApplication extends Application {
 
             ot = new OrderTable();
             ot.orders.addAll(Order.getAll());
+
+            pt = new ProductTable();
+            pt.products.addAll(Product.getAll());
+
+            ut = new UserTable();
+            ut.users.addAll(User.getAll());
+
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -51,7 +64,21 @@ public class HelloApplication extends Application {
             }));
         });
 
-        HBox menuOptions = new HBox(TeaTableButton, OrderTableButton);
+        Button ProductTableButton = new Button("Product");
+        ProductTableButton.setOnAction(e ->{
+            stage.setScene(ot.createScene(be -> {
+                stage.setScene(mainMenu);
+            }));
+        });
+
+        Button UserTableButton = new Button("User");
+        UserTableButton.setOnAction(e ->{
+            stage.setScene(ot.createScene(be -> {
+                stage.setScene(mainMenu);
+            }));
+        });
+
+        HBox menuOptions = new HBox(TeaTableButton, OrderTableButton, ProductTableButton, UserTableButton);
         mainMenu = new Scene(menuOptions, 600, 400);
 
         stage.setScene(mainMenu);
