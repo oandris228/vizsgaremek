@@ -18,6 +18,7 @@ export type BaseProduct = {
 export type Tea = {
     type?: string;
     flavor?: string;
+    color?: string;
 };
 
 export type Other = {
@@ -25,7 +26,7 @@ export type Other = {
     img?: string;
 };
 
-export type Order = {
+export type Commission = {
     user_id: number;
     shipping_address: string;
     extratext: string;
@@ -33,7 +34,7 @@ export type Order = {
 }
 
 export type Item = {
-    orderId: number;
+    commissionId: number;
     productId: number;
     quantity: number;
 }
@@ -44,19 +45,20 @@ export type ProductFormData = {
     category: "Tea" | "Other";
     tea_type?: string;
     tea_flavor?: string;
+    tea_color?: string;
     others_description?: string;
     others_img?: string;
 }
 
-export type OrderFormData = {
+export type CommissionFormData = {
     //ITEM
     orderId?: number;
     productId?: number;
     quantity?: number;
     //ITEM
 
-    order_shipping_address: string;
-    order_user_id: number;
-    order_orderState: "Active" | "Processed" | "Completed";
-    order_extratext: string;
+    commission_shipping_address: string;
+    commission_user_id: number;
+    commission_commissionState: "Active" | "Processed" | "Completed";
+    commission_extratext: string;
 }

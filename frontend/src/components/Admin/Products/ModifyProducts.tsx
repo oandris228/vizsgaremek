@@ -11,6 +11,7 @@ export default function ModifyProducts() {
     category: "Tea",
     tea_flavor: "",
     tea_type: "",
+    tea_color: "",
     others_description: "",
     others_img: ""
   });
@@ -33,6 +34,7 @@ export default function ModifyProducts() {
           category: data.category,
           tea_type: data.Tea.length > 0 ? data.Tea[0].type : undefined,
           tea_flavor: data.Tea.length > 0 ? data.Tea[0].flavor : undefined,
+          tea_color: data.Tea.length > 0 ? data.Tea[0].color : undefined,
           others_description: data.Other.length > 0 ? data.Other[0].description : undefined,
           others_img: data.Other.length > 0 ? data.Other[0].img : undefined,
         };
@@ -102,6 +104,9 @@ export default function ModifyProducts() {
 
             <label>Tea Flavor:</label>
             <input type="text" name="tea_flavor" onChange={(e) => { handleChange(e) }} value={formData.tea_flavor}/><br />
+
+            <label>Tea Color:</label>
+            <input type="text" name="tea_color" onChange={(e) => { handleChange(e) }} value={formData.tea_color}/><br />
 
             <label>Other Description:</label>
             <input type="text" name="others_description" onChange={(e) => { handleChange(e) }} value={formData.others_description}/><br />

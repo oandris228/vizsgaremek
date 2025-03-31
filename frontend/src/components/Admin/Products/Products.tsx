@@ -103,6 +103,7 @@ export function Products() {
                         <th>Category</th>
                         <th>Tea Type</th>
                         <th>Tea Flavor</th>
+                        <th>Tea Color</th>
                         <th>Other Description</th>
                         <th>Other Image</th>
                     </tr>
@@ -116,6 +117,7 @@ export function Products() {
                             <td>{product.category}</td>
                             <td>{product.Tea?.[0]?.type || "N/A"}</td>
                             <td>{product.Tea?.[0]?.flavor || "N/A"}</td>
+                            <td>{product.Tea?.[0]?.color || "N/A"}</td>
                             <td>N/A</td>
                             <td>N/A</td>
                             <td><button className="btn btn-danger" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>

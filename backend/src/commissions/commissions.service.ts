@@ -15,17 +15,20 @@ export class CommissionsService {
   }
 
   findAll() {
-    return this.db.commission.findMany();
+    return this.db.commission.findMany( {
+      include: {items: true}
+    });
   }
 
   findOne(id: number) {
     return this.db.commission.findUnique({
-      where: {id}
+      where: {id},
+      include: {items: true}
     });
   }
 
   async findActive() {
-    const activeCommissions = await this.db.commission.findMany({ where: { commissionState: "Active" } });
+    const activeCommissions = await this.db.commission.findMany({ where: { commissionState: "Active" }, include: {items: true} });
     return activeCommissions[0];
   }
 
