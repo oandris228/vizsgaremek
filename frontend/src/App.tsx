@@ -22,9 +22,9 @@ function App() {
   const { token, setToken } = useToken();
   return (
     <AuthContext.Provider value={token}>
-      <NavBar />
       <div className="wrapper">
         <BrowserRouter>
+          <NavBar />
           <Routes>
             {/* User Authentication/Creation */}
             <Route path="/login" element={
@@ -55,7 +55,7 @@ function App() {
             } />
             <Route path="/cart" element={
               <PrivateRoute element={
-                <Cart/>
+                <Cart />
               } />
             } />
 
