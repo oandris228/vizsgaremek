@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BaseProduct, OrderFormData, User } from "../../types";
+import { BaseProduct, CommissionFormData, User } from "../../types";
 import { AuthContext } from "../../App";
 import { GetProfile } from "../../functions";
 
@@ -49,7 +49,7 @@ export default function Listazas() {
         if (!user) {
             navigate('/login')
         } else {
-            const formData: OrderFormData = {
+            const formData: CommissionFormData = {
                 productId: id,
                 quantity: 1,
                 order_shipping_address: user.shipping_address,

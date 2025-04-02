@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../App';
-import LogoutButton from '../auth/LogoutButton';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { LogoutUser } from '../functions';
 
 export default function NavBar() {
     const token = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const [state, setState] = useState(false);
 
-    const LoggedIn = token != undefined;
+    const [LoggedIn, setLoggedIn] = useState(token != undefined);
     
     useEffect(()=> {
         async function IsUserAdmin() {
@@ -31,39 +33,49 @@ export default function NavBar() {
         IsUserAdmin();
     }, [token])
 
-    return <>
-        <div className="container">
-            <nav className="">
-                <a className="" href="#">Navbar</a>
+    function handleLogout() {
+        LogoutUser(token);
+        setLoggedIn(false);
+    }
 
-                <div className="" id="">
-                    <ul className="">
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/">Főoldal</a>
+    return <>
+        <div className="container mx-auto p-4">
+            <nav className="flex items-center justify-between bg-gray-800 p-4 text-white rounded-lg">
+                <NavLink className="text-xl font-bold" to="/">Navbar</NavLink>
+                
+                <ul className="flex space-x-4">
+                    <li>
+                        <NavLink className="nav-link" to="/">Főoldal</NavLink>
+                    </li>
+                    <li>
+                        <NavLink className="nav-link" to="/shop">Termékek</NavLink>
+                    </li>
+                    <li>
+                        <NavLink className="nav-link" to="/custom">Make Your Own</NavLink>
+                    </li>
+                    <li>
+                        <NavLink className="nav-link" to="/profile">Profil</NavLink>
+                    </li>
+                    {LoggedIn ? (
+                        <li>
+                             <button className="nav-link" onClick={()=> {handleLogout(); navigate('/login')}}>Logout</button>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/shop">Termékek</a>
+                    ) : (
+                        <>
+                            <li>
+                                <NavLink className="nav-link" to="/login">Bejelentkezés</NavLink>
+                            </li>
+                            <li>
+                                <NavLink className="nav-link" to="/register">Regisztráció</NavLink>
+                            </li>
+                        </>
+                    )}
+                    {state && (
+                        <li>
+                            <NavLink className="nav-link" to="/admin">Admin</NavLink>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/custom">Make Your Own</a> {/*lmao */}
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/profile">Profil</a>
-                        </li>
-                        <li className="nav-item" hidden={!LoggedIn}>
-                            <LogoutButton token={token}/>
-                        </li>
-                        <li className="nav-item" hidden={LoggedIn}>
-                            <a className="nav-link" href="/login">Bejelentkezés</a>
-                        </li>
-                        <li className="nav-item" hidden={LoggedIn}>
-                            <a className="nav-link" href="/register">Regisztráció</a>
-                        </li>
-                        <li className="nav-item" hidden={!state}>
-                            <a className="nav-link" href="/admin">Admin</a>
-                        </li>
-                    </ul>
-                </div>
+                    )}
+                </ul>
             </nav>
         </div>
     </>
