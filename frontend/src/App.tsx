@@ -24,20 +24,20 @@ function App() {
     <AuthContext.Provider value={token}>
       <div className="wrapper">
         <BrowserRouter>
-          <NavBar />
           <Routes>
             {/* User Authentication/Creation */}
             <Route path="/login" element={
-              <Login setToken={setToken} />
+              <><NavBar /><Login setToken={setToken} /></>
             } />
             <Route path="/profile" element={
               <PrivateRoute element={
-                <Profile />
+                <><NavBar /><Profile /></>
               } />
             } />
             <Route path="/register" element={
               <>
                 <h1>Regisztráció</h1>
+                <NavBar />
                 <Regisztracio />
               </>
             } />
@@ -45,17 +45,17 @@ function App() {
             {/* User Accessible endpoints */}
 
             <Route path="/" element={
-              <h1>Home</h1>
+              <><NavBar /><h1>Home</h1></>
             } />
             <Route path="/shop" element={
-              <Listazas />
+              <><NavBar /><Listazas /></>
             } />
             <Route path="/custom" element={ /* lol, lmao even (never implementing this) */
-              <h1>Saját blend készítő</h1>
+              <><NavBar /><h1>Saját blend készítő</h1></>
             } />
             <Route path="/cart" element={
               <PrivateRoute element={
-                <Cart />
+                <><NavBar /><Cart /></>
               } />
             } />
 
@@ -65,6 +65,7 @@ function App() {
             <Route path="/admin" element={
               <PrivateRoute element={
                 <>
+                  <NavBar />
                   <AdminNavBar />
                   <AdminFelulet />
                 </>
@@ -76,6 +77,7 @@ function App() {
             <Route path="/products" element={
               <PrivateRoute element={
                 <>
+                  <NavBar />
                   <AdminNavBar />
                   <Products />
                 </>
@@ -83,6 +85,7 @@ function App() {
             } />
             <Route path="/products/edit/:id" element={
               <>
+                <NavBar />
                 <AdminNavBar />
                 <ModifyProducts />
               </>
@@ -93,6 +96,7 @@ function App() {
             <Route path="/users" element={
               <PrivateRoute element={
                 <>
+                  <NavBar />
                   <AdminNavBar />
                   <Users />
                 </>
@@ -100,6 +104,7 @@ function App() {
             } />
             <Route path="/users/edit/:id" element={
               <>
+                <NavBar />
                 <AdminNavBar />
                 <ModifyUsers />
               </>
@@ -109,12 +114,14 @@ function App() {
 
             <Route path="/orders" element={
               <>
+                <NavBar />
                 <AdminNavBar />
                 <h1>Rendelések kezelése TODO</h1>
               </>
             } />
             <Route path="/ordwers/edit/:id" element={
               <>
+                <NavBar />
                 <AdminNavBar />
                 <h1>Rendelések módosítása TODO</h1>
               </>
