@@ -18,6 +18,13 @@ export class CommissionsService {
     return this.db.commission.findMany();
   }
 
+  findAllActive() {
+    return this.db.commission.findMany( {
+      where: {commissionState: "Active"},
+      include: {items: true}
+    });
+  }
+
   findOne(id: number) {
     return this.db.commission.findUnique({
       where: {id}

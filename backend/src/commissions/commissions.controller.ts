@@ -33,6 +33,17 @@ export class CommissionsController {
     return this.commissionsService.findAll();
   }
 
+  /**
+   * Returns all orders.
+   */
+  @Get('active')
+  @ApiResponse({status: 200, description: 'The data was successfully returned'})
+  @ApiResponse({status: 500, description: 'An error was encountered'})
+  findAllActive() {
+    return this.commissionsService.findAllActive();
+  }
+
+
 
   /**
    * Returns a specific order.
