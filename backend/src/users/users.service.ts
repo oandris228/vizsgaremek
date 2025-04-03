@@ -19,28 +19,35 @@ export class UsersService {
   }
 
   findAll() {
-    return this.db.user.findMany();
+    return this.db.user.findMany({
+      include: {commissions: true}
+    });
   }
 
   findOneByName(username: string) {
     return this.db.user.findUnique({
-      where: {username: username}
+      where: {username: username},
+      include: {commissions: true}
     });
   }
 
   findOne(id: number) {
     return this.db.user.findUnique({
-      where: {id}
+      where: {id},
+      include: {commissions: true}
     });
   }
 
   async findUserByToken(token: string) {
     const tokenData = await this.db.token.findUnique({
-      where: { token },
-      include: { user: true }
+      where: { token }
     })
     if (!tokenData) return null;
-    const user = tokenData.user;
+    const id = tokenData.userId;
+    const user = await this.db.user.findUnique({
+      where: {id},
+      include: {commissions: true}
+    })
     delete user.password;
     
     return user;

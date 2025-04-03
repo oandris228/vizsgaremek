@@ -84,7 +84,7 @@ model Commission {
   commissionState CommissionState
   extratext String?
 
-  User User[]
+  User User @relation(fields: [user_id], references: [id], onDelete: Cascade)
   items Item[]
 }
 
