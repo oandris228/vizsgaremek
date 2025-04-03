@@ -4,6 +4,7 @@ export type User = {
     email: string;
     shipping_address: string;
     role: string;
+    commissions: Commission[]
 };
 
 export type BaseProduct = {

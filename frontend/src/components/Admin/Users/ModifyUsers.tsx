@@ -11,7 +11,8 @@ export default function ModifyUsers() {
     username: ' ',
     email: ' ',
     shipping_address: ' ',
-    role: 'User'
+    role: 'User',
+    commissions: []
   });
   const [product, setProduct] = useState<User>();
   const [loading, setLoading] = useState(true);
@@ -33,6 +34,7 @@ export default function ModifyUsers() {
           email: data.email,
           shipping_address: data.shipping_address,
           role: data.role,
+          commissions: data.commissions
         };
         console.log(formattedData)
 
