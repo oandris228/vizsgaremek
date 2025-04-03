@@ -163,6 +163,9 @@ export function Products() {
             <label>Tea Flavor:</label>
             <input type="text" name="tea_flavor" onChange={(e) => { handleChange(e) }} /><br />
 
+            <label>Tea Color:</label>
+            <input type="text" name="tea_color" onChange={(e) => { handleChange(e) }} /><br />
+
             <label>Other Description:</label>
             <input type="text" name="others_description" onChange={(e) => { handleChange(e) }} /><br />
 

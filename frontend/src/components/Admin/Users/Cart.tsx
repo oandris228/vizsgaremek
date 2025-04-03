@@ -11,13 +11,14 @@ export function Cart() {
 
     const fetchCommission = async () => {
         try {
-            const response = await fetch("http://localhost:3000/orders/active");
+            const response = await fetch("http://localhost:3000/commissions/active");
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data: Commission = await response.json();
+            const data: Commission[] = await response.json();
 
-            setCommission(data);
+            setCommission(data[0]);
+            console.log(data[0])
         } catch (err: any) {
             setError(err.message);
         } finally {
@@ -25,22 +26,19 @@ export function Cart() {
         }
     };
 
-    useEffect(()=> {
+    useEffect(() => {
         fetchCommission()
-    }, [commission])
+    }, [])
 
 
     return <>
         <h1>Cart details</h1>
         <h3>{commission?.shipping_address}</h3>
         <h3>{commission?.extratext}</h3>
-    </>
-}
-
-/**
- * <ul>
-            {order?.items.map((item) => (
-                <li>Termék id: {item.productId} Mennyiség: {item.quantity}</li>
+        <ul>
+            {commission?.items?.map((item) => (
+                <li>Termék id: {item.productId} Mennyiség: {item.quantity} VESSZŐ </li>
             ))}
         </ul>
- */
+    </>
+}

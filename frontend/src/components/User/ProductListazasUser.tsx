@@ -52,10 +52,10 @@ export default function Listazas() {
             const formData: CommissionFormData = {
                 productId: id,
                 quantity: 1,
-                order_shipping_address: user.shipping_address,
-                order_user_id: user.id,
-                order_extratext: "",
-                order_orderState: "Active"
+                commission_shipping_address: user.shipping_address,
+                commission_user_id: user.id,
+                commission_extratext: "",
+                commission_commissionState: "Active"
             }
             try {
                 await fetch('http://localhost:3000/items', {
@@ -83,6 +83,7 @@ export default function Listazas() {
                         <th>Category</th>
                         <th>Tea Type</th>
                         <th>Tea Flavor</th>
+                        <th>Tea Color</th>
                         <th>Other Description</th>
                         <th>Other Image</th>
                     </tr>
@@ -96,6 +97,7 @@ export default function Listazas() {
                             <td>{product.category}</td>
                             <td>{product.Tea?.[0]?.type || "N/A"}</td>
                             <td>{product.Tea?.[0]?.flavor || "N/A"}</td>
+                            <td>{product.Tea?.[0].color || "N/A"}</td>
                             <td>N/A</td>
                             <td>N/A</td>
                             <td><button onClick={() => AddToCart(product.id)}>Add to Cart</button></td>
