@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BaseProduct, CommissionFormData, User } from "../../types";
 import { AuthContext } from "../../App";
 import { GetProfile } from "../../functions";
+import { Card } from "../Card";
 
 export default function Listazas() {
     const [products, setProducts] = useState<BaseProduct[]>([]);
@@ -39,7 +40,7 @@ export default function Listazas() {
         };
 
         fetchProducts();
-        GetProfile(token).then((e)=> setUser(e))
+        GetProfile(token).then((e) => setUser(e))
     }, [token]);
 
     if (loading) return <p>Loading...</p>;
@@ -73,8 +74,10 @@ export default function Listazas() {
 
     return (
         <div className="container mt-4">
-            <h1>Listázás</h1>
-            <table className="table table-striped table-bordered">
+            {teas.map((product) => (
+                <Card product={product}/>
+            ))}
+            {/*<table className="table table-striped table-bordered">
                 <thead className="thead-dark">
                     <tr>
                         <th>ID</th>
@@ -121,7 +124,7 @@ export default function Listazas() {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </table>*/}
         </div>
     );
 }

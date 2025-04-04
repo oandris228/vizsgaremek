@@ -15,13 +15,14 @@ import Modify from './components/Admin/Products/ModifyProducts';
 import ModifyProducts from './components/Admin/Products/ModifyProducts';
 import ModifyUsers from './components/Admin/Users/ModifyUsers';
 import { Cart } from './components/Admin/Users/Cart';
+import { Home } from './components/Home';
 export const AuthContext = createContext('no token');
 
 function App() {
   const { token, setToken } = useToken();
   return (
     <AuthContext.Provider value={token}>
-      <div className="min-h-screen flex flex-col bg-mainbackground">
+      <div className="min-h-screen min-w-screen flex flex-col bg-mainbackground">
         <BrowserRouter>
           <Routes>
             {/* User Authentication/Creation */}
@@ -44,17 +45,35 @@ function App() {
             {/* User Accessible endpoints */}
 
             <Route path="/" element={
-              <><NavBar /><h1>Home</h1></>
+              <>
+                <NavBar />
+                <div className='default-wrapper'>
+                  <Home />
+                  <Listazas />
+                </div>
+              </>
             } />
             <Route path="/shop" element={
-              <><NavBar /><Listazas /></>
+              <><NavBar />
+                <div className='default-wrapper'>
+                  <Listazas />
+                </div>
+              </>
             } />
             <Route path="/custom" element={ /* lol, lmao even (never implementing this) */
-              <><NavBar /><h1>Saját blend készítő</h1></>
+              <><NavBar />
+                <div className='default-wrapper'>
+                  <h1>Saját blend készítő</h1>
+                </div>
+              </>
             } />
             <Route path="/cart" element={
               <PrivateRoute element={
-                <><NavBar /><Cart /></>
+                <><NavBar />
+                  <div className='default-wrapper'>
+                    <Cart />
+                  </div>
+                </>
               } />
             } />
 

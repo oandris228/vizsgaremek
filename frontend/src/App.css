@@ -3,4 +3,25 @@
 @theme {
     --color-mainbackground: #99582a;
     --color-navbar: #fbba72;
+    --color-cardbg: #ffd29d;
+}
+
+.default-wrapper {
+    @apply p-4
+}
+
+h1 {
+    @apply text-7xl
+}
+
+.card {
+    @apply bg-cardbg max-w-fit p-3 rounded-2xl
+}
+
+.card h3 {
+    @apply text-4xl
+}
+
+.card button {
+    @apply bg-blue-400 rounded-2xl p-2
 }
