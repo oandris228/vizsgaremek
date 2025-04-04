@@ -9,7 +9,6 @@ import Listazas from './components/User/ProductListazasUser';
 import { Products } from './components/Admin/Products/Products';
 import NavBar from './components/Navbar';
 import AdminFelulet from './components/Admin/AdminFelulet';
-import AdminNavBar from './components/Admin/AdminNavbar';
 import Users from './components/Admin/Users/Users';
 import { Regisztracio } from './components/Register';
 import Modify from './components/Admin/Products/ModifyProducts';
@@ -22,7 +21,7 @@ function App() {
   const { token, setToken } = useToken();
   return (
     <AuthContext.Provider value={token}>
-      <div className="wrapper">
+      <div className="min-h-screen flex flex-col bg-mainbackground">
         <BrowserRouter>
           <Routes>
             {/* User Authentication/Creation */}
@@ -66,7 +65,6 @@ function App() {
               <PrivateRoute element={
                 <>
                   <NavBar />
-                  <AdminNavBar />
                   <AdminFelulet />
                 </>
               } />
@@ -77,16 +75,12 @@ function App() {
             <Route path="/products" element={
               <PrivateRoute element={
                 <>
-                  <NavBar />
-                  <AdminNavBar />
                   <Products />
                 </>
               } />
             } />
             <Route path="/products/edit/:id" element={
               <>
-                <NavBar />
-                <AdminNavBar />
                 <ModifyProducts />
               </>
             } />
@@ -96,16 +90,12 @@ function App() {
             <Route path="/users" element={
               <PrivateRoute element={
                 <>
-                  <NavBar />
-                  <AdminNavBar />
                   <Users />
                 </>
               } />
             } />
             <Route path="/users/edit/:id" element={
               <>
-                <NavBar />
-                <AdminNavBar />
                 <ModifyUsers />
               </>
             } />
@@ -114,15 +104,11 @@ function App() {
 
             <Route path="/orders" element={
               <>
-                <NavBar />
-                <AdminNavBar />
                 <h1>Rendelések kezelése TODO</h1>
               </>
             } />
             <Route path="/ordwers/edit/:id" element={
               <>
-                <NavBar />
-                <AdminNavBar />
                 <h1>Rendelések módosítása TODO</h1>
               </>
             } />
