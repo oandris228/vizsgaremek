@@ -75,7 +75,9 @@ export default function Listazas() {
     return (
         <div className="container mt-4">
             {teas.map((product) => (
-                <Card product={product}/>
+                <div key={product.id}>
+                    <Card product={product}/>
+                </div>
             ))}
             {/*<table className="table table-striped table-bordered">
                 <thead className="thead-dark">
