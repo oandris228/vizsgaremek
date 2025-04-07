@@ -95,6 +95,7 @@ model Item {
   product Product @relation(fields: [productId], references: [id])
   commission Commission @relation(fields: [commissionId], references: [id])
   quantity Int
+  productName String
 }
 
 model Token {

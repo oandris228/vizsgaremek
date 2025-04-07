@@ -30,7 +30,8 @@ export class ItemsService {
           data: {
             commissionId: newCommission.id,
             productId: createItemDto.productId,
-            quantity: createItemDto.quantity
+            quantity: createItemDto.quantity,
+            productName: createItemDto.productName
           }
         });
       } catch (error) {
@@ -38,6 +39,24 @@ export class ItemsService {
         throw new HttpException("Failed to create order", 500);
       }
 
+    } else {
+      const activeCommission = activeCommissions[0]
+      const activeItem = await this.db.item.findFirst({where: {productId: createItemDto.productId, commissionId: activeCommission.id}})
+      if (activeItem) {
+        return this.db.item.update({
+          where: {id: activeItem.id},
+          data: {quantity: activeItem.quantity+1}
+        })
+      } else {
+        return this.db.item.create({
+          data: {
+            commissionId: activeCommission.id,
+            productId: createItemDto.productId,
+            quantity: createItemDto.quantity,
+            productName: createItemDto.productName
+          }
+        });
+      }
     } else {
       return this.db.item.create({
         data: {
