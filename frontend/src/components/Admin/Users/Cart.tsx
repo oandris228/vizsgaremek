@@ -35,8 +35,28 @@ export function Cart() {
         throw new Error("Function not implemented.");
     }
 
-    function RemoveCommission(): void {
-        throw new Error("Function not implemented.");
+    async function RemoveCommission(e: any) {
+        e.preventDefault();
+        if (commission) {
+            try {
+                const response = await fetch(`http://localhost:3000/commissions/${commission.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                navigate('/');
+            } catch (err: any) {
+                setError(err.message);
+            }
+        } else {
+            throw new Error("no commission to submit")
+        }
     }
 
     async function SumbmitCommission(e: any) {
@@ -74,6 +94,6 @@ export function Cart() {
             ))}
         </ul>
         <button onClick={(e) => SumbmitCommission(e)}>Rendelés feladása</button><br />
-        <button onClick={() => RemoveCommission()}>Rendelés törlése</button>
+        <button onClick={(e) => RemoveCommission(e)}>Rendelés törlése (ez a döntés visszafordíthatatlan)</button>
     </>
 }
