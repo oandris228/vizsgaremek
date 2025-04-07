@@ -28,6 +28,7 @@ export type Other = {
 };
 
 export type Commission = {
+    id: number;
     user_id: number;
     shipping_address: string;
     extratext: string;
@@ -35,6 +36,7 @@ export type Commission = {
 }
 
 export type Item = {
+    id: number;
     commissionId: number;
     productId: number;
     quantity: number;
