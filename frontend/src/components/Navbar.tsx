@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../App';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LogoutUser } from '../functions';
+import { GetProfile, LogoutUser } from '../functions';
+import { User } from '../types';
 
 export default function NavBar() {
     const token = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [state, setState] = useState(false);
+    const [user, setUser] = useState<User>();
 
     const [LoggedIn, setLoggedIn] = useState(token != undefined);
     
@@ -31,6 +33,7 @@ export default function NavBar() {
             }
         }
         IsUserAdmin();
+        GetProfile(token).then((e) => setUser(e))
     }, [token])
 
     function handleLogout() {
@@ -53,7 +56,7 @@ export default function NavBar() {
                         <NavLink className="nav-link" to="/profile">Profil</NavLink>
                     </li>
                     <li>
-                        <NavLink className="nav-link" to="/cart">Kosár</NavLink>
+                        <NavLink className="nav-link" to={`/cart/${user?.id}`}>Kosár</NavLink>
                     </li>
                     {state && (
                         <li>

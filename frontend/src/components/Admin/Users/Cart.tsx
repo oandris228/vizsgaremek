@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { Commission } from "../../../types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function Cart() {
+    const { user_id } = useParams();
     const [commission, setCommission] = useState<Commission>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -11,7 +12,7 @@ export function Cart() {
 
     const fetchCommission = async () => {
         try {
-            const response = await fetch("http://localhost:3000/commissions/active");
+            const response = await fetch(`http://localhost:3000/commissions/active/${user_id}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -102,7 +103,7 @@ export function Cart() {
         <h3>{commission?.extratext}</h3>
         <ul>
             {commission?.items?.map((item) => (
-                <li key={item.commissionId}><p>Termék id: {item.productId} Mennyiség: {item.quantity} VESSZŐ </p> <button onClick={() => RemoveItem(item.id)}>Törlés</button></li>
+                <li key={item.commissionId}><p>#{item.productId} {item.productName} Mennyiség: {item.quantity} VESSZŐ </p> <button onClick={() => RemoveItem(item.id)}>Törlés</button></li>
             ))}
         </ul>
         <button onClick={(e) => SumbmitCommission(e)}>Rendelés feladása</button><br />

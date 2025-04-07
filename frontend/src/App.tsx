@@ -67,7 +67,7 @@ function App() {
                 </div>
               </>
             } />
-            <Route path="/cart" element={
+            <Route path="/cart/:user_id" element={
               <PrivateRoute element={
                 <><NavBar />
                   <div className='default-wrapper'>

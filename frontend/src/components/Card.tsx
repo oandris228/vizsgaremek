@@ -18,13 +18,14 @@ export const Card:  React.FC<ProductProps> = ({ product }) => {
         GetProfile(token).then((e) => setUser(e))
     })
 
-    async function AddToCart(id: number): Promise<void> {
+    async function AddToCart(item_product: BaseProduct): Promise<void> {
         if (!user) {
             navigate('/login')
         } else {
             const formData: CommissionFormData = {
-                productId: id,
+                productId: item_product.id,
                 quantity: 1,
+                productName: item_product.name,
                 commission_shipping_address: user.shipping_address,
                 commission_user_id: user.id,
                 commission_extratext: "",
@@ -36,7 +37,7 @@ export const Card:  React.FC<ProductProps> = ({ product }) => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData),
                 });
-                navigate('/cart');
+                navigate(`/cart/${user.id}`);
             } catch (error: any) {
                 console.error("Error submitting form:", error);
             }
@@ -55,7 +56,7 @@ export const Card:  React.FC<ProductProps> = ({ product }) => {
                 <p>{product.Tea?.[0].type}</p>
                 <p>{product.Tea?.[0].flavor}</p>
             </div>
-            <button onClick={() => AddToCart(product.id)}>Add to Cart</button>
+            <button onClick={() => AddToCart(product)}>Add to Cart</button>
         </div>
     } else {
         return <div className="card">
@@ -68,7 +69,7 @@ export const Card:  React.FC<ProductProps> = ({ product }) => {
                 <p>{product.Other?.[0].description}</p>
                 <p>{product.Other?.[0].img}</p>
             </div>
-            <button onClick={() => AddToCart(product.id)}>Add to Cart</button>
+            <button onClick={() => AddToCart(product)}>Add to Cart</button>
         </div>
     }
 }

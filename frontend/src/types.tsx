@@ -32,7 +32,8 @@ export type Commission = {
     user_id: number;
     shipping_address: string;
     extratext: string;
-    items: Item[]
+    items: Item[];
+    commissionState: string;
 }
 
 export type Item = {
@@ -40,6 +41,7 @@ export type Item = {
     commissionId: number;
     productId: number;
     quantity: number;
+    productName: string;
 }
 
 export type ProductFormData = {
@@ -58,6 +60,7 @@ export type CommissionFormData = {
     orderId?: number;
     productId?: number;
     quantity?: number;
+    productName?: string;
     //ITEM
 
     commission_shipping_address: string;
