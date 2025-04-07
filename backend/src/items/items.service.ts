@@ -30,7 +30,8 @@ export class ItemsService {
           data: {
             commissionId: newCommission.id,
             productId: createItemDto.productId,
-            quantity: createItemDto.quantity
+            quantity: createItemDto.quantity,
+            productName: createItemDto.productName
           }
         });
       } catch (error) {
@@ -51,7 +52,8 @@ export class ItemsService {
           data: {
             commissionId: activeCommission.id,
             productId: createItemDto.productId,
-            quantity: createItemDto.quantity
+            quantity: createItemDto.quantity,
+            productName: createItemDto.productName
           }
         });
       }

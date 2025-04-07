@@ -34,13 +34,13 @@ export class CommissionsController {
   }
 
   /**
-   * Returns all orders.
+   * Returns all active orders for a single user.
    */
-  @Get('active')
+  @Get('active/:user_id')
   @ApiResponse({status: 200, description: 'The data was successfully returned'})
   @ApiResponse({status: 500, description: 'An error was encountered'})
-  findAllActive() {
-    return this.commissionsService.findAllActive();
+  findAllActive(@Param('user_id') id: string) {
+    return this.commissionsService.findAllActive(+id);
   }
 
 

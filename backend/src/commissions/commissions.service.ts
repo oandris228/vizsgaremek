@@ -20,9 +20,9 @@ export class CommissionsService {
     });
   }
 
-  findAllActive() {
+  findAllActive(id: number) {
     return this.db.commission.findMany( {
-      where: {commissionState: "Active"},
+      where: {commissionState: "Active", user_id: id},
       include: {items: true}
     });
   }
