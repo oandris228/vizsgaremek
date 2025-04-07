@@ -57,14 +57,6 @@ export class ItemsService {
           }
         });
       }
-    } else {
-      return this.db.item.create({
-        data: {
-          commissionId: activeCommissions[0].id,
-          productId: createItemDto.productId,
-          quantity: createItemDto.quantity
-        }
-      })
     }
   }
 
