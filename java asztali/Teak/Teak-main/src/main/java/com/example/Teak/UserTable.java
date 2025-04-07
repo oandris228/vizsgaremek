@@ -24,28 +24,28 @@ public class UserTable {
         TableColumn<User, String> usernameColumn = new TableColumn<>("username");
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<User, Integer> emailColumn = new TableColumn<>("email");
+        TableColumn<User, String> emailColumn = new TableColumn<>("email");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        TableColumn<User, Enum> passwordColumn = new TableColumn<>("password");
+        TableColumn<User, String> passwordColumn = new TableColumn<>("password");
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
 
-        TableColumn<User, Integer> shipping_addressColumn = new TableColumn<>("shipping_address");
+        TableColumn<User, String> shipping_addressColumn = new TableColumn<>("shipping_address");
         shipping_addressColumn.setCellValueFactory(new PropertyValueFactory<>("shipping_address"));
 
-        TableColumn<User, Integer> adminColumn = new TableColumn<>("admin");
-        adminColumn.setCellValueFactory(new PropertyValueFactory<>("admin"));
+        TableColumn<User, User.Role> roleColumn = new TableColumn<>("role");
+        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         TableView<User> table = new TableView<>();
-        table.getColumns().addAll(idColumn, usernameColumn, emailColumn, passwordColumn, shipping_addressColumn, adminColumn);
+        table.getColumns().addAll(idColumn, usernameColumn, emailColumn, passwordColumn, shipping_addressColumn, roleColumn);
         table.setItems(users);
 
         // új tea hozzáadás sor
         TextField idInput = new TextField();
         idInput.setPromptText("id");
 
-        TextField usernameiInput = new TextField();
-        usernameiInput.setPromptText("username");
+        TextField usernameInput = new TextField();
+        usernameInput.setPromptText("username");
 
         TextField emailInput = new TextField();
         emailInput.setPromptText("email");
@@ -56,17 +56,17 @@ public class UserTable {
         TextField shipping_addressInput = new TextField();
         shipping_addressInput.setPromptText("shipping_address");
 
-        TextField adminInput = new TextField();
-        adminInput.setPromptText("admin");
+        TextField roleInput = new TextField();
+        roleInput.setPromptText("role");
 
         Button addButton = new Button("Add User");
         addButton.setOnAction(e -> {
             int id;
             String username;
-            int email;
-            enum password;
-            int shipping_address;
-            int admin;
+            String email;
+            String password;
+            String shipping_address;
+            User.Role role;
 
             try {
                 id = Integer.parseInt(idInput.getText());
@@ -77,40 +77,22 @@ public class UserTable {
                 a.showAndWait();
                 return;
             }
-            username = usernameiInput.getText();
+            username = usernameInput.getText();
             password = passwordInput.getText();
+            email = emailInput.getText();
+            shipping_address = shipping_addressInput.getText();
 
             try {
-                email = Integer.parseInt(emailInput.getText());
+                role = User.Role.valueOf(roleInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani a email-t számmá!");
+                a.setContentText("Nem sikerült átalakítani a role-t számmá!");
                 a.showAndWait();
                 return;
             }
 
-            try {
-                shipping_address = Integer.parseInt(shipping_addressInput.getText());
-            } catch (Exception exception) {
-                Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az shipping_address-t számmá!");
-                a.showAndWait();
-                return;
-            }
-
-            try {
-                admin = Integer.parseInt(adminInput.getText());
-            } catch (Exception exception) {
-                Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani a admin-t számmá!");
-                a.showAndWait();
-                return;
-            }
-
-            User newUser = new User(id, username, email, password, shipping_address, admin);
+            User newUser = new User(id, username, email, password, shipping_address, role);
 
             try {
                 newUser.upload();
@@ -126,17 +108,17 @@ public class UserTable {
             users.add(newUser);
 
             idInput.clear();
-            usernameiInput.clear();
+            usernameInput.clear();
             emailInput.clear();
             passwordInput.clear();
             shipping_addressInput.clear();
-            adminInput.clear();
+            roleInput.clear();
         });
 
         Button backButton = new Button("Back");
         backButton.setOnAction(backEventHandler);
 
-        HBox addLayout = new HBox(idInput, usernameiInput, emailInput, passwordInput, shipping_addressInput, adminInput, addButton);
+        HBox addLayout = new HBox(idInput, usernameInput, emailInput, passwordInput, shipping_addressInput, roleInput, addButton);
         VBox vbox = new VBox(backButton, table, addLayout);
         return new Scene(vbox, 600, 400);
     }

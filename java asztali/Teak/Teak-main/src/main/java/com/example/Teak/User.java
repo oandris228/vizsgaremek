@@ -1,7 +1,5 @@
 package com.example.Teak;
 
-import com.example.Productk.Product;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +10,11 @@ import java.util.List;
 public class User {
     private static Connection connection;
 
+    public enum Role {
+        ADMIN,
+        USER;
+    }
+
     public static void setConnection(Connection c) {
         connection = c;
     }
@@ -21,40 +24,29 @@ public class User {
     private String  email;
     private String password;
     private String shipping_address;
-    private byte admin;
+    private Role role;
 
-    public User(int id, String username, String email, String password, String shipping_address, byte admin ){
+    public User(int id, String username, String email, String password, String shipping_address, Role role ){
         this.id = id;
         this.username= username;
         this.email= email;
         this.password= password;
         this.shipping_address= shipping_address;
-        this.admin= admin;
+        this.role= role;
 
 
     }
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id;}
 
-    public String getUsername() {
-        return username;
-    }
+    public String getUsername() { return username;}
 
-    public String  getEmail() {
-        return email;
-    }
+    public String  getEmail() { return email;}
 
-    public String getPassword() {
-        return Product.password;
-    }
+    public String getPassword() { return password;}
 
-    public String getShipping_address() {
-        return shipping_address;
-    }
-    public byte getAdmin() {
-        return admin;
-    }
+    public String getShipping_address() { return shipping_address;}
+
+    public Role getrole() { return role;}
 
 
     public static List<User> getAll() throws Exception {
@@ -70,9 +62,10 @@ public class User {
             String email = resultSet.getString("email").trim();
             String password = resultSet.getString("password").trim();
             String shipping_address = resultSet.getString("shipping_address").trim();
-            byte admin = resultSet.getByte("admin");
+            Role role = Role.valueOf(resultSet.getString("role"));
 
-            res.add(new User(id, username, email, password, shipping_address, admin));
+
+            res.add(new User(id, username, email, password, shipping_address, role));
         }
         resultSet.close();
         statement.close();
@@ -81,7 +74,7 @@ public class User {
 
     public void upload() throws SQLException {
         Statement statement = connection.createStatement();
-        String sql = "insert into product(id, username, email, password, shipping_address, admin) values('"+id+"','"+username+"','"+email+"','"+password+"','"+shipping_address+"','"+admin+");";
+        String sql = "insert into product(id, username, email, password, shipping_address, role) values('"+id+"','"+username+"','"+email+"','"+password+"','"+shipping_address+"','"+role+");";
         System.out.println(sql);
         statement.executeUpdate(sql);
         statement.close();
