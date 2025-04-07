@@ -46,7 +46,11 @@ export class CommissionsService {
     });
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+
+    const removeItems = await this.db.item.deleteMany({
+      where: {commissionId: id}
+    })
     return this.db.commission.delete({
       where: {id}
     });
