@@ -27,7 +27,7 @@ public class ProductTable {
         TableColumn<Product, Integer> priceColumn = new TableColumn<>("price");
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        TableColumn<Product, Enum> categoryColumn = new TableColumn<>("category");
+        TableColumn<Product, Product.Category> categoryColumn = new TableColumn<>("category");
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         TableColumn<Product, Integer> other_idColumn = new TableColumn<>("other_id");
@@ -64,7 +64,7 @@ public class ProductTable {
             int id;
             String name;
             int price;
-            enum category;
+            Product.Category category;
             int other_id;
             int tea_id;
 
@@ -78,7 +78,16 @@ public class ProductTable {
                 return;
             }
             name = nameiInput.getText();
-            category = categoryInput.getText();
+
+            try {
+                category = Product.Category.valueOf(categoryInput.getText());
+            } catch (Exception exception) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Hiba");
+                a.setContentText("Nem sikerült átalakítani a category-t!");
+                a.showAndWait();
+                return;
+            }
 
             try {
                 price = Integer.parseInt(priceInput.getText());
