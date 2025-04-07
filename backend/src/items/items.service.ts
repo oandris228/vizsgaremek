@@ -10,7 +10,7 @@ export class ItemsService {
 
   async create(createItemDto: CreateItemDto) {
 
-    const activeCommissions = await this.db.commission.findMany({ where: { commissionState: "Active" } })
+    const activeCommissions = await this.db.commission.findMany({ where: { commissionState: "Active", user_id: createItemDto.commission_user_id } })
 
     if (activeCommissions.length == 0) {
       //create order and put item inside
@@ -41,11 +41,11 @@ export class ItemsService {
 
     } else {
       const activeCommission = activeCommissions[0]
-      const activeItem = await this.db.item.findFirst({where: {productId: createItemDto.productId, commissionId: activeCommission.id}})
+      const activeItem = await this.db.item.findFirst({ where: { productId: createItemDto.productId, commissionId: activeCommission.id } })
       if (activeItem) {
         return this.db.item.update({
-          where: {id: activeItem.id},
-          data: {quantity: activeItem.quantity+1}
+          where: { id: activeItem.id },
+          data: { quantity: activeItem.quantity + 1 }
         })
       } else {
         return this.db.item.create({
