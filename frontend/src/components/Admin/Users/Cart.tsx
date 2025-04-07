@@ -31,8 +31,21 @@ export function Cart() {
     }, [])
 
 
-    function RemoveItem(id: number): void {
-        throw new Error("Function not implemented.");
+    async function RemoveItem(id: number) {
+            try {
+                const response = await fetch(`http://localhost:3000/items/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                await fetchCommission();
+            } catch (err: any) {
+                setError(err.message);
+            }
     }
 
     async function RemoveCommission(e: any) {
@@ -49,7 +62,6 @@ export function Cart() {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-
                 navigate('/');
             } catch (err: any) {
                 setError(err.message);

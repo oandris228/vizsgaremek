@@ -57,6 +57,19 @@ export const Card:  React.FC<ProductProps> = ({ product }) => {
             </div>
             <button onClick={() => AddToCart(product.id)}>Add to Cart</button>
         </div>
+    } else {
+        return <div className="card">
+            <div className="teaicon">
+                {/**there will be an image here someday */}
+            </div>
+            <div className="container">
+                <h3>{product.name}</h3>
+                <h4>{product.price}</h4>
+                <p>{product.Other?.[0].description}</p>
+                <p>{product.Other?.[0].img}</p>
+            </div>
+            <button onClick={() => AddToCart(product.id)}>Add to Cart</button>
+        </div>
     }
 }
 

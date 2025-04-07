@@ -46,35 +46,14 @@ export default function Listazas() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error fetching data: {error}</p>;
 
-    async function AddToCart(id: number): Promise<void> {
-        if (!user) {
-            navigate('/login')
-        } else {
-            const formData: CommissionFormData = {
-                productId: id,
-                quantity: 1,
-                commission_shipping_address: user.shipping_address,
-                commission_user_id: user.id,
-                commission_extratext: "",
-                commission_commissionState: "Active"
-            }
-            try {
-                await fetch('http://localhost:3000/items', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData),
-                });
-                navigate('/cart');
-            } catch (error: any) {
-                console.error("Error submitting form:", error);
-            }
-
-        }
-    }
-
     return (
         <div className="container mt-4">
             {teas.map((product) => (
+                <div key={product.id}>
+                    <Card product={product}/>
+                </div>
+            ))}
+            {others.map((product) => (
                 <div key={product.id}>
                     <Card product={product}/>
                 </div>
