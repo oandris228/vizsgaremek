@@ -12,11 +12,14 @@ import java.sql.DriverManager;
 public class HelloApplication extends Application {
     Connection connection;
     Scene mainMenu;
-    TeaTable tt;
-    OrderTable ordert;
-    ProductTable pt;
-    UserTable ut;
-    OtherTable othert;
+    TeaTable teaT;
+    OrderTable orderT;
+    ProductTable productT;
+    UserTable userT;
+    OtherTable otherT;
+    OrdertoproductTable ordertoproductT;
+    OrdertouserTable ordertouserT;
+    TokenTable tokenT;
 
 
     @Override
@@ -31,24 +34,35 @@ public class HelloApplication extends Application {
             Product.setConnection(connection);
             User.setConnection(connection);
             Other.setConnection(connection);
+            Ordertoproduct.setConnection(connection);
+            Ordertouser.setConnection(connection);
+            Token.setConnection(connection);
 
 
 
-            tt = new TeaTable();
-            tt.teas.addAll(Tea.getAll());
+            teaT = new TeaTable();
+            teaT.teas.addAll(Tea.getAll());
 
-            ordert = new OrderTable();
-            ordert.orders.addAll(Order.getAll());
+            orderT = new OrderTable();
+            orderT.orders.addAll(Order.getAll());
 
-            pt = new ProductTable();
-            pt.products.addAll(Product.getAll());
+            productT = new ProductTable();
+            productT.products.addAll(Product.getAll());
 
-            ut = new UserTable();
-            ut.users.addAll(User.getAll());
+            userT = new UserTable();
+            userT.users.addAll(User.getAll());
 
-            othert = new OtherTable();
-            othert.others.addAll(Other.getAll());
+            otherT = new OtherTable();
+            otherT.others.addAll(Other.getAll());
 
+            ordertoproductT = new OrdertoproductTable();
+            ordertoproductT.ordertoproducts.addAll(Ordertoproduct.getAll());
+
+            ordertouserT = new OrdertouserTable();
+            ordertouserT.ordertousers.addAll(Ordertouser.getAll());
+
+            tokenT = new TokenTable();
+            tokenT.tokens.addAll(Token.getAll());
 
 
         } catch (Exception e) {
@@ -57,40 +71,61 @@ public class HelloApplication extends Application {
 
         Button TeaTableButton = new Button("Tea");
         TeaTableButton.setOnAction(e ->{
-            stage.setScene(tt.createScene(be -> {
+            stage.setScene(teaT.createScene(be -> {
                 stage.setScene(mainMenu);
             }));
         });
 
         Button OrderTableButton = new Button("Order");
         OrderTableButton.setOnAction(e ->{
-            stage.setScene(ordert.createScene(be -> {
+            stage.setScene(orderT.createScene(be -> {
                 stage.setScene(mainMenu);
             }));
         });
 
         Button ProductTableButton = new Button("Product");
         ProductTableButton.setOnAction(e ->{
-            stage.setScene(pt.createScene(be -> {
+            stage.setScene(productT.createScene(be -> {
                 stage.setScene(mainMenu);
             }));
         });
 
         Button UserTableButton = new Button("User");
         UserTableButton.setOnAction(e ->{
-            stage.setScene(ut.createScene(be -> {
+            stage.setScene(userT.createScene(be -> {
                 stage.setScene(mainMenu);
             }));
         });
 
         Button OtherTableButton = new Button("Other");
         OtherTableButton.setOnAction(e ->{
-            stage.setScene(othert.createScene(be -> {
+            stage.setScene(otherT.createScene(be -> {
                 stage.setScene(mainMenu);
             }));
         });
 
-        HBox menuOptions = new HBox(TeaTableButton, OrderTableButton, ProductTableButton, UserTableButton, OtherTableButton);
+        Button OrdertoproductTableButton = new Button("Ordertoproduct");
+        OrdertoproductTableButton.setOnAction(e ->{
+            stage.setScene(ordertoproductT.createScene(be -> {
+                stage.setScene(mainMenu);
+            }));
+        });
+
+        Button OrdertouserTableButton = new Button("Ordertouser");
+        OrdertouserTableButton.setOnAction(e ->{
+            stage.setScene(ordertouserT.createScene(be -> {
+                stage.setScene(mainMenu);
+            }));
+        });
+
+        Button TokenTableButton = new Button("Token");
+        TokenTableButton.setOnAction(e ->{
+            stage.setScene(tokenT.createScene(be -> {
+                stage.setScene(mainMenu);
+            }));
+        });
+
+        HBox menuOptions = new HBox(TeaTableButton, OrderTableButton, ProductTableButton, UserTableButton, OtherTableButton, OrdertoproductTableButton, OrdertouserTableButton, TokenTableButton);
         mainMenu = new Scene(menuOptions, 600, 400);
 
         stage.setScene(mainMenu);
