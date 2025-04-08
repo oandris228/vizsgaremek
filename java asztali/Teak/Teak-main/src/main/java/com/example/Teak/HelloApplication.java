@@ -13,9 +13,10 @@ public class HelloApplication extends Application {
     Connection connection;
     Scene mainMenu;
     TeaTable tt;
-    OrderTable ot;
+    OrderTable ordert;
     ProductTable pt;
     UserTable ut;
+    OtherTable othert;
 
 
     @Override
@@ -29,20 +30,24 @@ public class HelloApplication extends Application {
             Order.setConnection(connection);
             Product.setConnection(connection);
             User.setConnection(connection);
+            Other.setConnection(connection);
 
 
 
             tt = new TeaTable();
             tt.teas.addAll(Tea.getAll());
 
-            ot = new OrderTable();
-            ot.orders.addAll(Order.getAll());
+            ordert = new OrderTable();
+            ordert.orders.addAll(Order.getAll());
 
             pt = new ProductTable();
             pt.products.addAll(Product.getAll());
 
             ut = new UserTable();
             ut.users.addAll(User.getAll());
+
+            othert = new OtherTable();
+            othert.others.addAll(Other.getAll());
 
 
 
@@ -59,7 +64,7 @@ public class HelloApplication extends Application {
 
         Button OrderTableButton = new Button("Order");
         OrderTableButton.setOnAction(e ->{
-            stage.setScene(ot.createScene(be -> {
+            stage.setScene(ordert.createScene(be -> {
                 stage.setScene(mainMenu);
             }));
         });
@@ -78,7 +83,14 @@ public class HelloApplication extends Application {
             }));
         });
 
-        HBox menuOptions = new HBox(TeaTableButton, OrderTableButton, ProductTableButton, UserTableButton);
+        Button OtherTableButton = new Button("Other");
+        OtherTableButton.setOnAction(e ->{
+            stage.setScene(othert.createScene(be -> {
+                stage.setScene(mainMenu);
+            }));
+        });
+
+        HBox menuOptions = new HBox(TeaTableButton, OrderTableButton, ProductTableButton, UserTableButton, OtherTableButton);
         mainMenu = new Scene(menuOptions, 600, 400);
 
         stage.setScene(mainMenu);
