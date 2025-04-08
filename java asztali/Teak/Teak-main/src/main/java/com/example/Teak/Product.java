@@ -12,7 +12,7 @@ public class Product {
 
     public enum Category {
         TEA,
-        OTHER;
+        OTHER
     }
 
     public static void setConnection(Connection c) {

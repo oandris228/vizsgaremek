@@ -17,7 +17,7 @@ public class UserTable {
     }
 
     public Scene createScene(EventHandler backEventHandler) {
-        // táblázat
+        // Table columns
         TableColumn<User, Integer> idColumn = new TableColumn<>("id");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -40,7 +40,7 @@ public class UserTable {
         table.getColumns().addAll(idColumn, usernameColumn, emailColumn, passwordColumn, shipping_addressColumn, roleColumn);
         table.setItems(users);
 
-        // új tea hozzáadás sor
+        // Input fields for adding a new user
         TextField idInput = new TextField();
         idInput.setPromptText("id");
 
@@ -83,11 +83,11 @@ public class UserTable {
             shipping_address = shipping_addressInput.getText();
 
             try {
-                role = User.Role.valueOf(roleInput.getText());
+                role = User.Role.valueOf(roleInput.getText().toUpperCase());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani a role-t számmá!");
+                a.setContentText("Nem sikerült átalakítani a role-t érvényes értékké!");
                 a.showAndWait();
                 return;
             }

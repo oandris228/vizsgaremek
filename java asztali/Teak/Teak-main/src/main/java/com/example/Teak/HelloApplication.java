@@ -66,14 +66,14 @@ public class HelloApplication extends Application {
 
         Button ProductTableButton = new Button("Product");
         ProductTableButton.setOnAction(e ->{
-            stage.setScene(ot.createScene(be -> {
+            stage.setScene(pt.createScene(be -> {
                 stage.setScene(mainMenu);
             }));
         });
 
         Button UserTableButton = new Button("User");
         UserTableButton.setOnAction(e ->{
-            stage.setScene(ot.createScene(be -> {
+            stage.setScene(ut.createScene(be -> {
                 stage.setScene(mainMenu);
             }));
         });
