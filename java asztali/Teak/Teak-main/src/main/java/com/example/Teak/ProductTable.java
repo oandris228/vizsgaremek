@@ -9,6 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
+
 public class ProductTable {
     public ObservableList<Product> products;
 
@@ -17,7 +19,7 @@ public class ProductTable {
     }
 
     public Scene createScene(EventHandler backEventHandler) {
-        // táblázat
+        // Table setup
         TableColumn<Product, Integer> idColumn = new TableColumn<>("id");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -40,7 +42,7 @@ public class ProductTable {
         table.getColumns().addAll(idColumn, nameColumn, priceColumn, categoryColumn, other_idColumn, tea_idColumn);
         table.setItems(products);
 
-        // új tea hozzáadás sor
+        // Input fields
         TextField idInput = new TextField();
         idInput.setPromptText("id");
 
@@ -72,19 +74,27 @@ public class ProductTable {
                 id = Integer.parseInt(idInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az id-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert id to a number!");
                 a.showAndWait();
                 return;
             }
+
             name = nameiInput.getText();
+            if (name.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Error");
+                a.setContentText("The name field cannot be empty!");
+                a.showAndWait();
+                return;
+            }
 
             try {
                 category = Product.Category.valueOf(categoryInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani a category-t!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert category to a valid value!");
                 a.showAndWait();
                 return;
             }
@@ -93,8 +103,8 @@ public class ProductTable {
                 price = Integer.parseInt(priceInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani a price-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert price to a number!");
                 a.showAndWait();
                 return;
             }
@@ -103,8 +113,8 @@ public class ProductTable {
                 other_id = Integer.parseInt(other_idInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az other_id-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert other_id to a number!");
                 a.showAndWait();
                 return;
             }
@@ -113,8 +123,8 @@ public class ProductTable {
                 tea_id = Integer.parseInt(tea_idInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani a tea_id-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert tea_id to a number!");
                 a.showAndWait();
                 return;
             }
@@ -123,11 +133,18 @@ public class ProductTable {
 
             try {
                 newProduct.upload();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Database Error");
+                a.setContentText("Failed to upload the new product due to a database error!");
+                a.showAndWait();
+                return;
             } catch (Exception exception) {
                 exception.printStackTrace();
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült feltölteni az új termeket!");
+                a.setTitle("Error");
+                a.setContentText("An unexpected error occurred while uploading the new product!");
                 a.showAndWait();
                 return;
             }
@@ -147,6 +164,8 @@ public class ProductTable {
 
         HBox addLayout = new HBox(idInput, nameiInput, priceInput, categoryInput, other_idInput, tea_idInput, addButton);
         VBox vbox = new VBox(backButton, table, addLayout);
-        return new Scene(vbox, 600, 400);
+        Scene scene = new Scene(vbox, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        return scene;
     }
 }

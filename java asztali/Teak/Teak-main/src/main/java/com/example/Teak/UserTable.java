@@ -9,6 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
+
 public class UserTable {
     public ObservableList<User> users;
 
@@ -72,22 +74,54 @@ public class UserTable {
                 id = Integer.parseInt(idInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az id-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert id to a number!");
                 a.showAndWait();
                 return;
             }
+
             username = usernameInput.getText();
+            if (username.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Error");
+                a.setContentText("The username field cannot be empty!");
+                a.showAndWait();
+                return;
+            }
+
             password = passwordInput.getText();
+            if (password.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Error");
+                a.setContentText("The password field cannot be empty!");
+                a.showAndWait();
+                return;
+            }
+
             email = emailInput.getText();
+            if (email.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Error");
+                a.setContentText("The email field cannot be empty!");
+                a.showAndWait();
+                return;
+            }
+
             shipping_address = shipping_addressInput.getText();
+            if (shipping_address.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Error");
+                a.setContentText("The shipping address field cannot be empty!");
+                a.showAndWait();
+                return;
+            }
 
             try {
                 role = User.Role.valueOf(roleInput.getText().toUpperCase());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani a role-t érvényes értékké!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert role to a valid value!");
                 a.showAndWait();
                 return;
             }
@@ -96,11 +130,18 @@ public class UserTable {
 
             try {
                 newUser.upload();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Database Error");
+                a.setContentText("Failed to upload the new user due to a database error!");
+                a.showAndWait();
+                return;
             } catch (Exception exception) {
                 exception.printStackTrace();
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült feltölteni az új termeket!");
+                a.setTitle("Error");
+                a.setContentText("An unexpected error occurred while uploading the new user!");
                 a.showAndWait();
                 return;
             }
@@ -120,6 +161,8 @@ public class UserTable {
 
         HBox addLayout = new HBox(idInput, usernameInput, emailInput, passwordInput, shipping_addressInput, roleInput, addButton);
         VBox vbox = new VBox(backButton, table, addLayout);
-        return new Scene(vbox, 600, 400);
+        Scene scene = new Scene(vbox, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        return scene;
     }
 }

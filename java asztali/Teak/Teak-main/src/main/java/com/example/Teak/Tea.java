@@ -1,16 +1,8 @@
 package com.example.Teak;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.io.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Tea {
     private static Connection connection;
@@ -24,12 +16,13 @@ public class Tea {
     private String flavor;
     private int productId;
 
-    public Tea(int id, String type, String flavor, int productId){
+    public Tea(int id, String type, String flavor, int productId) {
         this.id = id;
-        this.type= type;
-        this.flavor= flavor;
-        this.productId= productId;
+        this.type = type;
+        this.flavor = flavor;
+        this.productId = productId;
     }
+
     public int getId() {
         return id;
     }
@@ -47,14 +40,12 @@ public class Tea {
     }
 
     public static List<Tea> getAll() throws Exception {
-        if (connection == null ) throw new Exception("connection is not set in Tea");
+        if (connection == null) throw new Exception("Connection is not set in Tea");
         List<Tea> res = new ArrayList<>();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(
-                "select * from tea;"
-        );
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM tea;");
         while (resultSet.next()) {
-            int id= resultSet.getInt("id");
+            int id = resultSet.getInt("id");
             String type = resultSet.getString("type").trim();
             String flavor = resultSet.getString("flavor").trim();
             int productId = resultSet.getInt("productId");
@@ -66,10 +57,16 @@ public class Tea {
     }
 
     public void upload() throws SQLException {
-        Statement statement = connection.createStatement();
-        String sql = "insert into tea(id, type, flavor, productId) values('"+id+"','"+type+"','"+flavor+"','"+productId+"');";
-        System.out.println(sql);
-        statement.executeUpdate(sql);
-        statement.close();
+        if (connection == null) {
+            throw new SQLException("Connection is not set in Tea");
+        }
+        String sql = "INSERT INTO tea(id, type, flavor, productId) VALUES(?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, type);
+        preparedStatement.setString(3, flavor);
+        preparedStatement.setInt(4, productId);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 }

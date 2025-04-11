@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
 
 public class OrdertouserTable {
     public ObservableList<Ordertouser> ordertousers;
@@ -18,7 +19,7 @@ public class OrdertouserTable {
     }
 
     public Scene createScene(EventHandler backEventHandler) {
-        // táblázat
+        // Table setup
         TableColumn<Ordertouser, Integer> AColumn = new TableColumn<>("A");
         AColumn.setCellValueFactory(new PropertyValueFactory<>("A"));
 
@@ -29,7 +30,7 @@ public class OrdertouserTable {
         table.getColumns().addAll(AColumn, BColumn);
         table.setItems(ordertousers);
 
-        // új tea hozzáadás sor
+        // Input fields
         TextField AInput = new TextField();
         AInput.setPromptText("A");
 
@@ -61,15 +62,22 @@ public class OrdertouserTable {
                 return;
             }
 
-            Ordertouser newOrdertouser = new Ordertouser(A,B);
+            Ordertouser newOrdertouser = new Ordertouser(A, B);
 
             try {
                 newOrdertouser.upload();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Database Error");
+                a.setContentText("Failed to upload the new Ordertouser due to a database error!");
+                a.showAndWait();
+                return;
             } catch (Exception exception) {
                 exception.printStackTrace();
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült feltölteni az új teát!");
+                a.setTitle("Error");
+                a.setContentText("An unexpected error occurred while uploading the new Ordertouser!");
                 a.showAndWait();
                 return;
             }
@@ -85,6 +93,8 @@ public class OrdertouserTable {
 
         HBox addLayout = new HBox(AInput, BInput, addButton);
         VBox vbox = new VBox(backButton, table, addLayout);
-        return new Scene(vbox, 600, 400);
+        Scene scene = new Scene(vbox, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        return scene;
     }
 }

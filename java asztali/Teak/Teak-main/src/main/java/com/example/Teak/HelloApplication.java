@@ -127,6 +127,7 @@ public class HelloApplication extends Application {
 
         HBox menuOptions = new HBox(TeaTableButton, OrderTableButton, ProductTableButton, UserTableButton, OtherTableButton, OrdertoproductTableButton, OrdertouserTableButton, TokenTableButton);
         mainMenu = new Scene(menuOptions, 600, 400);
+        mainMenu.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
         stage.setScene(mainMenu);
         stage.show();

@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
 
 public class OrdertoproductTable {
     public ObservableList<Ordertoproduct> ordertoproducts;
@@ -18,7 +19,7 @@ public class OrdertoproductTable {
     }
 
     public Scene createScene(EventHandler backEventHandler) {
-        // táblázat
+        // Table setup
         TableColumn<Ordertoproduct, Integer> AColumn = new TableColumn<>("A");
         AColumn.setCellValueFactory(new PropertyValueFactory<>("A"));
 
@@ -29,7 +30,7 @@ public class OrdertoproductTable {
         table.getColumns().addAll(AColumn, BColumn);
         table.setItems(ordertoproducts);
 
-        // új tea hozzáadás sor
+        // Input fields
         TextField AInput = new TextField();
         AInput.setPromptText("A");
 
@@ -45,8 +46,8 @@ public class OrdertoproductTable {
                 A = Integer.parseInt(AInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az A-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert A to a number!");
                 a.showAndWait();
                 return;
             }
@@ -55,21 +56,28 @@ public class OrdertoproductTable {
                 B = Integer.parseInt(BInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az B-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert B to a number!");
                 a.showAndWait();
                 return;
             }
 
-            Ordertoproduct newOrdertoproduct = new Ordertoproduct(A,B);
+            Ordertoproduct newOrdertoproduct = new Ordertoproduct(A, B);
 
             try {
                 newOrdertoproduct.upload();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Database Error");
+                a.setContentText("Failed to upload the new Ordertoproduct due to a database error!");
+                a.showAndWait();
+                return;
             } catch (Exception exception) {
                 exception.printStackTrace();
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült feltölteni az új teát!");
+                a.setTitle("Error");
+                a.setContentText("An unexpected error occurred while uploading the new Ordertoproduct!");
                 a.showAndWait();
                 return;
             }
@@ -85,6 +93,9 @@ public class OrdertoproductTable {
 
         HBox addLayout = new HBox(AInput, BInput, addButton);
         VBox vbox = new VBox(backButton, table, addLayout);
-        return new Scene(vbox, 600, 400);
+
+        Scene scene = new Scene(vbox, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        return scene;
     }
 }

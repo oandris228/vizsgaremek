@@ -9,6 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
+
 public class OrderTable {
     public ObservableList<Order> orders;
 
@@ -17,7 +19,7 @@ public class OrderTable {
     }
 
     public Scene createScene(EventHandler backEventHandler) {
-        // táblázat
+        // Table setup
         TableColumn<Order, Integer> idColumn = new TableColumn<>("id");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
@@ -31,10 +33,10 @@ public class OrderTable {
         cartColumn.setCellValueFactory(new PropertyValueFactory<>("cart"));
 
         TableView<Order> table = new TableView<>();
-        table.getColumns().addAll(idColumn, user_idColumn, shipping_addressColumn,cartColumn);
+        table.getColumns().addAll(idColumn, user_idColumn, shipping_addressColumn, cartColumn);
         table.setItems(orders);
 
-        // új tea hozzáadás sor
+        // Input fields
         TextField idInput = new TextField();
         idInput.setPromptText("id");
 
@@ -58,19 +60,36 @@ public class OrderTable {
                 id = Integer.parseInt(idInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az id-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert id to a number!");
                 a.showAndWait();
                 return;
             }
+
             cart = cartInput.getText();
+            if (cart.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Error");
+                a.setContentText("The cart field cannot be empty!");
+                a.showAndWait();
+                return;
+            }
+
             shipping_address = shipping_addressInput.getText();
+            if (shipping_address.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Error");
+                a.setContentText("The shipping address field cannot be empty!");
+                a.showAndWait();
+                return;
+            }
+
             try {
                 user_id = Integer.parseInt(user_idiInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az user_id-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert user_id to a number!");
                 a.showAndWait();
                 return;
             }
@@ -79,11 +98,18 @@ public class OrderTable {
 
             try {
                 newOrder.upload();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Database Error");
+                a.setContentText("Failed to upload the new order due to a database error!");
+                a.showAndWait();
+                return;
             } catch (Exception exception) {
                 exception.printStackTrace();
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült feltölteni az új rendelest!");
+                a.setTitle("Error");
+                a.setContentText("An unexpected error occurred while uploading the new order!");
                 a.showAndWait();
                 return;
             }

@@ -1,9 +1,6 @@
 package com.example.Teak;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,10 +77,18 @@ public class User {
     }
 
     public void upload() throws SQLException {
-        Statement statement = connection.createStatement();
-        String sql = "insert into product(id, username, email, password, shipping_address, role) values('" + id + "','" + username + "','" + email + "','" + password + "','" + shipping_address + "','" + role + "');";
-        System.out.println(sql);
-        statement.executeUpdate(sql);
-        statement.close();
+        if (connection == null) {
+            throw new SQLException("Connection is not set in User");
+        }
+        String sql = "INSERT INTO product(id, username, email, password, shipping_address, role) VALUES(?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, username);
+        preparedStatement.setString(3, email);
+        preparedStatement.setString(4, password);
+        preparedStatement.setString(5, shipping_address);
+        preparedStatement.setString(6, role.name());
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 }

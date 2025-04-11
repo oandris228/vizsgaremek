@@ -1,16 +1,8 @@
 package com.example.Teak;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.io.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Ordertoproduct {
     private static Connection connection;
@@ -22,10 +14,11 @@ public class Ordertoproduct {
     private int A;
     private int B;
 
-    public Ordertoproduct(int A, int B){
+    public Ordertoproduct(int A, int B) {
         this.A = A;
-        this.B= B;
+        this.B = B;
     }
+
     public int getA() {
         return A;
     }
@@ -35,14 +28,12 @@ public class Ordertoproduct {
     }
 
     public static List<Ordertoproduct> getAll() throws Exception {
-        if (connection == null ) throw new Exception("connection is not set in Ordertoproduct");
+        if (connection == null) throw new Exception("Connection is not set in Ordertoproduct");
         List<Ordertoproduct> res = new ArrayList<>();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(
-                "select * from _ordertoproduct;"
-        );
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM _ordertoproduct;");
         while (resultSet.next()) {
-            int A= resultSet.getInt("A");
+            int A = resultSet.getInt("A");
             int B = resultSet.getInt("B");
             res.add(new Ordertoproduct(A, B));
         }
@@ -52,10 +43,14 @@ public class Ordertoproduct {
     }
 
     public void upload() throws SQLException {
-        Statement statement = connection.createStatement();
-        String sql = "insert into _ordertoproduct(A, B) values('"+A+"','"+B+"');";
-        System.out.println(sql);
-        statement.executeUpdate(sql);
-        statement.close();
+        if (connection == null) {
+            throw new SQLException("Connection is not set in Ordertoproduct");
+        }
+        String sql = "INSERT INTO _ordertoproduct(A, B) VALUES(?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, A);
+        preparedStatement.setInt(2, B);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 }

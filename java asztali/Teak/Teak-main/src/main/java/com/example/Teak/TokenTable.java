@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
 
 public class TokenTable {
     public ObservableList<Token> tokens;
@@ -18,8 +19,7 @@ public class TokenTable {
     }
 
     public Scene createScene(EventHandler backEventHandler) {
-        // táblázat
-
+        // Table setup
         TableColumn<Token, String> tokenColumn = new TableColumn<>("token");
         tokenColumn.setCellValueFactory(new PropertyValueFactory<>("token"));
 
@@ -27,11 +27,10 @@ public class TokenTable {
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         TableView<Token> table = new TableView<>();
-        table.getColumns().addAll(tokenColumn,userIdColumn);
+        table.getColumns().addAll(tokenColumn, userIdColumn);
         table.setItems(tokens);
 
-        // új token hozzáadás sor
-
+        // Input fields
         TextField tokenInput = new TextField();
         tokenInput.setPromptText("token");
 
@@ -40,17 +39,24 @@ public class TokenTable {
 
         Button addButton = new Button("Add Token");
         addButton.setOnAction(e -> {
-
             String token;
             int userId;
 
             token = tokenInput.getText();
+            if (token.isEmpty()) {
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Error");
+                a.setContentText("The token field cannot be empty!");
+                a.showAndWait();
+                return;
+            }
+
             try {
                 userId = Integer.parseInt(userIdInput.getText());
             } catch (Exception exception) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült átalakítani az userId-t számmá!");
+                a.setTitle("Error");
+                a.setContentText("Failed to convert userId to a number!");
                 a.showAndWait();
                 return;
             }
@@ -59,11 +65,18 @@ public class TokenTable {
 
             try {
                 newToken.upload();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+                Alert a = new Alert(Alert.AlertType.ERROR);
+                a.setTitle("Database Error");
+                a.setContentText("Failed to upload the new token due to a database error!");
+                a.showAndWait();
+                return;
             } catch (Exception exception) {
                 exception.printStackTrace();
                 Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setTitle("Hiba");
-                a.setContentText("Nem sikerült feltölteni az új teát!");
+                a.setTitle("Error");
+                a.setContentText("An unexpected error occurred while uploading the new token!");
                 a.showAndWait();
                 return;
             }
@@ -79,6 +92,8 @@ public class TokenTable {
 
         HBox addLayout = new HBox(tokenInput, userIdInput, addButton);
         VBox vbox = new VBox(backButton, table, addLayout);
-        return new Scene(vbox, 600, 400);
+        Scene scene = new Scene(vbox, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
+        return scene;
     }
 }
