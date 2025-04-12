@@ -6,6 +6,11 @@
     --color-cardbg: #ffd29d;
 }
 
+body {
+    @apply
+    overflow-x-hidden
+}
+
 .default-wrapper {
     @apply p-4
 }
@@ -15,7 +20,7 @@ h1 {
 }
 
 .card {
-    @apply bg-cardbg max-w-fit p-3 rounded-2xl
+    @apply bg-white w-72 h-96 p-3 m-5 rounded-2xl
 }
 
 .card h3 {
@@ -24,4 +29,47 @@ h1 {
 
 .card button {
     @apply bg-blue-400 rounded-2xl p-2
+}
+
+.card button:hover {
+    @apply 
+    bg-red-400
+    rounded-2xl 
+    p-2
+}
+
+.card-list {
+    display: flex;
+}
+
+.product-header {
+    @apply
+    h-52
+    w-full
+    rounded-2xl
+    overflow-hidden
+}
+
+.tea-image {
+    @apply
+    object-cover
+}
+
+/* mobile view */
+@media screen and (max-width: 576px) {
+    .card-list {
+        flex-direction: column;
+    }
+}
+
+/* tablet view */
+@media screen and (max-width: 768px) {
+}
+
+/* laptop view */
+@media screen and (max-width: 992px) {
+}
+
+/* screen view */
+@media screen and (max-width: 1200px) {
 }

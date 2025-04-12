@@ -49,7 +49,6 @@ function App() {
                 <NavBar />
                 <div className='default-wrapper'>
                   <Home />
-                  <Listazas />
                 </div>
               </>
             } />

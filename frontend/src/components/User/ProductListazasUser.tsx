@@ -47,7 +47,7 @@ export default function Listazas() {
     if (error) return <p>Error fetching data: {error}</p>;
 
     return (
-        <div className="container mt-4">
+        <div className="card-list">
             {teas.map((product) => (
                 <div key={product.id}>
                     <Card product={product}/>

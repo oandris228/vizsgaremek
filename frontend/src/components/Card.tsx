@@ -8,7 +8,7 @@ interface ProductProps {
     product: BaseProduct;
 }
 
-export const Card:  React.FC<ProductProps> = ({ product }) => {
+export const Card: React.FC<ProductProps> = ({ product }) => {
     const [user, setUser] = useState<User>();
     const navigate = useNavigate()
     const token = useContext(AuthContext);
@@ -47,8 +47,10 @@ export const Card:  React.FC<ProductProps> = ({ product }) => {
 
     if (product.category == "Tea") {
         return <div className="card">
-            <div className="teaicon">
-                {/**there will be an image here someday */}
+            <div className="product-header tea-header" style={{
+                backgroundColor: product.Tea?.[0].color
+            }}>
+                <img src="tea.png" alt="tea icon thing" className="tea-image" />
             </div>
             <div className="container">
                 <h3>{product.name}</h3>
@@ -60,8 +62,8 @@ export const Card:  React.FC<ProductProps> = ({ product }) => {
         </div>
     } else {
         return <div className="card">
-            <div className="teaicon">
-                {/**there will be an image here someday */}
+            <div className="product-header">
+                <img src={product.Other?.[0].img} alt="Poduct image" className="other-img" />
             </div>
             <div className="container">
                 <h3>{product.name}</h3>
