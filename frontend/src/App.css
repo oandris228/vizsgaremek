@@ -12,23 +12,35 @@ body {
 }
 
 .default-wrapper {
-    @apply p-4
+    @apply 
+    p-4
 }
 
 h1 {
-    @apply text-7xl
+    @apply 
+    text-7xl
 }
 
 .card {
-    @apply bg-white w-72 h-96 p-3 m-5 rounded-2xl
+    @apply 
+    bg-white 
+    w-72 
+    h-96 
+    p-3 
+    m-5 
+    rounded-2xl
 }
 
 .card h3 {
-    @apply text-4xl
+    @apply 
+    text-4xl
 }
 
 .card button {
-    @apply bg-blue-400 rounded-2xl p-2
+    @apply 
+    bg-blue-400 
+    rounded-2xl 
+    p-2
 }
 
 .card button:hover {
@@ -55,21 +67,137 @@ h1 {
     object-cover
 }
 
+.navbar {
+    @apply
+    bg-navbar
+    flex
+    overflow-hidden
+    justify-between
+}
+
+.nav-list {
+    @apply
+    list-none
+    self-center
+    overflow-hidden
+}
+
+.nav-list ul {
+    @apply
+    list-none
+    p-0
+    overflow-hidden
+}
+
+.nav-list li {
+    @apply
+    inline
+    float-left
+    text-center
+    p-3
+}
+
+.nav-list a {
+    @apply
+    p-4
+    rounded-4xl
+}
+
+.nav-list a:hover {
+    @apply
+    bg-amber-300
+}
+
+.hamburger-button {
+    @apply
+    m-5
+}
+
+.nav-title {
+    @apply
+    m-5
+    align-middle
+    font-bold
+    text-4xl
+}
+
+.profile-div {
+    @apply
+    flex
+    flex-col
+    items-center
+    m-10
+    p-5
+    pb-96
+    bg-cardbg
+    rounded-4xl
+}
+
+.profile-username {
+    @apply
+    font-semibold
+    italic
+}
+
+.nav-list-mobile {
+    @apply
+    bg-navbar
+    flex
+    flex-col
+    list-none
+    p-0
+    m-0
+}
+
+.nav-list-mobile li {
+    @apply
+    block
+    p-2
+}
+
 /* mobile view */
 @media screen and (max-width: 576px) {
     .card-list {
-        flex-direction: column;
+        @apply
+        flex-col
+        items-center
+    }
+    .nav-link {
+        @apply
+        hidden
+    }
+    .navbar {
+        @apply
+        justify-between
+    }
+    .nav-admin {
+        @apply
+        hidden
     }
 }
 
 /* tablet view */
-@media screen and (max-width: 768px) {
-}
-
-/* laptop view */
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1150px) {
+    .card-list {
+        @apply
+        flex
+        flex-wrap
+        overflow-hidden
+    }
+    .nav-link {
+        @apply
+        hidden
+    }
+    .navbar {
+        @apply
+        justify-between
+    }
 }
 
 /* screen view */
-@media screen and (max-width: 1200px) {
+@media screen and (min-width: 1151px) {
+    .hamburger-button {
+        @apply
+        hidden
+    }
 }

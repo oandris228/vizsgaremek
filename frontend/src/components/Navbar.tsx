@@ -9,14 +9,15 @@ export default function NavBar() {
     const navigate = useNavigate();
 
     const [state, setState] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState<User>();
 
     const [LoggedIn, setLoggedIn] = useState(token != undefined);
-    
-    useEffect(()=> {
+
+    useEffect(() => {
         async function IsUserAdmin() {
 
-            if(LoggedIn) {
+            if (LoggedIn) {
                 const response = await fetch('http://localhost:3000/users/token', {
                     method: 'GET',
                     headers: {
@@ -42,42 +43,83 @@ export default function NavBar() {
     }
 
     return <>
-            <nav className="flex items-center justify-between bg-navbar p-4 w-full top-0 start-0">
-                <NavLink className="text-xl font-bold" to="/">Navbar</NavLink>
-                
-                <ul className="flex space-x-4">
+        <nav className="navbar">
+            <NavLink className="nav-title" to="/">Tea Shop</NavLink>
+
+            <ul className="nav-list">
+                <li>
+                    <NavLink className="nav-link" to="/">Főoldal</NavLink>
+                </li>
+                <li>
+                    <NavLink className="nav-link" to="/custom">Make Your Own</NavLink>
+                </li>
+                <li>
+                    <NavLink className="nav-link" to="/profile">Profil</NavLink>
+                </li>
+                <li>
+                    <NavLink className="nav-link" to={`/cart/${user?.id}`}>Kosár</NavLink>
+                </li>
+                {state && (
                     <li>
-                        <NavLink className="nav-link" to="/">Főoldal</NavLink>
+                        <NavLink className="nav-link nav-admin" to="/admin">Admin</NavLink>
+                    </li>
+                )}
+                {LoggedIn ? (
+                    <li>
+                        <button className="nav-link" onClick={() => { handleLogout(); navigate('/login') }}>Logout</button>
+                    </li>
+                ) : (
+                    <>
+                        <li>
+                            <NavLink className="nav-link" to="/login">Bejelentkezés</NavLink>
+                        </li>
+                        <li>
+                            <NavLink className="nav-link" to="/register">Regisztráció</NavLink>
+                        </li>
+                    </>
+                )}
+            </ul>
+            <button
+                className="hamburger-button"
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                {isOpen ? <p>a</p> : <p>b</p>}
+            </button>
+        </nav>
+        {isOpen && (
+                <ul className="nav-list-mobile">
+                    <li>
+                        <NavLink className="nav-mobile" to="/">Főoldal</NavLink>
                     </li>
                     <li>
-                        <NavLink className="nav-link" to="/custom">Make Your Own</NavLink>
+                        <NavLink className="nav-mobile" to="/custom">Make Your Own</NavLink>
                     </li>
                     <li>
-                        <NavLink className="nav-link" to="/profile">Profil</NavLink>
+                        <NavLink className="nav-mobile" to="/profile">Profil</NavLink>
                     </li>
                     <li>
-                        <NavLink className="nav-link" to={`/cart/${user?.id}`}>Kosár</NavLink>
+                        <NavLink className="nav-mobile" to={`/cart/${user?.id}`}>Kosár</NavLink>
                     </li>
                     {state && (
-                        <li>
-                            <NavLink className="nav-link" to="/admin">Admin</NavLink>
+                        <li className='nav-admin'>
+                            <NavLink className="nav-mobile nav-admin" to="/admin">Admin</NavLink>
                         </li>
                     )}
                     {LoggedIn ? (
                         <li>
-                             <button className="nav-link" onClick={()=> {handleLogout(); navigate('/login')}}>Logout</button>
+                            <button className="nav-mobile" onClick={() => { handleLogout(); navigate('/login') }}>Logout</button>
                         </li>
                     ) : (
                         <>
                             <li>
-                                <NavLink className="nav-link" to="/login">Bejelentkezés</NavLink>
+                                <NavLink className="nav-mobile" to="/login">Bejelentkezés</NavLink>
                             </li>
                             <li>
-                                <NavLink className="nav-link" to="/register">Regisztráció</NavLink>
+                                <NavLink className="nav-mobile" to="/register">Regisztráció</NavLink>
                             </li>
                         </>
                     )}
                 </ul>
-            </nav>
+            )}
     </>
 }

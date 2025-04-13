@@ -15,15 +15,17 @@ export default function Profile() {
     }, [token])
 
     return (<>
-        <h1>Welcome {user?.username}</h1>
-        <h2>email: {user?.email}</h2>
-        <h2>shipping_address: {user?.shipping_address}</h2>
-        <ul>
-            {user?.commissions.map((commission) => (
-                <li key={commission.id}>
-                    <button style={{"padding": 10}}>Rendelés ID: {commission.id}; Rendelés státusza: {commission.commissionState}</button>
-                </li>
-            ))}
-        </ul>
+        <div className="profile-div">
+            <h1>Üdvözlünk <span className="profile-username">{user?.username}</span></h1>
+            <h2>email: {user?.email}</h2>
+            <h2>shipping_address: {user?.shipping_address}</h2>
+            <ul>
+                {user?.commissions.map((commission) => (
+                    <li key={commission.id}>
+                        <button style={{ "padding": 10 }}>Rendelés ID: {commission.id}; Rendelés státusza: {commission.commissionState}</button>
+                    </li>
+                ))}
+            </ul>
+        </div>
     </>)
 }
