@@ -98,12 +98,12 @@ export function Cart() {
     }
 
     return <>
-        <h1>Cart details</h1>
-        <h3>{commission?.shipping_address}</h3>
-        <h3>{commission?.extratext}</h3>
-        <ul>
+        <h1 className="cart-title">Cart details</h1>
+        <h3 className="cart-address">{commission?.shipping_address}</h3>
+        <h3 className="cart-extratext">{commission?.extratext}</h3>
+        <ul className="cart-list">
             {commission?.items?.map((item) => (
-                <li key={item.commissionId}><p>#{item.productId} {item.productName} Mennyiség: {item.quantity} VESSZŐ </p> <button onClick={() => RemoveItem(item.id)}>Törlés</button></li>
+                <li key={item.commissionId} className="cart-item"><p>#{item.productId} {item.productName} Mennyiség: {item.quantity}</p> <button onClick={() => RemoveItem(item.id)}>Törlés</button></li>
             ))}
         </ul>
         <button onClick={(e) => SumbmitCommission(e)}>Rendelés feladása</button><br />
