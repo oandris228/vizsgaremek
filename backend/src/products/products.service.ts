@@ -19,9 +19,8 @@ export class ProductsService {
 
     const temp_product = await this.db.product.create({
       data: {
-        id: createProductDto.id,
         name: createProductDto.name,
-        price: createProductDto.price,
+        price: +createProductDto.price,
         category: createProductDto.category
       }
     })
@@ -32,13 +31,14 @@ export class ProductsService {
         data: {
           type: createProductDto.tea_type,
           flavor: createProductDto.tea_flavor,
-          productId: temp_product.id
+          productId: temp_product.id,
+          color: createProductDto.tea_color
         }
       })
 
       //Update product with Tea
       return this.db.product.update({
-        where: {id: createProductDto.id},
+        where: {id: temp_product.id},
         data: {
           tea_id: tea_to_connect.id
         }
@@ -50,13 +50,13 @@ export class ProductsService {
         data: {
           description: createProductDto.others_description,
           img: createProductDto.others_img,
-          productId: createProductDto.id
+          productId: temp_product.id
         }
       })
 
       //Update product with Other
       return this.db.product.update({
-        where: {id: createProductDto.id},
+        where: {id: temp_product.id},
         data: {
           other_id: other_to_connect.id
         }
@@ -78,9 +78,6 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-
-    console.log(updateProductDto)
-
     await this.db.product.update({
       where: {id},
       data: {
@@ -95,16 +92,17 @@ export class ProductsService {
           description: updateProductDto.others_description,
           img: updateProductDto.others_img
       }
-      return this.otherservice.update(updateProductDto.other_id, dtobj)
+      return this.otherservice.updateByProductID(id, dtobj)
 
     } else {
       //console.log("Uh Oh")
       const dtobj = {
         type: updateProductDto.tea_type,
         flavor: updateProductDto.tea_flavor,
-        productId: id
+        productId: id,
+        color: updateProductDto.tea_color
       }
-      return this.teaservice.update(updateProductDto.tea_id, dtobj)
+      return this.teaservice.updateByProductID(id, dtobj)
     }
   }
 

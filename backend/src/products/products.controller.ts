@@ -26,7 +26,6 @@ export class ProductsController {
       example1: {
         summary: "example of a tea",
         value: {
-          id: 0,
           name: "tea 1",
           price: 1000,
           category: "Tea",
@@ -38,7 +37,6 @@ export class ProductsController {
       example2: {
         summary: "example of an Other",
         value: {
-          id: 0,
           name: "other 1",
           price: 1000,
           category: "Other",
@@ -98,7 +96,7 @@ export class ProductsController {
           price: 1000,
           category: "Tea",
           //below are tea details
-          tea_id: 0, //THIS IS THE REQUIRED IF YOU WANT TO UPDATE TEA DETAILS
+          tea_id: 0,
           tea_type: "filteres",
           tea_flavor: "strawberry"
         }
@@ -109,8 +107,8 @@ export class ProductsController {
           name: "other 1",
           price: 1000,
           category: "Other",
-          //below are tea details
-          others_id: 0, //THIS IS THE REQUIRED IF YOU WANT TO UPDATE OTHERS DETAILS
+          //below are other details
+          others_id: 0, 
           others_description: "description",
           others_img: "img.png"
         }
@@ -119,7 +117,7 @@ export class ProductsController {
   })
   @ApiParam({
     name: 'id',
-    type: 'int',
+    type: 'string',
     description: 'The unique ID of the order'
   })
   @ApiResponse({status: 200, description: 'The data was successfully updated'})
@@ -136,7 +134,7 @@ export class ProductsController {
   @Delete(':id')
   @ApiParam({
     name: 'id',
-    type: 'int',
+    type: 'string',
     description: 'The unique ID of the product'
   })
   @ApiResponse({status: 200, description: 'The data was successfully deleted'})

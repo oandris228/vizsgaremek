@@ -31,6 +31,15 @@ export class OthersService {
     })
   }
 
+  updateByProductID(id: number, updateOtherDto: UpdateOtherDto) {
+    return this.db.other.update({
+      where: {
+        productId: id
+      },
+      data: updateOtherDto
+    });
+  }
+
   remove(id: number) {
     return this.db.other.delete({
       where: {id}

@@ -19,8 +19,6 @@ import { UsersService } from 'src/users/users.service';
       const request = context.switchToHttp().getRequest();
       const token = this.extractTokenFromHeader(request);
       const finduser = await this.userService.findUserByToken(token);
-      console.log(finduser)
-      console.log("gamer");
       if (!token) {
         throw new UnauthorizedException();
       }

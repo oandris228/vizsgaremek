@@ -11,7 +11,10 @@ export class UsersService {
   async create(createUserDto: CreateUserDto) {
     createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
     return this.db.user.create({
-      data: createUserDto
+      data: {
+        ...createUserDto,
+        role: 'User'
+      }
     });
   }
 
@@ -43,16 +46,16 @@ export class UsersService {
     return user;
   }
 
-  update(username: string, updateUserDto: UpdateUserDto) {
+  update(id: number, updateUserDto: UpdateUserDto) {
     return this.db.user.update({
-      where: {username: username},
+      where: {id},
       data: updateUserDto
     });
   }
 
-  remove(username: string) {
+  remove(id: number) {
     return this.db.user.delete({
-      where: {username}
+      where: {id}
     });
   }
 }

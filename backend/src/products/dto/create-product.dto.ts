@@ -4,17 +4,6 @@ const categories = ["Tea", "Other"];
 
 export class CreateProductDto {
     /**
-     * unique ID of the product, you have to manually input it
-     * 
-     * 10 for tea, 11 for other, the last two digits just go up (01, 02, 03)
-     */
-    @IsInt()
-    @ApiProperty({
-        example: 1001
-    })
-    id: number;
-
-    /**
      * the name of the product
      */
     @IsString()
@@ -88,6 +77,8 @@ export class CreateProductDto {
         example: "strawberry"
     })
     tea_flavor?: string;
+
+    tea_color?: string;
 
     /**
      * ONLY FILL THIS WHEN CREATING AN 'OTHER', OTHERWISE IT IS IGNORED

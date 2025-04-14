@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiExcludeController } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiExcludeController } from '@nestjs/swagger';
+import { TokenAuthGuard } from 'src/auth/auth.guard';
 
 
 //will finish later
@@ -20,18 +21,25 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  @UseGuards(TokenAuthGuard)
+  @Get('token')
+  @ApiBearerAuth()
+  getProfile(@Request() req) {
+    return this.usersService.findUserByToken(req.token);
+  }
+
   @Get(':id')
-  findOne(@Param('username') id: string) {
-    return this.usersService.findOneByName(id);
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('username') username: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(username, updateUserDto);
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+    return this.usersService.remove(+id);
   }
 }

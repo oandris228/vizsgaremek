@@ -1,26 +1,26 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { OrdersService } from './orders.service';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { CommissionsService } from './commissions.service';
+import { CreateCommissionDto } from './dto/create-commission.dto';
+import { UpdateCommissionDto } from './dto/update-commission.dto';
 import { ApiBadRequestResponse, ApiParam, ApiResponse } from '@nestjs/swagger';
 
-@Controller('orders')
-export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+@Controller('commissions')
+export class CommissionsController {
+  constructor(private readonly commissionsService: CommissionsService) {}
 
 
   /**
    * 
    * Creates an order.
    * 
-   * @param createOrderDto the DTO for the order
+   * @param createCommissionDto the DTO for the order
    * @returns json of the order
    */
   @Post()
   @ApiResponse({ status: 201, description: 'A new random was created' })
   @ApiBadRequestResponse({ description: 'The supplied data was invalid' })
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+  create(@Body() createCommissionDto: CreateCommissionDto) {
+    return this.commissionsService.create(createCommissionDto);
   }
 
   /**
@@ -30,8 +30,20 @@ export class OrdersController {
   @ApiResponse({status: 200, description: 'The data was successfully returned'})
   @ApiResponse({status: 500, description: 'An error was encountered'})
   findAll() {
-    return this.ordersService.findAll();
+    return this.commissionsService.findAll();
   }
+
+  /**
+   * Returns all active orders for a single user.
+   */
+  @Get('active/:user_id')
+  @ApiResponse({status: 200, description: 'The data was successfully returned'})
+  @ApiResponse({status: 500, description: 'An error was encountered'})
+  findAllActive(@Param('user_id') id: string) {
+    return this.commissionsService.findAllActive(+id);
+  }
+
+
 
   /**
    * Returns a specific order.
@@ -47,7 +59,7 @@ export class OrdersController {
   @ApiResponse({status: 200, description: 'The data was successfully returned'})
   @ApiResponse({status: 500, description: 'An error was encountered'})
   findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
+    return this.commissionsService.findOne(+id);
   }
 
   /**
@@ -64,8 +76,8 @@ export class OrdersController {
   })
   @ApiResponse({status: 200, description: 'The data was successfully updated'})
   @ApiResponse({status: 500, description: 'An error was encountered'})
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.ordersService.update(+id, updateOrderDto);
+  update(@Param('id') id: string, @Body() updateCommissionDto: UpdateCommissionDto) {
+    return this.commissionsService.update(+id, updateCommissionDto);
   }
 
   /**
@@ -82,6 +94,6 @@ export class OrdersController {
   @ApiResponse({status: 200, description: 'The data was successfully deleted'})
   @ApiResponse({status: 500, description: 'An error was encountered'})
   remove(@Param('id') id: string) {
-    return this.ordersService.remove(+id);
+    return this.commissionsService.remove(+id);
   }
 }
