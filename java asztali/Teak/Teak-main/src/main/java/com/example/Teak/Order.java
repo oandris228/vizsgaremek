@@ -43,7 +43,7 @@ public class Order {
         if (connection == null) throw new Exception("Connection is not set in Order");
         List<Order> res = new ArrayList<>();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM rendelesek;");
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM rendeles;");
         while (resultSet.next()) {
             int id = resultSet.getInt("id");
             int user_id = resultSet.getInt("user_id");

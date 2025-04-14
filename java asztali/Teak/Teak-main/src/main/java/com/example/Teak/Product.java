@@ -91,4 +91,17 @@ public class Product {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
+    public static boolean exists(int productId) throws SQLException {
+        String query = "SELECT COUNT(*) FROM product WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, productId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
 }

@@ -32,8 +32,32 @@ public class TeaTable {
         TableColumn<Tea, Integer> productIdColumn = new TableColumn<>("productId");
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("productId"));
 
+        TableColumn<Tea, Void> actionColumn = new TableColumn<>("Action");
+        actionColumn.setCellFactory(param -> new TableCell<Tea, Void>() {
+            private final Button deleteButton = new Button("Delete");
+
+            {
+                deleteButton.setOnAction(event -> {
+                    Tea tea = getTableView().getItems().get(getIndex());
+                    teas.remove(tea);
+                    // You can also add logic here to delete from file/db
+                    System.out.println("Deleted: " + tea);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                }
+            }
+        });
+
         TableView<Tea> table = new TableView<>();
-        table.getColumns().addAll(idColumn, typeColumn, flavorColumn, productIdColumn);
+        table.getColumns().addAll(idColumn, typeColumn, flavorColumn, productIdColumn, actionColumn);
         table.setItems(teas);
 
         // Input fields
