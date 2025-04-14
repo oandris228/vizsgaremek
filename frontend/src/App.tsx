@@ -36,7 +36,6 @@ function App() {
             } />
             <Route path="/register" element={
               <>
-                <h1>Regisztráció</h1>
                 <NavBar />
                 <Regisztracio />
               </>

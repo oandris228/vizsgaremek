@@ -57,6 +57,9 @@ export function Products() {
 
     const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        if (formData.tea_color == undefined) {
+            formData.tea_color = "orange"
+        }
         try {
             await fetch('http://localhost:3000/products', {
                 method: 'POST',
@@ -92,8 +95,9 @@ export function Products() {
     };
 
     return <>
-        <div className="container">
-            <h1>Listázás</h1>
+        <div className="information-box">
+            <h1>Products</h1>
+            <h3>"Tea"</h3>
             <table className="table">
                 <thead className="thead">
                     <tr>
@@ -104,8 +108,6 @@ export function Products() {
                         <th>Tea Type</th>
                         <th>Tea Flavor</th>
                         <th>Tea Color</th>
-                        <th>Other Description</th>
-                        <th>Other Image</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -118,20 +120,31 @@ export function Products() {
                             <td>{product.Tea?.[0]?.type || "N/A"}</td>
                             <td>{product.Tea?.[0]?.flavor || "N/A"}</td>
                             <td>{product.Tea?.[0]?.color || "N/A"}</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
                             <td><button className="button-delete" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>
                             <td><button className="button-modify" onClick={() => { handleModify(product.id) }}>Módosítás</button></td>
                         </tr>
                     ))}
+                </tbody>
+            </table>
+            <h3>"Other"</h3>
+            <table>
+                <thead className="thead">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Other Description</th>
+                        <th>Other Image</th>
+                    </tr>
+                </thead>
+                <tbody>
                     {others.map((product) => (
                         <tr key={product.id}>
                             <td>{product.id}</td>
                             <td>{product.name}</td>
                             <td>{product.price}</td>
                             <td>{product.category}</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
                             <td>{product.Other?.[0]?.description || "N/A"}</td>
                             <td>
                                 {product.Other?.[0]?.img ? (
@@ -146,33 +159,37 @@ export function Products() {
             </table>
         </div>
 
-        <h1>Felvétel</h1>
-        <form>
-            <label>Name:</label>
-            <input type="text" name="name" onChange={(e) => { handleChange(e) }} /><br />
+        <div className="admin-info-box">
+            <div className="information-box">
+                <h1>Felvétel</h1>
+                <form>
+                    <label>Name:</label>
+                    <input type="text" name="name" onChange={(e) => { handleChange(e) }} /><br />
 
-            <label>Price:</label>
-            <input type="number" name="price" onChange={(e) => { handleChange(e) }} /><br />
+                    <label>Price:</label>
+                    <input type="number" name="price" onChange={(e) => { handleChange(e) }} /><br />
 
-            <label>Category:</label>
-            <input type="text" name="category" onChange={(e) => { handleChange(e) }} /><br />
+                    <label>Category:</label>
+                    <input type="text" name="category" onChange={(e) => { handleChange(e) }} /><br />
 
-            <label>Tea Type:</label>
-            <input type="text" name="tea_type" onChange={(e) => { handleChange(e) }} /><br />
+                    <label>Tea Type:</label>
+                    <input type="text" name="tea_type" onChange={(e) => { handleChange(e) }} /><br />
 
-            <label>Tea Flavor:</label>
-            <input type="text" name="tea_flavor" onChange={(e) => { handleChange(e) }} /><br />
+                    <label>Tea Flavor:</label>
+                    <input type="text" name="tea_flavor" onChange={(e) => { handleChange(e) }} /><br />
 
-            <label>Tea Color:</label>
-            <input type="text" name="tea_color" onChange={(e) => { handleChange(e) }} /><br />
+                    <label>Tea Color:</label>
+                    <input type="text" name="tea_color" onChange={(e) => { handleChange(e) }} /><br />
 
-            <label>Other Description:</label>
-            <input type="text" name="others_description" onChange={(e) => { handleChange(e) }} /><br />
+                    <label>Other Description:</label>
+                    <input type="text" name="others_description" onChange={(e) => { handleChange(e) }} /><br />
 
-            <label>Other Image:</label>
-            <input type="text" name="others_img" onChange={(e) => { handleChange(e) }} /><br />
+                    <label>Other Image:</label>
+                    <input type="text" name="others_img" onChange={(e) => { handleChange(e) }} /><br />
 
-            <button onClick={(e) => handleSubmit(e)}>Submit</button>
-        </form>
+                    <button onClick={(e) => handleSubmit(e)}>Submit</button>
+                </form>
+            </div>
+        </div>
     </>
 }

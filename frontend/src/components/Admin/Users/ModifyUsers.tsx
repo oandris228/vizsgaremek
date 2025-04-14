@@ -93,7 +93,7 @@ export default function ModifyUsers() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error fetching data: {error}</p>;
 
-  return <>
+  return <div className='information-box'>
     <h1>Módosítás</h1>
     <h3>You can only edit some of the things</h3>
     <form>
@@ -132,5 +132,5 @@ export default function ModifyUsers() {
       <button onClick={(e) => handleSubmit(e)}>Submit</button>
     </form>
 
-  </>
+  </div>
 }

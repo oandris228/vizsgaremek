@@ -18,19 +18,19 @@ export default function Login({ setToken }: any) {
   }
 
   return(
-    <div className="login-wrapper">
-      <h1>Please Log In</h1>
+    <div className="information-box">
+      <h1 className='p-3'>Bejelentkezés</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)} />
+          <p>Felhasználónév</p>
         </label>
+        <input type="text" onChange={e => setUserName(e.target.value)} />
         <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} />
+          <p>Jelszó</p>
         </label>
+        <input type="password" onChange={e => setPassword(e.target.value)} />
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" className='button-confirm'>Bejelentkezés</button>
         </div>
       </form>
     </div>

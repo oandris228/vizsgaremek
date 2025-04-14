@@ -68,3 +68,10 @@ export type CommissionFormData = {
     commission_commissionState: "Active" | "Processed" | "Completed";
     commission_extratext: string;
 }
+
+export type UserFormData = {
+    username: string;
+    password: string;
+    email: string;
+    shipping_address: string;
+}

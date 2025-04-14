@@ -127,8 +127,9 @@ export function Cart() {
                         ))}
                     </ul>
                     <div className="order-info">
-                        <h3 className="order-stuff">Szállítási cím: <span className="italic">{commission?.shipping_address}</span></h3>
-                        <h3 className="order-stuff">Megjegyzés: <input type="text" className="extratext-input" onChange={(e) => { handleChange(e) }} /></h3>
+                        <h3 className="order-stuff p-3">Szállítási cím: <span className="italic">{commission?.shipping_address}</span></h3>
+                        <h3 className="order-stuff p-3">Megjegyzés:</h3>
+                        <input type="text" className="extratext-input p-3" onChange={(e) => { handleChange(e) }} />
                     </div>
                     <span className="button-container">
                         <button className="button-confirm" onClick={(e) => SumbmitCommission(e)}>Rendelés feladása</button>

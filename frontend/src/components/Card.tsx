@@ -50,28 +50,36 @@ export const Card: React.FC<ProductProps> = ({ product }) => {
             <div className="product-header tea-header" style={{
                 backgroundColor: product.Tea?.[0].color
             }}>
-                <img src="tea.png" alt="tea icon thing" className="tea-image" />
+                <img src="tea.png" alt="tea icon thing" className="product-image" />
             </div>
-            <div className="container">
+            <div className="card-container">
                 <h3>{product.name}</h3>
-                <h4>{product.price}</h4>
-                <p>{product.Tea?.[0].type}</p>
-                <p>{product.Tea?.[0].flavor}</p>
+                <div className="card-content">
+                    <div>
+                        <h4>{product.price} Ft</h4>
+                        <p>{product.Tea?.[0].type}</p>
+                        <p>{product.Tea?.[0].flavor}</p>
+                    </div>
+                    <div><button onClick={() => AddToCart(product)}>Add to Cart</button></div>
+                </div>
             </div>
-            <button onClick={() => AddToCart(product)}>Add to Cart</button>
         </div>
     } else {
         return <div className="card">
             <div className="product-header">
-                <img src={product.Other?.[0].img} alt="Poduct image" className="other-img" />
+                <img src={product.Other?.[0].img} alt="Poduct image" className="product-image" />
             </div>
             <div className="container">
                 <h3>{product.name}</h3>
-                <h4>{product.price}</h4>
-                <p>{product.Other?.[0].description}</p>
-                <p>{product.Other?.[0].img}</p>
+                <div className="card-content">
+                    <div>
+                        <h4>{product.price}Ft</h4>
+                        <p>{product.Other?.[0].description}</p>
+                        <p>{product.Other?.[0].img}</p>
+                    </div>
+                    <div><button onClick={() => AddToCart(product)}>Add to Cart</button></div>
+                </div>
             </div>
-            <button onClick={() => AddToCart(product)}>Add to Cart</button>
         </div>
     }
 }

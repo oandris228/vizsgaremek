@@ -4,11 +4,14 @@
     --color-mainbackground: #99582a;
     --color-navbar: #fbba72;
     --color-cardbg: #ffd29d;
+    --color-hover: #fb8500;
+    --color-sandy: #d4a373;
 }
 
 body {
     @apply
     overflow-x-hidden
+    m-0
 }
 
 .default-wrapper {
@@ -18,7 +21,8 @@ body {
 
 h1 {
     @apply 
-    text-7xl
+    text-3xl
+    font-bold
 }
 
 .card {
@@ -29,6 +33,13 @@ h1 {
     p-3 
     m-5 
     rounded-2xl
+}
+
+.card-content {
+    @apply
+    flex
+    flex-row
+    justify-between
 }
 
 h2 {
@@ -46,8 +57,8 @@ h3 {
     bg-blue-500 
     rounded-2xl 
     p-2
-    mt-4
-    ml-40
+    m-2
+    mt-8
 }
 
 .card button:hover {
@@ -63,15 +74,15 @@ h3 {
 
 .product-header {
     @apply
-    h-52
+    h-66
     w-full
     rounded-2xl
     overflow-hidden
 }
 
-.tea-image {
+.product-image {
     @apply
-    object-cover
+    object-fill
 }
 
 .navbar {
@@ -88,6 +99,7 @@ h3 {
     list-none
     self-center
     overflow-hidden
+    font-bold
 }
 
 .nav-list ul {
@@ -105,16 +117,20 @@ h3 {
     p-3
 }
 
-.nav-list a {
+.nav-list a, .nav-list button, .nav-item {
     @apply
     p-4
     rounded-4xl
+    border-2
+    border-transparent
+    hover:text-hover
+    hover:border-hover
+    hover:border-dashed
+    transition-all
+    duration-300
 }
 
-.nav-list a:hover {
-    @apply
-    bg-amber-300
-}
+
 
 .hamburger-button {
     @apply
@@ -165,6 +181,19 @@ h3 {
 .button-delete:hover {
     @apply 
     bg-red-400
+}
+
+.button-modify {
+    @apply 
+    bg-orange-400 
+    rounded-2xl 
+    p-2
+    m-3
+}
+
+.button-modify:hover {
+    @apply 
+    bg-orange-300
 }
 
 .order-info {
@@ -227,6 +256,8 @@ h3 {
     @apply
     block
     p-5
+    m-2
+    font-bold
 }
 
 .admin-frame {
@@ -234,7 +265,6 @@ h3 {
     flex-1
     h-full
     min-w-full
-    m-5
 }
 
 .profile-comm {
@@ -250,9 +280,40 @@ h3 {
     rounded-4xl
 }
 
-.table {
+table {
+    @apply
+    overflow-x-auto
+    border-collapse
+}
+tr {
+    @apply
+    rounded-4xl
+}
+
+th, td {
+    @apply
+    text-left
+    p-3
+}
+
+tr:nth-child(even) {
+    @apply
+    bg-sandy
+}
+
+input, select, textarea {
     @apply
     w-full
+    p-3
+    resize-y
+    bg-sandy
+    rounded-2xl
+}
+
+label {
+    @apply
+    p-1
+    inline-block
 }
 
 /* mobile view */
@@ -270,9 +331,15 @@ h3 {
         @apply
         justify-between
     }
-    .admin-stuff {
+    .admin-container {
         @apply
         hidden
+    }
+
+    .profile-comm-item {
+        @apply
+        max-w-60
+        wrap-break-word
     }
 }
 
@@ -292,9 +359,15 @@ h3 {
         @apply
         justify-between
     }
-    .admin-stuff {
+    .admin-container {
         @apply
         hidden
+    }
+    .profile-comm {
+        @apply
+        flex
+        flex-col
+        items-center
     }
 }
 

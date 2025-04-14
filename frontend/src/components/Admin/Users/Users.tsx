@@ -63,10 +63,10 @@ export default function Users() {
     //ehhez nincs felvétel, ha fel akarsz venni valakit akkor kérd meg hogy regisztráljon lol
 
     return (
-        <div className="container mt-4">
-            <h1>Listázás</h1>
-            <table className="table table-striped table-bordered">
-                <thead className="thead-dark">
+        <div className="information-box">
+            <h1>Users</h1>
+            <table className="table">
+                <thead className="thead">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -83,8 +83,8 @@ export default function Users() {
                             <td>{user.email}</td>
                             <td>{user.shipping_address}</td>
                             <td>{user.role}</td>
-                            <td><button className="btn btn-danger" onClick={() => { handleDelete(user.id) }}>Törlés</button></td>
-                            <td><button className="btn btn-primary" onClick={() => { handleModify(user.id) }}>Módosítás</button></td>
+                            <td><button className="button-delete" onClick={() => { handleDelete(user.id) }}>Törlés</button></td>
+                            <td><button className="button-modify" onClick={() => { handleModify(user.id) }}>Módosítás</button></td>
                         </tr>
                     ))}
                 </tbody>

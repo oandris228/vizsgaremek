@@ -81,40 +81,40 @@ export default function ModifyProducts() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
-        ...prev,
-        [name]: value.toString(),
+      ...prev,
+      [name]: value.toString(),
     }));
-};
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error fetching data: {error}</p>;
 
-  return <>
+  return <div className='information-box'>
     <h1>Módosítás</h1>
     <h3>You can only edit some of the things</h3>
-        <form>
-            <label>Name:</label>
-            <input type="text" name="name" onChange={(e) => { handleChange(e) }} value={formData.name}/><br />
+    <form>
+      <label>Name:</label>
+      <input type="text" name="name" onChange={(e) => { handleChange(e) }} value={formData.name} /><br />
 
-            <label>Price:</label>
-            <input type="number" name="price" onChange={(e) => { handleChange(e) }} value={formData.price}/><br />
+      <label>Price:</label>
+      <input type="number" name="price" onChange={(e) => { handleChange(e) }} value={formData.price} /><br />
 
-            <label>Tea Type:</label>
-            <input type="text" name="tea_type" onChange={(e) => { handleChange(e) }} value={formData.tea_type}/><br />
+      <label>Tea Type:</label>
+      <input type="text" name="tea_type" onChange={(e) => { handleChange(e) }} value={formData.tea_type} /><br />
 
-            <label>Tea Flavor:</label>
-            <input type="text" name="tea_flavor" onChange={(e) => { handleChange(e) }} value={formData.tea_flavor}/><br />
+      <label>Tea Flavor:</label>
+      <input type="text" name="tea_flavor" onChange={(e) => { handleChange(e) }} value={formData.tea_flavor} /><br />
 
-            <label>Tea Color:</label>
-            <input type="text" name="tea_color" onChange={(e) => { handleChange(e) }} value={formData.tea_color}/><br />
+      <label>Tea Color:</label>
+      <input type="text" name="tea_color" onChange={(e) => { handleChange(e) }} value={formData.tea_color} /><br />
 
-            <label>Other Description:</label>
-            <input type="text" name="others_description" onChange={(e) => { handleChange(e) }} value={formData.others_description}/><br />
+      <label>Other Description:</label>
+      <input type="text" name="others_description" onChange={(e) => { handleChange(e) }} value={formData.others_description} /><br />
 
-            <label>Other Image:</label>
-            <input type="text" name="others_img" onChange={(e) => { handleChange(e) }} value={formData.others_img}/><br />
+      <label>Other Image:</label>
+      <input type="text" name="others_img" onChange={(e) => { handleChange(e) }} value={formData.others_img} /><br />
 
-            <button onClick={(e) => handleSubmit(e)}>Submit</button>
-        </form>
-  </>
+      <button onClick={(e) => handleSubmit(e)}>Submit</button>
+    </form>
+  </div>
 }

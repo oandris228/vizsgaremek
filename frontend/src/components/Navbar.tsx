@@ -66,7 +66,7 @@ export default function NavBar() {
                 )}
                 {LoggedIn ? (
                     <li>
-                        <button className="nav-link" onClick={() => { handleLogout(); navigate('/login') }}>Logout</button>
+                        <NavLink className="nav-link" onClick={() => { handleLogout();}} to="/login">Logout</NavLink>
                     </li>
                 ) : (
                     <>
