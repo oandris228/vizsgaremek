@@ -23,35 +23,42 @@ h1 {
 
 .card {
     @apply 
-    bg-white 
+    bg-cardbg
     w-72 
-    h-96 
+    h-100 
     p-3 
     m-5 
     rounded-2xl
 }
 
-.card h3 {
+h2 {
+    @apply
+    text-5xl
+}
+
+h3 {
     @apply 
     text-4xl
 }
 
 .card button {
     @apply 
-    bg-blue-400 
+    bg-blue-500 
     rounded-2xl 
     p-2
+    mt-4
+    ml-40
 }
 
 .card button:hover {
     @apply 
-    bg-red-400
-    rounded-2xl 
-    p-2
+    bg-blue-400
 }
 
 .card-list {
-    display: flex;
+    @apply
+    flex
+    flex-wrap
 }
 
 .product-header {
@@ -73,6 +80,7 @@ h1 {
     flex
     overflow-hidden
     justify-between
+    p-2
 }
 
 .nav-list {
@@ -121,7 +129,7 @@ h1 {
     text-4xl
 }
 
-.profile-div {
+.information-box {
     @apply
     flex
     flex-col
@@ -131,6 +139,43 @@ h1 {
     pb-96
     bg-cardbg
     rounded-4xl
+}
+
+.button-confirm {
+    @apply 
+    bg-blue-500 
+    rounded-2xl 
+    p-2
+    m-3
+}
+
+.button-confirm:hover {
+    @apply 
+    bg-blue-400
+}
+
+.button-delete {
+    @apply 
+    bg-red-500 
+    rounded-2xl 
+    p-2
+    m-3
+}
+
+.button-delete:hover {
+    @apply 
+    bg-red-400
+}
+
+.order-info {
+    @apply
+    m-4
+}
+
+.cart-item {
+    @apply
+    p-4
+    border-b-2
 }
 
 .profile-username {
@@ -155,6 +200,61 @@ h1 {
     p-2
 }
 
+.button-container {
+    @apply
+    flex
+    
+}
+
+.admin-container {
+    height: calc(100vh - 96px);
+
+    @apply
+    flex
+    overflow-hidden
+}
+
+.admin-navbar {
+    @apply
+    m-0
+    p-0
+    w-32
+    h-full
+    bg-navbar
+}
+
+.admin-navbar li {
+    @apply
+    block
+    p-5
+}
+
+.admin-frame {
+    @apply
+    flex-1
+    h-full
+    min-w-full
+    m-5
+}
+
+.profile-comm {
+    @apply
+    m-5
+}
+
+.profile-comm-item {
+    @apply
+    bg-amber-100
+    m-5
+    p-3
+    rounded-4xl
+}
+
+.table {
+    @apply
+    w-full
+}
+
 /* mobile view */
 @media screen and (max-width: 576px) {
     .card-list {
@@ -170,7 +270,7 @@ h1 {
         @apply
         justify-between
     }
-    .nav-admin {
+    .admin-stuff {
         @apply
         hidden
     }
@@ -192,11 +292,19 @@ h1 {
         @apply
         justify-between
     }
+    .admin-stuff {
+        @apply
+        hidden
+    }
 }
 
 /* screen view */
 @media screen and (min-width: 1151px) {
     .hamburger-button {
+        @apply
+        hidden
+    }
+    .admin-mobile {
         @apply
         hidden
     }

@@ -9,11 +9,11 @@ export default function AdminFelulet() {
     const [frameLink, setFrameLink] = useState('/products');
 
     const LoggedIn = token != undefined;
-    
-    useEffect(()=> {
+
+    useEffect(() => {
         async function IsUserAdmin() {
 
-            if(LoggedIn) {
+            if (LoggedIn) {
                 const response = await fetch('http://localhost:3000/users/token', {
                     method: 'GET',
                     headers: {
@@ -33,25 +33,24 @@ export default function AdminFelulet() {
     }, [token])
 
     return <>
-        <div className="container flex min-h-full overflow-hidden" hidden={!state}>
-            <nav className="">
-                <div className="" id="">
-                    <ul className="">
-                        <li className="nav-item active">
-                            <button onClick={()=> {setFrameLink("/products")}}>Products</button>
-                        </li>
-                        <li className="nav-item active">
-                            <button onClick={()=> {setFrameLink("/users")}}>Users</button>
-                        </li>
-                        <li className="nav-item active">
-                            <button onClick={()=> {setFrameLink("/orders")}}>Orders</button>
-                        </li>
-                    </ul>
-                </div>
+        <div className="admin-container" hidden={!state}>
+            <nav className="admin-navbar">
+                <ul className="">
+                    <li className="nav-item active">
+                        <button onClick={() => { setFrameLink("/products") }}>Products</button>
+                    </li>
+                    <li className="nav-item active">
+                        <button onClick={() => { setFrameLink("/users") }}>Users</button>
+                    </li>
+                    <li className="nav-item active">
+                        <button onClick={() => { setFrameLink("/orders") }}>Orders</button>
+                    </li>
+                </ul>
             </nav>
-
-
-            <iframe className='min-w-screen min-h-screen' src={frameLink}></iframe>
+            <iframe className='admin-frame' src={frameLink}></iframe>
+        </div>
+        <div className='admin-mobile'>
+            <h1>Az admin felület mobilon és tableten nem elérhető</h1>
         </div>
     </>
 }

@@ -92,10 +92,10 @@ export function Products() {
     };
 
     return <>
-        <div className="container mt-4">
+        <div className="container">
             <h1>Listázás</h1>
-            <table className="table table-striped table-bordered">
-                <thead className="thead-dark">
+            <table className="table">
+                <thead className="thead">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -120,8 +120,8 @@ export function Products() {
                             <td>{product.Tea?.[0]?.color || "N/A"}</td>
                             <td>N/A</td>
                             <td>N/A</td>
-                            <td><button className="btn btn-danger" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>
-                            <td><button className="btn btn-primary" onClick={() => { handleModify(product.id) }}>Módosítás</button></td>
+                            <td><button className="button-delete" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>
+                            <td><button className="button-modify" onClick={() => { handleModify(product.id) }}>Módosítás</button></td>
                         </tr>
                     ))}
                     {others.map((product) => (
@@ -138,8 +138,8 @@ export function Products() {
                                     <img src={product.Other[0].img} alt="Product" width="50" />
                                 ) : "N/A"}
                             </td>
-                            <td><button className="btn btn-danger" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>
-                            <td><button className="btn btn-primary" onClick={() => { handleModify(product.id) }}>Módosítás</button></td>
+                            <td><button className="button-delete" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>
+                            <td><button className="button-modify" onClick={() => { handleModify(product.id) }}>Módosítás</button></td>
                         </tr>
                     ))}
                 </tbody>

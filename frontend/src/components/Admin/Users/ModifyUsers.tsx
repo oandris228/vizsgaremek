@@ -57,12 +57,19 @@ export default function ModifyUsers() {
     e.preventDefault();
 
     try {
+      const datawitoutcommissions = {
+        id: formData.id,
+        username: formData.username,
+        email: formData.email,
+        shipping_address: formData.shipping_address,
+        role: formData.role
+      }
       const response = await fetch(`http://localhost:3000/users/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(datawitoutcommissions),
       });
 
       if (!response.ok) {

@@ -15,14 +15,15 @@ export default function Profile() {
     }, [token])
 
     return (<>
-        <div className="profile-div">
+        <div className="information-box">
             <h1>Üdvözlünk <span className="profile-username">{user?.username}</span></h1>
-            <h2>email: {user?.email}</h2>
-            <h2>shipping_address: {user?.shipping_address}</h2>
-            <ul>
+            <p>Email-cím: <span className="italic m-2">{user?.email}</span></p>
+            <p>Szállítási cím: <span className="italic m-2">{user?.shipping_address}</span></p>
+            <h3>Rendelések: </h3>
+            <ul className="profile-comm">
                 {user?.commissions.map((commission) => (
                     <li key={commission.id}>
-                        <button style={{ "padding": 10 }}>Rendelés ID: {commission.id}; Rendelés státusza: {commission.commissionState}</button>
+                        <button className="profile-comm-item">Rendelés ID: {commission.id}; Rendelés státusza: {commission.commissionState}; Megjegyzés: {commission.extratext}</button>
                     </li>
                 ))}
             </ul>
