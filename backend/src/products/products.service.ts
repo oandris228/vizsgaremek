@@ -15,7 +15,6 @@ export class ProductsService {
   ) {}
 
   async create(createProductDto: CreateProductDto) {
-
     //Create product
 
     const temp_product = await this.db.product.create({

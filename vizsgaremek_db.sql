@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Feb 21. 14:08
--- Kiszolgáló verziója: 10.4.27-MariaDB
--- PHP verzió: 8.2.0
+-- Host: 127.0.0.1
+-- Generation Time: Apr 14, 2025 at 04:35 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,26 +18,41 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Adatbázis: `vizsgaremek_db`
+-- Database: `vizsgadb`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `order`
+-- Table structure for table `commission`
 --
 
-CREATE TABLE `order` (
+CREATE TABLE `commission` (
   `id` int(11) NOT NULL,
-  `cart` varchar(191) NOT NULL,
   `shipping_address` varchar(191) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `commissionState` enum('Active','Processed','Completed') NOT NULL,
+  `extratext` varchar(191) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `other`
+-- Table structure for table `item`
+--
+
+CREATE TABLE `item` (
+  `id` int(11) NOT NULL,
+  `commissionId` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `productName` varchar(191) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `other`
 --
 
 CREATE TABLE `other` (
@@ -50,7 +65,7 @@ CREATE TABLE `other` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `product`
+-- Table structure for table `product`
 --
 
 CREATE TABLE `product` (
@@ -65,20 +80,21 @@ CREATE TABLE `product` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `tea`
+-- Table structure for table `tea`
 --
 
 CREATE TABLE `tea` (
   `id` int(11) NOT NULL,
   `type` varchar(191) NOT NULL,
   `flavor` varchar(191) NOT NULL,
+  `color` varchar(191) NOT NULL,
   `productId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `token`
+-- Table structure for table `token`
 --
 
 CREATE TABLE `token` (
@@ -86,23 +102,10 @@ CREATE TABLE `token` (
   `userId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- A tábla adatainak kiíratása `token`
---
-
-INSERT INTO `token` (`token`, `userId`) VALUES
-('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoic3RyaW5nIiwiaWF0IjoxNzM5OTcwOTUwfQ.hEpHraUIqdWbgvuIth8l9KEf2riMGxrk59qmJs_E77s', 1),
-('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoic3RyaW5nIiwiaWF0IjoxNzM5OTY0MDcyfQ.gRDliLTnj0a2ehrsK9RDeDkiLLFYTxh1Pkz5V3z5gWc', 1),
-('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoic3RyaW5nIiwiaWF0IjoxNzM5OTY3NjE0fQ.7cSX8gIKySyxL1TkAAXvlBCLN9yC5vDgDOWV63gFb-U', 1),
-('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3Mzk5NjA2NTV9.DxncL7ACE-0bkBnlrYKLEiYtQvJncV_fcwQo5Ip40LU', 2),
-('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3Mzk5Njg0OTJ9.Bvjy40ZhgDmRl6UNbSmfLzUlgtwJQCmETkq6wfSvrFU', 2),
-('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3Mzk5NjgyMzB9.kodb8NkNwdUSHx6NrWuGNRnd9DU2xmacoap_cr3KG7M', 2),
-('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE3Mzk5NzA3NDR9.XscsAKUULSPN0p7xAuYr2i_CDnJIxmKiM7YX-fc_7Vw', 2);
-
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
@@ -115,54 +118,33 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- A tábla adatainak kiíratása `user`
---
-
-INSERT INTO `user` (`id`, `username`, `email`, `password`, `shipping_address`, `role`) VALUES
-(1, 'string', 'string', '$2b$10$z5V3lpDNRB3AEI6Ee81/fO74rT8EZUbckBaG8.mfiZMio2HV2yrk2', 'string', 'User'),
-(2, 'admin', 'string', '$2b$10$YLx6xkQfN0Kj1PsYTD2b8eFVRk1H2P0o6iWoSwt/yWDDtzWBd6qbO', 'string', 'Admin');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `_ordertoproduct`
---
-
-CREATE TABLE `_ordertoproduct` (
-  `A` int(11) NOT NULL,
-  `B` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `_ordertouser`
---
-
-CREATE TABLE `_ordertouser` (
-  `A` int(11) NOT NULL,
-  `B` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Indexek a kiírt táblákhoz
+-- Indexes for dumped tables
 --
 
 --
--- A tábla indexei `order`
+-- Indexes for table `commission`
 --
-ALTER TABLE `order`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `commission`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `Commission_user_id_fkey` (`user_id`);
 
 --
--- A tábla indexei `other`
+-- Indexes for table `item`
+--
+ALTER TABLE `item`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `Item_productId_fkey` (`productId`),
+  ADD KEY `Item_commissionId_fkey` (`commissionId`);
+
+--
+-- Indexes for table `other`
 --
 ALTER TABLE `other`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `Other_productId_key` (`productId`);
 
 --
--- A tábla indexei `product`
+-- Indexes for table `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`id`),
@@ -170,97 +152,100 @@ ALTER TABLE `product`
   ADD UNIQUE KEY `Product_other_id_key` (`other_id`);
 
 --
--- A tábla indexei `tea`
+-- Indexes for table `tea`
 --
 ALTER TABLE `tea`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `Tea_productId_key` (`productId`);
 
 --
--- A tábla indexei `token`
+-- Indexes for table `token`
 --
 ALTER TABLE `token`
   ADD PRIMARY KEY (`token`),
   ADD KEY `Token_userId_fkey` (`userId`);
 
 --
--- A tábla indexei `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `User_username_key` (`username`);
 
 --
--- A tábla indexei `_ordertoproduct`
---
-ALTER TABLE `_ordertoproduct`
-  ADD UNIQUE KEY `_OrderToProduct_AB_unique` (`A`,`B`),
-  ADD KEY `_OrderToProduct_B_index` (`B`);
-
---
--- A tábla indexei `_ordertouser`
---
-ALTER TABLE `_ordertouser`
-  ADD UNIQUE KEY `_OrderToUser_AB_unique` (`A`,`B`),
-  ADD KEY `_OrderToUser_B_index` (`B`);
-
---
--- A kiírt táblák AUTO_INCREMENT értéke
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT a táblához `other`
+-- AUTO_INCREMENT for table `commission`
+--
+ALTER TABLE `commission`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `item`
+--
+ALTER TABLE `item`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `other`
 --
 ALTER TABLE `other`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT a táblához `tea`
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tea`
 --
 ALTER TABLE `tea`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT a táblához `user`
+-- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Megkötések a kiírt táblákhoz
+-- Constraints for dumped tables
 --
 
 --
--- Megkötések a táblához `other`
+-- Constraints for table `commission`
+--
+ALTER TABLE `commission`
+  ADD CONSTRAINT `Commission_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `item`
+--
+ALTER TABLE `item`
+  ADD CONSTRAINT `Item_commissionId_fkey` FOREIGN KEY (`commissionId`) REFERENCES `commission` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `Item_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `other`
 --
 ALTER TABLE `other`
   ADD CONSTRAINT `Other_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON UPDATE CASCADE;
 
 --
--- Megkötések a táblához `tea`
+-- Constraints for table `tea`
 --
 ALTER TABLE `tea`
   ADD CONSTRAINT `Tea_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) ON UPDATE CASCADE;
 
 --
--- Megkötések a táblához `token`
+-- Constraints for table `token`
 --
 ALTER TABLE `token`
   ADD CONSTRAINT `Token_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Megkötések a táblához `_ordertoproduct`
---
-ALTER TABLE `_ordertoproduct`
-  ADD CONSTRAINT `_OrderToProduct_A_fkey` FOREIGN KEY (`A`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `_OrderToProduct_B_fkey` FOREIGN KEY (`B`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Megkötések a táblához `_ordertouser`
---
-ALTER TABLE `_ordertouser`
-  ADD CONSTRAINT `_OrderToUser_A_fkey` FOREIGN KEY (`A`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `_OrderToUser_B_fkey` FOREIGN KEY (`B`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
