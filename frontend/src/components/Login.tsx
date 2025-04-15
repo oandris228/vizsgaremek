@@ -6,18 +6,27 @@ export default function Login({ setToken }: any) {
   const navigate = useNavigate();
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const token = await loginUser({
-      username,
-      password
-    });
-    setToken(token);
-    navigate('/profile')
+    try {
+      const token = await loginUser({
+        username,
+        password
+      });
+      setToken(token);
+      navigate('/profile')
+    } catch (error: any) {
+      console.log(error.message);
+      switch (error.message) {
+        case "401": setErrors("Hibás bejelentkezési adatok!"); break;
+        default: setErrors("Hiba történt"); break;
+      }
+    }
   }
 
-  return(
+  return (
     <div className="information-box">
       <h1 className='p-3'>Bejelentkezés</h1>
       <form onSubmit={handleSubmit}>
@@ -33,6 +42,11 @@ export default function Login({ setToken }: any) {
           <button type="submit" className='button-confirm'>Bejelentkezés</button>
         </div>
       </form>
+      {errors && (
+        <div>
+          <p className='text-red-600'><strong>Hiba:</strong>{errors}</p>
+        </div>
+      )}
     </div>
   )
 }

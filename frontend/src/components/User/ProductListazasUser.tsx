@@ -58,54 +58,6 @@ export default function Listazas() {
                     <Card product={product}/>
                 </div>
             ))}
-            {/*<table className="table table-striped table-bordered">
-                <thead className="thead-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Tea Type</th>
-                        <th>Tea Flavor</th>
-                        <th>Tea Color</th>
-                        <th>Other Description</th>
-                        <th>Other Image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {teas.map((product) => (
-                        <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>{product.name}</td>
-                            <td>{product.price}</td>
-                            <td>{product.category}</td>
-                            <td>{product.Tea?.[0]?.type || "N/A"}</td>
-                            <td>{product.Tea?.[0]?.flavor || "N/A"}</td>
-                            <td>{product.Tea?.[0].color || "N/A"}</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
-                            <td><button onClick={() => AddToCart(product.id)}>Add to Cart</button></td>
-                        </tr>
-                    ))}
-                    {others.map((product) => (
-                        <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>{product.name}</td>
-                            <td>{product.price}</td>
-                            <td>{product.category}</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
-                            <td>{product.Other?.[0]?.description || "N/A"}</td>
-                            <td>
-                                {product.Other?.[0]?.img ? (
-                                    <img src={product.Other[0].img} alt="Product" width="50" />
-                                ) : "N/A"}
-                            </td>
-                            <td><button onClick={() => AddToCart(product.id)}>Add to Cart</button></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>*/}
         </div>
     );
 }

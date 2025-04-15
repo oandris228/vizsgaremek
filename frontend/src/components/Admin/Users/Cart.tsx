@@ -73,7 +73,7 @@ export function Cart() {
                 setError(err.message);
             }
         } else {
-            throw new Error("no commission to submit")
+            setError("no commission to remove");
         }
     }
 
@@ -99,7 +99,7 @@ export function Cart() {
                 setError(err.message);
             }
         } else {
-            throw new Error("no commission to submit")
+            setError("no commission to submit")
         }
     }
 
@@ -140,6 +140,11 @@ export function Cart() {
             ) : (<>
                 <h3>Üres a kosarad! Adj hozzá egy terméket</h3>
             </>)}
+            {error && (
+                <div>
+                    <p className='text-red-600'><strong>Hiba:</strong>{error}</p>
+                </div>
+            )}
         </div>
     </>
 }

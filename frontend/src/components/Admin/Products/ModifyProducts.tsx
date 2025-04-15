@@ -114,7 +114,7 @@ export default function ModifyProducts() {
       <label>Other Image:</label>
       <input type="text" name="others_img" onChange={(e) => { handleChange(e) }} value={formData.others_img} /><br />
 
-      <button onClick={(e) => handleSubmit(e)}>Submit</button>
+      <button className='button-confirm' onClick={(e) => handleSubmit(e)}>Submit</button>
     </form>
   </div>
 }

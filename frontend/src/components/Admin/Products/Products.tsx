@@ -187,7 +187,7 @@ export function Products() {
                     <label>Other Image:</label>
                     <input type="text" name="others_img" onChange={(e) => { handleChange(e) }} /><br />
 
-                    <button onClick={(e) => handleSubmit(e)}>Submit</button>
+                    <button className="button-confirm" onClick={(e) => handleSubmit(e)}>Submit</button>
                 </form>
             </div>
         </div>

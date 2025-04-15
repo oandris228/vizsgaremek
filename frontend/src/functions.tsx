@@ -19,18 +19,25 @@ export async function GetProfile(token: string) {
 }
 
 export async function loginUser(credentials: any) {
-    return fetch('http://localhost:3000/auth', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-        .then(data => data.json())
+    try {
+        const response = await fetch('http://localhost:3000/auth', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        });
+        if (!response.ok) {
+            throw new Error(`${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error("Error")
+    }
 }
 
 export function LogoutUser(token: string) {
-    console.log(token);
     if (token) {
         return fetch('http://localhost:3000/auth/logout', {
             method: 'DELETE',

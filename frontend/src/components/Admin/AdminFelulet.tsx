@@ -8,25 +8,30 @@ export default function AdminFelulet() {
 
     const [frameLink, setFrameLink] = useState('/products');
 
+    const [errors, setErrors] = useState("");
+
     const LoggedIn = token != undefined;
 
     useEffect(() => {
         async function IsUserAdmin() {
-
-            if (LoggedIn) {
-                const response = await fetch('http://localhost:3000/users/token', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + token
+            try {
+                if (LoggedIn) {
+                    const response = await fetch('http://localhost:3000/users/token', {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    })
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                })
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    setState(data.role == "Admin")
+                } else {
+                    setState(false)
                 }
-                const data = await response.json();
-                setState(data.role == "Admin")
-            } else {
-                setState(false)
+            } catch (error: any) {
+                setErrors(error.message)
             }
         }
         IsUserAdmin();
@@ -52,5 +57,10 @@ export default function AdminFelulet() {
         <div className='admin-mobile'>
             <h1>Az admin felület mobilon és tableten nem elérhető</h1>
         </div>
+        {errors && (
+            <div>
+                <p className='text-red-600'><strong>Hiba:</strong>{errors}</p>
+            </div>
+        )}
     </>
 }

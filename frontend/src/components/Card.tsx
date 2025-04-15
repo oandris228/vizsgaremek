@@ -39,7 +39,7 @@ export const Card: React.FC<ProductProps> = ({ product }) => {
                 });
                 navigate(`/cart/${user.id}`);
             } catch (error: any) {
-                console.error("Error submitting form:", error);
+                throw new Error("Error submitting form:" + error.message)
             }
 
         }
@@ -83,21 +83,3 @@ export const Card: React.FC<ProductProps> = ({ product }) => {
         </div>
     }
 }
-
-/**
- * {teas.map((product) => (
-                        <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>{product.name}</td>
-                            <td>{product.price}</td>
-                            <td>{product.category}</td>
-                            <td>{product.Tea?.[0]?.type || "N/A"}</td>
-                            <td>{product.Tea?.[0]?.flavor || "N/A"}</td>
-                            <td>{product.Tea?.[0]?.color || "N/A"}</td>
-                            <td>N/A</td>
-                            <td>N/A</td>
-                            <td><button className="btn btn-danger" onClick={() => { handleDelete(product.id) }}>Törlés</button></td>
-                            <td><button className="btn btn-primary" onClick={() => { handleModify(product.id) }}>Módosítás</button></td>
-                        </tr>
-                    ))}
- */

@@ -129,7 +129,7 @@ export default function ModifyUsers() {
         value={formData.role}
       /><br />
 
-      <button onClick={(e) => handleSubmit(e)}>Submit</button>
+      <button className='button-confirm' onClick={(e) => handleSubmit(e)}>Submit</button>
     </form>
 
   </div>
