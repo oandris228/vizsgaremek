@@ -38,21 +38,6 @@ export class UsersService {
     });
   }
 
-  async findUserByToken(token: string) {
-    const tokenData = await this.db.token.findUnique({
-      where: { token }
-    })
-    if (!tokenData) return null;
-    const id = tokenData.userId;
-    const user = await this.db.user.findUnique({
-      where: {id},
-      include: {commissions: true}
-    })
-    delete user.password;
-    
-    return user;
-  }
-
   update(id: number, updateUserDto: UpdateUserDto) {
     return this.db.user.update({
       where: {id},

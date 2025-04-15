@@ -22,7 +22,6 @@ model User {
   shipping_address String?
   role Role
   commissions Commission[]
-  tokens Token[]
 }
 
 model Product {
@@ -96,10 +95,4 @@ model Item {
   commission Commission @relation(fields: [commissionId], references: [id])
   quantity Int
   productName String
-}
-
-model Token {
-  token String @id
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
 }

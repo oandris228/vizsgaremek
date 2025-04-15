@@ -8,7 +8,6 @@ import {
   import { JwtService } from '@nestjs/jwt';
   import { jwtConstants } from './constants';
   import { Request } from 'express';
-import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from 'src/users/users.service';
   
   @Injectable()
@@ -18,7 +17,6 @@ import { UsersService } from 'src/users/users.service';
     async canActivate(context: ExecutionContext): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
       const token = this.extractTokenFromHeader(request);
-      const finduser = await this.userService.findUserByToken(token);
       if (!token) {
         throw new UnauthorizedException();
       }
@@ -30,7 +28,6 @@ import { UsersService } from 'src/users/users.service';
           },
         );
         request['user'] = payload;
-        request['token'] = token;
       } catch {
         throw new UnauthorizedException();
       }

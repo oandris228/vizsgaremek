@@ -5,6 +5,7 @@ import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma.service';
+import { jwtConstants } from './constants';
 
 @Injectable()
 export class AuthService {
@@ -22,18 +23,10 @@ export class AuthService {
     }
     const { password, ...result } = user;
     const payload = { sub: user.id, username: user.username };
-    const access_token = await this.jwtService.signAsync(payload)
-    return this.db.token.create({
-      data: {
-        userId: user.id,
-        token: access_token
-      }
+    const access_token = await this.jwtService.signAsync(payload, {
+      secret: jwtConstants.secret,
+      expiresIn: '1d'
     })
-  }
-
-  logout(token: string) {
-    return this.db.token.delete({
-      where: {token}
-    })
+    return access_token;
   }
 }
