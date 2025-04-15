@@ -1,7 +1,5 @@
 package com.example.Teak;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -19,9 +17,8 @@ public class TeaForm extends GridPane {
     private Button backButton = new Button("Back");
 
     public TeaForm() {
-        setHgap(10);
-        setVgap(10);
-        setPadding(new javafx.geometry.Insets(20, 20, 20, 20));
+        scene.getStylesheets().add(getClass().getResource("form.css").toExternalForm());
+        getStyleClass().add("grid");
 
         add(backButton, 0, 0);
         setColumnSpan(backButton, 2);

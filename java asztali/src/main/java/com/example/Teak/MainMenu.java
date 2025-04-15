@@ -2,11 +2,12 @@ package com.example.Teak;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 public class MainMenu extends GridPane {
@@ -22,18 +23,36 @@ public class MainMenu extends GridPane {
     private Button commissionFormButton = new Button("Commission Form");
 
     public MainMenu() {
-        setHgap(10);
-        setVgap(10);
-        setPadding(new Insets(20, 20, 20, 20));
+        scene.getStylesheets().add(this.getClass().getResource("mainMenu.css").toExternalForm());
 
-        add(userTableButton,0,0);
-        add(userFormButton,0,1);
-        add(teaTableButton,0,2);
-        add(teaFormButton,0,3);
-        add(otherTableButton, 0, 4);
-        add(otherFormButton, 0, 5);
-        add(commissionTableButton, 0, 6);
-        add(commissionFormButton, 0, 7);
+        getStyleClass().add("grid");
+
+        // Set column constraints for responsiveness
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHgrow(Priority.ALWAYS); // Allow column 1 to grow
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHgrow(Priority.ALWAYS); // Allow column 2 to grow
+        getColumnConstraints().addAll(col1, col2);
+
+        // Set buttons to grow and fill available space
+        userTableButton.setMaxWidth(Double.MAX_VALUE);
+        userFormButton.setMaxWidth(Double.MAX_VALUE);
+        teaTableButton.setMaxWidth(Double.MAX_VALUE);
+        teaFormButton.setMaxWidth(Double.MAX_VALUE);
+        otherTableButton.setMaxWidth(Double.MAX_VALUE);
+        otherFormButton.setMaxWidth(Double.MAX_VALUE);
+        commissionTableButton.setMaxWidth(Double.MAX_VALUE);
+        commissionFormButton.setMaxWidth(Double.MAX_VALUE);
+
+        // Add buttons to the grid
+        add(userTableButton, 0, 0);
+        add(userFormButton, 1, 0);
+        add(teaTableButton, 0, 1);
+        add(teaFormButton, 1, 1);
+        add(otherTableButton, 0, 2);
+        add(otherFormButton, 1, 2);
+        add(commissionTableButton, 0, 3);
+        add(commissionFormButton, 1, 3);
     }
 
     public Scene getSceneOf() {

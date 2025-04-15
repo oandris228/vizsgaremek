@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kong.unirest.HttpResponse;
@@ -15,13 +16,16 @@ import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
 
-public class UserTable extends  TableView<User> {
+public class UserTable extends GridPane {
     private Button backButton = new Button("Back");
     private Scene scene = new Scene(new VBox(backButton, this));
 
     private ObservableList<User> users = FXCollections.observableArrayList();
 
     public UserTable() {
+        scene.getStylesheets().add(getClass().getResource("table.css").toExternalForm());
+        getStyleClass().add("grid");
+
         TableColumn<User, Integer> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
@@ -63,9 +67,22 @@ public class UserTable extends  TableView<User> {
             }
         });
 
-        getColumns().addAll(idColumn, usernameColumn, emailColumn, passwordColumn, addressColumn, roleColumn, actionColumn);
-        setItems(users);
+        TableView<User> tableView = new TableView<>(users);
+        tableView.getColumns().addAll(
+                idColumn,
+                usernameColumn,
+                emailColumn,
+                passwordColumn,
+                addressColumn,
+                roleColumn,
+                actionColumn
+        );
+        tableView.setItems(users);
+
         updateData();
+
+        add(backButton, 0, 0);
+        add(tableView, 0,1);
     }
 
     public void updateData() {

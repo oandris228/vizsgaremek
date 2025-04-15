@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kong.unirest.HttpResponse;
@@ -16,13 +17,17 @@ import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
 
 
-public class TeaTable extends TableView<Tea> {
+public class TeaTable extends GridPane {
     private Button backButton = new Button("Back");
     private Scene scene = new Scene(new VBox(backButton, this));
 
     private ObservableList<Tea> teas = FXCollections.observableArrayList();
 
     public TeaTable() {
+
+        scene.getStylesheets().add(getClass().getResource("table.css").toExternalForm());
+        getStyleClass().add("grid");
+
         TableColumn<Tea, Integer> teaIdColumn = new TableColumn<>("teaId");
         teaIdColumn.setCellValueFactory(new PropertyValueFactory<>("teaId"));
 
@@ -64,9 +69,13 @@ public class TeaTable extends TableView<Tea> {
             }
         });
 
-        getColumns().addAll(teaIdColumn, productIdColumn, nameColumn, priceColumn, typeColumn, flavorColumn, actionColumn);
-        setItems(teas);
+        TableView<Tea> tableView = new TableView<>(teas);
+        tableView.getColumns().addAll(teaIdColumn, productIdColumn, nameColumn, priceColumn, typeColumn, flavorColumn, actionColumn);
+        tableView.setItems(teas);
         updateData();
+
+        add(backButton, 0, 0);
+        add(tableView, 0,1);
     }
 
     public void updateData() {

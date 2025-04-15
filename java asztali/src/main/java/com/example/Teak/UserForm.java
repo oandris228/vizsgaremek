@@ -2,7 +2,6 @@ package com.example.Teak;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,9 +14,8 @@ public class UserForm extends GridPane {
     private Button backButton = new Button("Back");
 
     public UserForm() {
-        setHgap(10);
-        setVgap(10);
-        setPadding(new Insets(20, 20, 20, 20));
+        scene.getStylesheets().add(getClass().getResource("form.css").toExternalForm());
+        getStyleClass().add("grid");
 
         add(backButton, 0, 0);
         setColumnSpan(backButton, 2);

@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kong.unirest.HttpResponse;
@@ -15,13 +16,17 @@ import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
 
-public class CommissionTable extends TableView<Commission> {
+public class CommissionTable extends GridPane {
     private Button backButton = new Button("Back");
     private Scene scene = new Scene(new VBox(backButton, this));
 
     private ObservableList<Commission> commissions = FXCollections.observableArrayList();
 
     public CommissionTable() {
+
+        scene.getStylesheets().add(getClass().getResource("table.css").toExternalForm());
+        getStyleClass().add("grid");
+
         TableColumn<Commission, Integer> commissionIdColumn = new TableColumn<>("Commission ID");
         commissionIdColumn.setCellValueFactory(new PropertyValueFactory<>("commissionId"));
 
@@ -73,7 +78,8 @@ public class CommissionTable extends TableView<Commission> {
             }
         });
 
-        getColumns().addAll(
+        TableView<Commission> tableView = new TableView<>(commissions);
+        tableView.getColumns().addAll(
                 commissionIdColumn,
                 itemIdColumn,
                 userIdColumn,
@@ -85,9 +91,12 @@ public class CommissionTable extends TableView<Commission> {
                 extratextColumn,
                 actionColumn
         );
-        setItems(commissions);
+        tableView.setItems(commissions);
 
         updateData();
+
+        add(backButton, 0, 0);
+        add(tableView, 0,1);
     }
 
     private void updateData() {

@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kong.unirest.HttpResponse;
@@ -15,13 +16,17 @@ import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
 
-public class OtherTable extends TableView<Other> {
+public class OtherTable extends GridPane {
     private Button backButton = new Button("Back");
     private Scene scene = new Scene(new VBox(backButton, this));
 
     private ObservableList<Other> others = FXCollections.observableArrayList();
 
     public OtherTable() {
+
+        scene.getStylesheets().add(getClass().getResource("table.css").toExternalForm());
+        getStyleClass().add("grid");
+
         TableColumn<Other, Integer> otherIdColumn = new TableColumn<>("otherId");
         otherIdColumn.setCellValueFactory(new PropertyValueFactory<>("otherId"));
 
@@ -62,10 +67,13 @@ public class OtherTable extends TableView<Other> {
                 }
             }
         });
-
-        getColumns().addAll(otherIdColumn, productIdColumn, nameColumn, priceColumn, descriptionColumn, imgColumn, actionColumn);
-        setItems(others);
+        TableView<Other> tableView = new TableView<>(others);
+        tableView.getColumns().addAll(otherIdColumn, productIdColumn, nameColumn, priceColumn, descriptionColumn, imgColumn, actionColumn);
+        tableView.setItems(others);
         updateData();
+
+        add(backButton, 0, 0);
+        add(tableView, 0,1);
     }
 
     public void updateData() {
