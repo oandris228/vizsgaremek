@@ -34,9 +34,10 @@ export default function NavBar() {
                 <li>
                     <NavLink className="nav-link" to="/">Főoldal</NavLink>
                 </li>
+                {/* Nem elkészített feature
                 <li>
                     <NavLink className="nav-link" to="/custom">Make Your Own</NavLink>
-                </li>
+                </li>*/}
                 <li>
                     <NavLink className="nav-link" to="/profile">Profil</NavLink>
                 </li>
@@ -50,7 +51,7 @@ export default function NavBar() {
                 )}
                 {user ? (
                     <li>
-                        <NavLink className="nav-link" onClick={() => { handleLogout();}} to="/login">Logout</NavLink>
+                        <NavLink className="nav-link" onClick={() => { handleLogout(); }} to="/login">Logout</NavLink>
                     </li>
                 ) : (
                     <>
@@ -71,39 +72,40 @@ export default function NavBar() {
             </button>
         </nav>
         {isOpen && (
-                <ul className="nav-list-mobile">
-                    <li>
-                        <NavLink className="nav-mobile" to="/">Főoldal</NavLink>
+            <ul className="nav-list-mobile">
+                <li>
+                    <NavLink className="nav-mobile" to="/">Főoldal</NavLink>
+                </li>
+                {/* Nem elkészített feature
+                <li>
+                    <NavLink className="nav-mobile" to="/custom">Make Your Own</NavLink>
+                </li>*/}
+                <li>
+                    <NavLink className="nav-mobile" to="/profile">Profil</NavLink>
+                </li>
+                <li>
+                    <NavLink className="nav-mobile" to={`/cart/${user?.id}`}>Kosár</NavLink>
+                </li>
+                {state && (
+                    <li className='nav-admin'>
+                        <NavLink className="nav-mobile nav-admin" to="/admin">Admin</NavLink>
                     </li>
+                )}
+                {user ? (
                     <li>
-                        <NavLink className="nav-mobile" to="/custom">Make Your Own</NavLink>
+                        <button className="nav-mobile" onClick={() => { handleLogout(); navigate('/login') }}>Logout</button>
                     </li>
-                    <li>
-                        <NavLink className="nav-mobile" to="/profile">Profil</NavLink>
-                    </li>
-                    <li>
-                        <NavLink className="nav-mobile" to={`/cart/${user?.id}`}>Kosár</NavLink>
-                    </li>
-                    {state && (
-                        <li className='nav-admin'>
-                            <NavLink className="nav-mobile nav-admin" to="/admin">Admin</NavLink>
-                        </li>
-                    )}
-                    {user ? (
+                ) : (
+                    <>
                         <li>
-                            <button className="nav-mobile" onClick={() => { handleLogout(); navigate('/login') }}>Logout</button>
+                            <NavLink className="nav-mobile" to="/login">Bejelentkezés</NavLink>
                         </li>
-                    ) : (
-                        <>
-                            <li>
-                                <NavLink className="nav-mobile" to="/login">Bejelentkezés</NavLink>
-                            </li>
-                            <li>
-                                <NavLink className="nav-mobile" to="/register">Regisztráció</NavLink>
-                            </li>
-                        </>
-                    )}
-                </ul>
-            )}
+                        <li>
+                            <NavLink className="nav-mobile" to="/register">Regisztráció</NavLink>
+                        </li>
+                    </>
+                )}
+            </ul>
+        )}
     </>
 }

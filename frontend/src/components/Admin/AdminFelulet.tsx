@@ -30,9 +30,10 @@ export default function AdminFelulet() {
                     <li className="nav-item active">
                         <button onClick={() => { setFrameLink("/users") }}>Users</button>
                     </li>
+                    {/* nem elkészített funkció
                     <li className="nav-item active">
                         <button onClick={() => { setFrameLink("/orders") }}>Orders</button>
-                    </li>
+                    </li>*/}
                 </ul>
             </nav>
             <iframe className='admin-frame' src={frameLink}></iframe>
