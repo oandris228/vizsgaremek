@@ -27,6 +27,6 @@ export class AuthService {
       secret: jwtConstants.secret,
       expiresIn: '1d'
     })
-    return access_token;
+    return {access_token};
   }
 }

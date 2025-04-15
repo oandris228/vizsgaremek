@@ -48,7 +48,7 @@ model Tea {
 
 
   productId Int @unique
-  product Product @relation(fields: [productId], references: [id])
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Other {
@@ -57,7 +57,7 @@ model Other {
   img String
 
   productId Int @unique
-  product Product @relation(fields: [productId], references: [id])
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 enum ProductCategory {
@@ -92,7 +92,7 @@ model Item {
   commissionId Int
   productId Int
   product Product @relation(fields: [productId], references: [id])
-  commission Commission @relation(fields: [commissionId], references: [id])
+  commission Commission @relation(fields: [commissionId], references: [id], onDelete: Cascade)
   quantity Int
   productName String
 }
