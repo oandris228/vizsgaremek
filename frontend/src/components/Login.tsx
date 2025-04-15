@@ -1,27 +1,28 @@
-import { useState } from 'react';
-import { loginUser } from '../functions';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../auth/AuthContext';
 
-export default function Login({ setToken }: any) {
+export default function Login() {
   const navigate = useNavigate();
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+  const { login } = useContext(AuthContext);
+
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      const token = await loginUser({
-        username,
-        password
-      });
-      setToken(token);
-      navigate('/profile')
+      login(username, password)
     } catch (error: any) {
-      console.log(error.message);
       switch (error.message) {
-        case "401": setErrors("Hibás bejelentkezési adatok!"); break;
-        default: setErrors("Hiba történt"); break;
+        case "401":
+          setErrors("Hibás bejelentkezési adatok")
+          break;
+      
+        default:
+          setErrors("Hiba történt")
+          break;
       }
     }
   }
@@ -44,7 +45,7 @@ export default function Login({ setToken }: any) {
       </form>
       {errors && (
         <div>
-          <p className='text-red-600'><strong>Hiba:</strong>{errors}</p>
+          <p className='text-red-600'><strong>{errors}</strong></p>
         </div>
       )}
     </div>

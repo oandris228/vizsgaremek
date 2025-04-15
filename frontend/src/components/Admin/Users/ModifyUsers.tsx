@@ -1,10 +1,12 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useContext } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { User } from '../../../types';
+import { AuthContext } from '../../../auth/AuthContext';
 
 export default function ModifyUsers() {
 
   const { id } = useParams();
+  const {getprofile, user} = useContext(AuthContext);
 
   const [formData, setFormData] = useState<User>({
     id: 0,
@@ -14,7 +16,6 @@ export default function ModifyUsers() {
     role: 'User',
     commissions: []
   });
-  const [product, setProduct] = useState<User>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -47,11 +48,11 @@ export default function ModifyUsers() {
     };
 
     if (id == undefined) {
-      console.log("fuc u");
+      console.log("no id");
     } else {
       fetchProduct(+id);
     }
-  }, []);
+  }, [user]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -75,7 +76,7 @@ export default function ModifyUsers() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+      getprofile();
       navigate('/users');
     } catch (err: any) {
       setError(err.message);

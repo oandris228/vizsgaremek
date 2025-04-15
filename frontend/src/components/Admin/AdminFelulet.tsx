@@ -1,41 +1,24 @@
 import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../App';
+import { AuthContext } from '../../auth/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminFelulet() {
-    const token = useContext(AuthContext);
-
+    const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
     const [state, setState] = useState(false);
-
     const [frameLink, setFrameLink] = useState('/products');
 
-    const [errors, setErrors] = useState("");
-
-    const LoggedIn = token != undefined;
-
     useEffect(() => {
-        async function IsUserAdmin() {
-            try {
-                if (LoggedIn) {
-                    const response = await fetch('http://localhost:3000/users/token', {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': 'Bearer ' + token
-                        }
-                    })
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    setState(data.role == "Admin")
-                } else {
-                    setState(false)
-                }
-            } catch (error: any) {
-                setErrors(error.message)
+        if (user) {
+            if (user.role == "Admin") {
+                setState(true);
+            } else {
+                navigate('/');
             }
+        } else {
+            navigate('/');
         }
-        IsUserAdmin();
-    }, [token])
+    },[user])
 
     return <>
         <div className="admin-container" hidden={!state}>
@@ -57,10 +40,5 @@ export default function AdminFelulet() {
         <div className='admin-mobile'>
             <h1>Az admin felület mobilon és tableten nem elérhető</h1>
         </div>
-        {errors && (
-            <div>
-                <p className='text-red-600'><strong>Hiba:</strong>{errors}</p>
-            </div>
-        )}
     </>
 }

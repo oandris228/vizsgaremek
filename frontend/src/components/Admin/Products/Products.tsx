@@ -42,7 +42,7 @@ export function Products() {
 
     useEffect(() => {
         fetchProducts();
-    }, [products]);
+    }, []);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error fetching data: {error}</p>;

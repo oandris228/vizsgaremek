@@ -1,22 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { BaseProduct, CommissionFormData, User } from "../types";
 import { useNavigate } from "react-router-dom";
-import { GetProfile } from "../functions";
-import { AuthContext } from "../App";
+import { AuthContext } from "../auth/AuthContext";
 
 interface ProductProps {
     product: BaseProduct;
 }
 
 export const Card: React.FC<ProductProps> = ({ product }) => {
-    const [user, setUser] = useState<User>();
     const navigate = useNavigate()
-    const token = useContext(AuthContext);
-
-
-    useEffect(() => {
-        GetProfile(token).then((e) => setUser(e))
-    })
+    const {user} = useContext(AuthContext);
 
     async function AddToCart(item_product: BaseProduct): Promise<void> {
         if (!user) {

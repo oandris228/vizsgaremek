@@ -381,4 +381,8 @@ label {
         @apply
         hidden
     }
+    .nav-list-mobile {
+        @apply
+        hidden
+    }
 }

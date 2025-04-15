@@ -3,36 +3,30 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Profile from './components/Profile';
 import Login from './components/Login';
-import useToken from './auth/useToken';
-import PrivateRoute from './auth/PrivateRoute';
 import Listazas from './components/User/ProductListazasUser';
 import { Products } from './components/Admin/Products/Products';
 import NavBar from './components/Navbar';
 import AdminFelulet from './components/Admin/AdminFelulet';
 import Users from './components/Admin/Users/Users';
 import { Regisztracio } from './components/Register';
-import Modify from './components/Admin/Products/ModifyProducts';
 import ModifyProducts from './components/Admin/Products/ModifyProducts';
 import ModifyUsers from './components/Admin/Users/ModifyUsers';
 import { Cart } from './components/Admin/Users/Cart';
 import { Home } from './components/Home';
-export const AuthContext = createContext('no token');
+import { AuthProvider } from './auth/AuthContext';
 
 function App() {
-  const { token, setToken } = useToken();
   return (
-    <AuthContext.Provider value={token}>
-      <div className="min-h-screen min-w-screen flex flex-col bg-mainbackground">
-        <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
+        <div className="min-h-screen min-w-screen flex flex-col bg-mainbackground">
           <Routes>
             {/* User Authentication/Creation */}
             <Route path="/login" element={
-              <><NavBar /><Login setToken={setToken} /></>
+              <><NavBar /><Login /></>
             } />
             <Route path="/profile" element={
-              <PrivateRoute element={
-                <><NavBar /><Profile /></>
-              } />
+              <><NavBar /><Profile /></>
             } />
             <Route path="/register" element={
               <>
@@ -66,35 +60,29 @@ function App() {
               </>
             } />
             <Route path="/cart/:user_id" element={
-              <PrivateRoute element={
-                <><NavBar />
-                  <div className='default-wrapper'>
-                    <Cart />
-                  </div>
-                </>
-              } />
+              <><NavBar />
+                <div className='default-wrapper'>
+                  <Cart />
+                </div>
+              </>
             } />
 
             {/* Admin endpoints */}
 
 
             <Route path="/admin" element={
-              <PrivateRoute element={
-                <>
-                  <NavBar />
-                  <AdminFelulet />
-                </>
-              } />
+              <>
+                <NavBar />
+                <AdminFelulet />
+              </>
             } />
 
             {/* Product management */}
 
             <Route path="/products" element={
-              <PrivateRoute element={
-                <>
-                  <Products />
-                </>
-              } />
+              <>
+                <Products />
+              </>
             } />
             <Route path="/products/edit/:id" element={
               <>
@@ -105,11 +93,9 @@ function App() {
             {/* User management */}
 
             <Route path="/users" element={
-              <PrivateRoute element={
-                <>
-                  <Users />
-                </>
-              } />
+              <>
+                <Users />
+              </>
             } />
             <Route path="/users/edit/:id" element={
               <>
@@ -130,9 +116,9 @@ function App() {
               </>
             } />
           </Routes>
-        </BrowserRouter>
-      </div>
-    </AuthContext.Provider>
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 export default App;

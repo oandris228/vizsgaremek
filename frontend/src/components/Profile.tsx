@@ -1,18 +1,16 @@
 import React, { useContext, useEffect, useState } from "react"
-import { AuthContext } from "../App"
-import { User } from "../types";
-import { GetProfile } from "../functions";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext";
 
 export default function Profile() {
-    const token = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const navigate = useNavigate();
 
-    const [user, setUser] = useState<User>();
-
     useEffect(() => {
-        GetProfile(token).then((e) => setUser(e))
-    }, [token])
+        if (!user) {
+            navigate('/login');
+        }
+    }, [user])
 
     return (<>
         <div className="information-box">

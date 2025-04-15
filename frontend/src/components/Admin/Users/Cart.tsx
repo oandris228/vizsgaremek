@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Commission } from "../../../types";
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../../../auth/AuthContext";
 
 export function Cart() {
     const { user_id } = useParams();
@@ -9,6 +10,7 @@ export function Cart() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
+    const { getprofile, user } = useContext(AuthContext);
 
 
     const fetchCommission = async () => {
@@ -33,8 +35,12 @@ export function Cart() {
     };
 
     useEffect(() => {
-        fetchCommission()
-    }, [])
+        if (user) {
+            fetchCommission()
+        } else {
+            navigate('/login')
+        }
+    }, [user])
 
 
     async function RemoveItem(id: number) {
@@ -93,7 +99,7 @@ export function Cart() {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-
+                getprofile();
                 navigate('/');
             } catch (err: any) {
                 setError(err.message);

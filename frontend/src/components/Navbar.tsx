@@ -1,45 +1,29 @@
 import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../App';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { GetProfile, LogoutUser } from '../functions';
-import { User } from '../types';
+import { AuthContext } from '../auth/AuthContext';
 
 export default function NavBar() {
-    const token = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [state, setState] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const [user, setUser] = useState<User>();
-
-    const [LoggedIn, setLoggedIn] = useState(token != undefined);
 
     useEffect(() => {
-        async function IsUserAdmin() {
-
-            if (LoggedIn) {
-                const response = await fetch('http://localhost:3000/users/token', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
-                })
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setState(data.role == "Admin")
+        if (user) {
+            if (user.role == "Admin") {
+                setState(true);
             } else {
-                setState(false)
+                navigate('/');
             }
+        } else {
+            setState(false);
+            navigate('/');
         }
-        IsUserAdmin();
-        GetProfile(token).then((e) => setUser(e))
-    }, [token])
+    }, [user])
 
     function handleLogout() {
-        LogoutUser(token);
-        setLoggedIn(false);
+        logout();
     }
 
     return <>
@@ -64,7 +48,7 @@ export default function NavBar() {
                         <NavLink className="nav-link nav-admin" to="/admin">Admin</NavLink>
                     </li>
                 )}
-                {LoggedIn ? (
+                {user ? (
                     <li>
                         <NavLink className="nav-link" onClick={() => { handleLogout();}} to="/login">Logout</NavLink>
                     </li>
@@ -83,7 +67,7 @@ export default function NavBar() {
                 className="hamburger-button"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                {isOpen ? <p>a</p> : <p>b</p>}
+                Menü
             </button>
         </nav>
         {isOpen && (
@@ -105,7 +89,7 @@ export default function NavBar() {
                             <NavLink className="nav-mobile nav-admin" to="/admin">Admin</NavLink>
                         </li>
                     )}
-                    {LoggedIn ? (
+                    {user ? (
                         <li>
                             <button className="nav-mobile" onClick={() => { handleLogout(); navigate('/login') }}>Logout</button>
                         </li>
