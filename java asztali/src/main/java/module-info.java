@@ -1,7 +1,7 @@
 module com.example.Teak {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.desktop;
+    requires javafx.graphics;
     requires unirest.java;
 
     opens com.example.Teak to javafx.fxml;

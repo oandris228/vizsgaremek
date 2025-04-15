@@ -15,41 +15,40 @@ import kong.unirest.JsonNode;
 import kong.unirest.Unirest;
 import kong.unirest.json.JSONObject;
 
-
-public class TeaTable extends TableView<Tea> {
+public class OtherTable extends TableView<Other> {
     private Button backButton = new Button("Back");
     private Scene scene = new Scene(new VBox(backButton, this));
 
-    private ObservableList<Tea> teas = FXCollections.observableArrayList();
+    private ObservableList<Other> others = FXCollections.observableArrayList();
 
-    public TeaTable() {
-        TableColumn<Tea, Integer> teaIdColumn = new TableColumn<>("teaId");
-        teaIdColumn.setCellValueFactory(new PropertyValueFactory<>("teaId"));
+    public OtherTable() {
+        TableColumn<Other, Integer> otherIdColumn = new TableColumn<>("otherId");
+        otherIdColumn.setCellValueFactory(new PropertyValueFactory<>("otherId"));
 
-        TableColumn<Tea, Integer> productIdColumn = new TableColumn<>("productId");
+        TableColumn<Other, Integer> productIdColumn = new TableColumn<>("productId");
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("productId"));
 
-        TableColumn<Tea, String> nameColumn = new TableColumn<>("name");
+        TableColumn<Other, String> nameColumn = new TableColumn<>("name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Tea, Integer> priceColumn = new TableColumn<>("price");
+        TableColumn<Other, Integer> priceColumn = new TableColumn<>("price");
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        TableColumn<Tea, String> typeColumn = new TableColumn<>("type");
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        TableColumn<Other, String> descriptionColumn = new TableColumn<>("description");
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-        TableColumn<Tea, String> flavorColumn = new TableColumn<>("flavor");
-        flavorColumn.setCellValueFactory(new PropertyValueFactory<>("flavor"));
+        TableColumn<Other, String> imgColumn = new TableColumn<>("img");
+        imgColumn.setCellValueFactory(new PropertyValueFactory<>("img"));
 
-        TableColumn<Tea, Void> actionColumn = new TableColumn<>("");
-        actionColumn.setCellFactory(param -> new TableCell<Tea, Void>() {
+        TableColumn<Other, Void> actionColumn = new TableColumn<>("");
+        actionColumn.setCellFactory(param -> new TableCell<Other, Void>() {
             private final Button deleteButton = new Button("Delete");
 
             {
                 deleteButton.setOnAction(event -> {
-                    Tea tea = getTableView().getItems().get(getIndex());
-                    HttpResponse<JsonNode> res = Unirest.delete(HelloApplication.getServerUrl() + "/products/" + tea.getProductId()).asJson();
-                    teas.remove(tea);
+                    Other other = getTableView().getItems().get(getIndex());
+                    HttpResponse<JsonNode> res = Unirest.delete(HelloApplication.getServerUrl() + "/products/" + other.getProductId()).asJson();
+                    others.remove(other);
                 });
             }
 
@@ -64,25 +63,24 @@ public class TeaTable extends TableView<Tea> {
             }
         });
 
-        getColumns().addAll(teaIdColumn, productIdColumn, nameColumn, priceColumn, typeColumn, flavorColumn, actionColumn);
-        setItems(teas);
+        getColumns().addAll(otherIdColumn, productIdColumn, nameColumn, priceColumn, descriptionColumn, imgColumn, actionColumn);
+        setItems(others);
         updateData();
     }
 
     public void updateData() {
-        teas.clear();
+        others.clear();
         HttpResponse<JsonNode> products = Unirest.get(HelloApplication.getServerUrl() + "/products").asJson();
         for (int i = 0; i < products.getBody().getArray().length(); i++) {
             JSONObject product = products.getBody().getArray().optJSONObject(i);
-            if (product.getString("category").equals("Tea")) {
-                teas.add(new Tea(
-                        product.getInt("tea_id"),
+            if (product.getString("category").equals("Other")) {
+                others.add(new Other(
+                        product.getInt("other_id"),
                         product.getInt("id"),
                         product.getString("name"),
                         product.getInt("price"),
-                        product.getJSONArray("Tea").optJSONObject(0).getString("type"),
-                        product.getJSONArray("Tea").optJSONObject(0).getString("flavor"),
-                        product.getJSONArray("Tea").optJSONObject(0).getString("color")
+                        product.getJSONArray("Other").optJSONObject(0).getString("description"),
+                        product.getJSONArray("Other").optJSONObject(0).getString("img")
                 ));
             }
         }
