@@ -98,7 +98,8 @@ export class ProductsController {
           //below are tea details
           tea_id: 0,
           tea_type: "filteres",
-          tea_flavor: "strawberry"
+          tea_flavor: "strawberry",
+          tea_color: "pink"
         }
       },
       example2: {
