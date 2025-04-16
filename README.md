@@ -61,3 +61,17 @@ Más adatbázis-kezelő rendszert is lehet használni, de ezek konfigurálása n
 ---
 
 Ha bármi kérdésed van, nézd meg a [Wiki oldalt](https://github.com/oandris228/vizsgaremek/wiki), vagy nyiss egy `issue`-t a repositoryban. 😊
+
+
+---
+
+## 🔐 Alapértelmezett Felhasználók
+
+Az alábbi felhasználói fiókok tesztelésre elérhetők:
+
+| Felhasználónév | Jelszó |
+|----------------|--------|
+| `user`         | `user` |
+| `admin`        | `admin` |
+
+> 🔒 Ezeket a bejelentkezési adatokat csak fejlesztési vagy tesztelési célokra használja!
