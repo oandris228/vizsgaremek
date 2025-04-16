@@ -64,6 +64,10 @@ public class UserForm extends GridPane {
 
             try {
                 new User(username, email, password, shippingAddress, role);
+                Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                successAlert.setTitle("Success");
+                successAlert.setContentText("User saved successfully!");
+                successAlert.showAndWait();
             } catch (Exception ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setTitle("Error");

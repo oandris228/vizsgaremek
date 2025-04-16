@@ -82,6 +82,10 @@ public class CommissionForm extends GridPane {
 
             try {
                 new Commission(userId, productId, quantity, extratext);
+                Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                successAlert.setTitle("Success");
+                successAlert.setContentText("User saved successfully!");
+                successAlert.showAndWait();
             } catch (Exception ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setTitle("Error");

@@ -65,6 +65,10 @@ public class OtherForm extends GridPane {
 
             try {
                 new Other(name, price, description, img);
+                Alert successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                successAlert.setTitle("Success");
+                successAlert.setContentText("User saved successfully!");
+                successAlert.showAndWait();
             } catch (Exception ex) {
                 Alert a = new Alert(Alert.AlertType.ERROR);
                 a.setTitle("Error");
