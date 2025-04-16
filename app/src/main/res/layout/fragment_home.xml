@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/hatter"
+    tools:context=".HomeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teashop"
+            android:textSize="50sp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/btn_green_tea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zöld tea - 890 Ft"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/material_dynamic_primary90"/>
+
+        <Button
+            android:id="@+id/btn_black_tea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fekete tea - 790 Ft"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/material_dynamic_primary90"/>
+
+        <Button
+            android:id="@+id/btn_herbal_tea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gyógytea - 990 Ft"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/material_dynamic_primary90"/>
+
+        <Button
+            android:id="@+id/btn_fruit_tea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gyümölcstea - 1090 Ft"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/material_dynamic_primary90"/>
+
+        <Button
+            android:id="@+id/btn_white_tea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fehér tea - 1290 Ft"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:padding="12dp"
+
+            android:backgroundTint="@color/material_dynamic_primary90"/>
+
+    </LinearLayout>
+
+</FrameLayout>
