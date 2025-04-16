@@ -1,6 +1,6 @@
 # 💻 Letöltési Útmutató az Adatbázishoz / Backendhez / Frontendhez
 
-📖 A részletesebb, szebb dokumentáció elérhető a Wiki-n:  
+📖 Weboldal Wiki:  
 🔗 [Weboldal Felhasználói Dokumentáció](https://github.com/oandris228/vizsgaremek/wiki/Weboldal-Felhaszn%C3%A1l%C3%B3i-Dokument%C3%A1ci%C3%B3)
 
 ---
