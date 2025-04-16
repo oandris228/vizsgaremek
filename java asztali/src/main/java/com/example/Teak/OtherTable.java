@@ -18,7 +18,7 @@ import kong.unirest.json.JSONObject;
 
 public class OtherTable extends GridPane {
     private Button backButton = new Button("Back");
-    private Scene scene = new Scene(new VBox(backButton, this));
+    private Scene scene = new Scene(this);
 
     private ObservableList<Other> others = FXCollections.observableArrayList();
 

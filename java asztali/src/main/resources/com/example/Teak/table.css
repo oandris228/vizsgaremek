@@ -3,6 +3,7 @@
     -fx-border-color: #4CAF50;
     -fx-border-width: 2px;
     -fx-padding: 10px;
+    -fx-background-color: transparent;
 }
 
 .button {
@@ -16,10 +17,6 @@
 
 .root{
     -fx-background-color: #262626;
-}
-
-.table-view{
-   -fx-background-color: transparent;
 }
 
 .table-view:focused{

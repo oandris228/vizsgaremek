@@ -19,7 +19,7 @@ import kong.unirest.json.JSONObject;
 
 public class TeaTable extends GridPane {
     private Button backButton = new Button("Back");
-    private Scene scene = new Scene(new VBox(backButton, this));
+    private Scene scene = new Scene(this);
 
     private ObservableList<Tea> teas = FXCollections.observableArrayList();
 
